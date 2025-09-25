@@ -15,6 +15,7 @@
             background-color: #FFFBF5;
             color: #1a202c;
             overflow-x: hidden;
+            overflow-y: hidden;
         }
         .btn-register {
             background-color: #F97316;
@@ -55,9 +56,110 @@
                 width: 33.3333%;
             }
         }
+        /* Loader Styles - Centering Fixed */
+#loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    background-color: #FFFBF5;
+    transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+}
+
+#loader-container.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* --- FIX APPLIED HERE --- */
+.loader-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #1a202c;
+    text-align: center; /* Ensures text inside is centered if it wraps */
+    padding: 0 20px;    /* Adds space on the sides for small mobile screens */
+}
+
+/* --- FIX APPLIED HERE --- */
+.loader-logo {
+    margin-bottom: 40px; /* margin: auto is no longer needed */
+    animation: pulse-orange 2s infinite ease-in-out;
+}
+
+.loader-title h1 {
+    font-size: 48px;
+    font-weight: 800;
+    color: #1a202c;
+    margin-bottom: 8px;
+}
+
+.loader-subtitle {
+    font-size: 16px;
+    color: #EA580C;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+}
+
+.progress-bar {
+    width: 300px;
+    max-width: 80%;
+    height: 6px;
+    background: #F3EADD;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #F97316;
+    border-radius: 3px;
+    width: 0%;
+    animation: load 6s ease-out forwards; 
+}
+
+@keyframes pulse-orange {
+    0% { transform: scale(0.95); }
+    70% { transform: scale(1.05); }
+    100% { transform: scale(0.95); }
+}
+
+@keyframes load {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
     </style>
 </head>
 <body>
+
+  <!-- loader -->
+<div id="loader-container">
+    <div class="loader-content">
+        <div class="loader-logo">
+            <svg width="80" height="80" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="16" fill="#F97316"/>
+                <circle cx="16" cy="16" r="12" fill="white" fill-opacity="0.3"/>
+                <circle cx="16" cy="16" r="6" fill="white"/>
+            </svg>
+        </div>
+        <div class="loader-title">
+            <h1>MetaSphere 2026</h1>
+        </div>
+        <div class="loader-subtitle">
+            Where Tradition Meets Tomorrow
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+    </div>
+</div>
+
 <!-- Nav -->
 <header class="bg-black/20 backdrop-blur-lg fixed top-0 left-0 right-0 z-30 py-3 px-4 sm:px-6">
   <div class="max-w-7xl mx-auto flex justify-between items-center">
@@ -483,6 +585,26 @@ data-aos-easing="ease-in-sine">
 <script src="script.js"></script>
 <script>
   AOS.init()
+  // --- LOADER SCRIPT ---
+window.addEventListener('load', () => {
+    const loader = document.getElementById('loader-container');
+    
+    // Start the fade-out process after 6 seconds
+    setTimeout(() => {
+        if (loader) {
+            loader.classList.add('hidden');
+        }
+        // Restore scrolling on the body
+        document.body.style.overflowY = 'auto';
+    }, 6000); // 6000ms = 6 seconds
+
+    // Remove the loader element from the DOM after the fade-out animation finishes
+    setTimeout(() => {
+        if (loader) {
+            loader.remove();
+        }
+    }, 6800); // 6s load + 0.8s fade-out transition
+});
 </script>
 </body>
 </html>
