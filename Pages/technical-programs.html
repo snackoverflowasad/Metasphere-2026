@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Programs | MetaSphere 2026</title>
+    
+    <link rel="stylesheet" href="../Style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFFBF5;
+            color: #1a202c;
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #F97316, #D946EF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="main-container">
+
+ <header class="bg-black/20 backdrop-blur-lg fixed top-0 left-0 right-0 z-30 py-3 px-4 sm:px-6">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <!-- Logo -->
+    <div class="flex items-center space-x-2">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16" cy="16" r="16" fill="#F97316"/>
+        <circle cx="16" cy="16" r="12" fill="white" fill-opacity="0.2"/>
+        <circle cx="16" cy="16" r="6" fill="white"/>
+      </svg>
+      <span class="text-xl font-bold text-white">MetaSphere 2026</span>
+    </div>
+
+    <!-- Desktop Nav -->
+    <div class="hidden md:flex items-center ">
+      <nav class="flex items-center space-x-5 text-sm font-medium">
+        <a href="/Pages/index.html" class="text-white hover:text-orange-400 transition">Home</a>
+
+        <!-- Authors Dropdown -->
+        <div class="relative">
+          <button onclick="toggleDropdown('authorsDropdown')" class="text-white hover:text-orange-400 transition flex items-center">
+            Authors <i data-lucide="chevron-down" class="w-3.5 h-3.5 ml-1"></i>
+          </button>
+          <div id="authorsDropdown" class="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50">
+            <a href="/Pages/CallPapers.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Call For Papers</a>
+            <a href="/Pages/PaperSubmit.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Paper Submission</a>
+            <a href="index.html#speakers" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Keynote Speakers</a>
+          </div>
+        </div>
+
+        <a href="/Pages/technical-programs.html" class="text-white hover:text-orange-400 transition">Technical Programs</a>
+        <!-- <a href="/Pages/gallery.html" class="text-white hover:text-orange-400 transition">Gallery</a> -->
+        <a href="/Pages/registration.html" class="text-white hover:text-orange-400 transition">Registration</a>
+
+        <!-- Committee Dropdown -->
+        <div class="relative">
+          <button onclick="toggleDropdown('committeeDropdown')" class="text-white hover:text-orange-400 transition flex items-center">
+            Committee <i data-lucide="chevron-down" class="w-3.5 h-3.5 ml-1"></i>
+          </button>
+          <div id="committeeDropdown" class="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50">
+            <a href="/Pages/scientific-committee.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Scientific Committee</a>
+            <a href="/Pages/AdvisoryCommittee.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Advisory Committee</a>
+            <a href="/Pages/TechCommittee.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Technical Programs Committee</a>
+            <a href="/Pages/dev.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Developers</a>
+          </div>
+        </div>
+
+        <a href="/Pages/TechSponsor.html" class="text-white hover:text-orange-400 transition">Technical Sponsors</a>
+        <a href="/Pages/Contact.html" class="text-white hover:text-orange-400 transition">Contact</a>
+      </nav>
+
+      <!-- Register Button -->
+      <a href="/Pages/registration.html" class="ml-6 px-4 py-1.5 rounded-md text-sm font-semibold shadow-md transition bg-orange-500 text-white hover:bg-orange-600">
+        Register Now
+      </a>
+    </div>
+
+    <!-- Mobile Hamburger -->
+    <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-md text-white hover:bg-orange-400">
+      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu">
+        <line x1="4" x2="20" y1="12" y2="12"/>
+        <line x1="4" x2="20" y1="6" y2="6"/>
+        <line x1="4" x2="20" y1="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="md:hidden hidden bg-black/50 text-white px-6 py-4 space-y-4">
+    <a href="/Pages/index.html" class="block hover:text-orange-400">Home</a>
+    <a href="/Pages/CallPapers.html" class="block hover:text-orange-400">Call for Papers</a>
+    <a href="/Pages/PaperSubmit.html" class="block hover:text-orange-400">Paper Submission</a>
+    <a href="/Pages/technical-programs.html" class="block hover:text-orange-400">Technical Programs</a>
+    <!-- <a href="#" class="block hover:text-orange-400">Gallery</a> -->
+    <a href="/Pages/registration.html" class="block hover:text-orange-400">Registration</a>
+    <a href="/Pages/scientific-committee.html" class="block hover:text-orange-400">Scientific Committee</a>
+    <a href="/Pages/AdvisoryCommittee.html" class="block hover:text-orange-400">Advisory Committee</a>
+    <a href="/Pages/TechCommittee.html" class="block hover:text-orange-400">Technical Program Committee</a>
+    <a href="/Pages/dev.html" class="block hover:text-orange-400">Developers</a>
+    <a href="/Pages/TechSponsor.html" class="block hover:text-orange-400">Technical Sponsors</a>
+    <a href="/Pages/Contact.html" class="block hover:text-orange-400">Contact</a>
+    <a href="/Pages/registration.html" class="block bg-orange-500 text-center rounded-md py-2 text-sm font-semibold hover:bg-orange-600">Register Now</a>
+  </div>
+</header>
+        <section class="relative pt-60 pb-20 sm:pt-60 sm:pb-24 overflow-hidden">
+            <div id="video-slideshow" class="absolute top-0 left-0 w-full h-full z-0">
+                <video autoplay loop muted class="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-100">
+                    <source src="/Assets/4198845-hd_1920_1080_25fps.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#FFFBF5] via-[#FFFBF5]/80 to-transparent z-10"></div>
+            
+            <div class="relative max-w-5xl mx-auto text-center px-4 z-20" data-aos="fade-up" data-aos-duration="2000" >
+                 <div class="max-w-5xl mx-auto text-center px-4">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+                    Technical <span class="gradient-text">Programs</span>
+                </h1>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Explore the comprehensive technical program and conference schedule.</p>
+            </div>
+            </div>
+        </section>
+
+        <main class="py-20 md:py-28">
+            <div class="max-w-7xl mx-auto px-4 space-y-24">
+
+                <div class="bg-orange-100 border-l-4 border-orange-500 text-orange-800 p-6 rounded-r-lg" role="alert">
+                    <div class="flex items-center">
+                        <i data-lucide="calendar-check" class="h-6 w-6 mr-4"></i>
+                        <div>
+                            <p class="font-bold text-lg">Program Schedule Coming Soon</p>
+                            <p>The detailed technical program will be published in <strong>March 2026</strong>. The conference will feature keynote speeches, technical sessions, workshops, and panel discussions.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl md:text-5xl font-bold text-gray-900">Program Highlights</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        
+                        <div class="text-center bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:-translate-y-2 transition-all duration-300">
+                            <i data-lucide="mic" class="w-12 h-12 text-orange-500 mx-auto mb-4"></i>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Keynote Sessions</h3>
+                            <p class="text-gray-600 text-sm">Distinguished speakers presenting cutting-edge research and future trends.</p>
+                        </div>
+
+                        <div class="text-center bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:-translate-y-2 transition-all duration-300">
+                            <i data-lucide="cpu" class="w-12 h-12 text-orange-500 mx-auto mb-4"></i>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Technical Sessions</h3>
+                            <p class="text-gray-600 text-sm">Peer-reviewed paper presentations organized by research tracks.</p>
+                        </div>
+
+                        <div class="text-center bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:-translate-y-2 transition-all duration-300">
+                            <i data-lucide="wrench" class="w-12 h-12 text-orange-500 mx-auto mb-4"></i>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Workshops</h3>
+                            <p class="text-gray-600 text-sm">Hands-on workshops covering emerging technologies and research methodologies.</p>
+                        </div>
+                        
+                        <div class="text-center bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:-translate-y-2 transition-all duration-300">
+                            <i data-lucide="message-square" class="w-12 h-12 text-orange-500 mx-auto mb-4"></i>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Panel Discussions</h3>
+                            <p class="text-gray-600 text-sm">Interactive panels with experts discussing current challenges and future opportunities.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl md:text-5xl font-bold text-gray-900">Tentative Schedule</h2>
+                    </div>
+                    <!-- <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        
+                        <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-6 border-b pb-4">Day 1 <span class="text-orange-600 font-medium text-lg">- July 1, 2026</span></h3>
+                            <ul class="space-y-4">
+                                <li class="flex"><span class="font-bold text-orange-600 w-28 shrink-0">09:00 - 10:00</span><span>Registration & Welcome</span></li>
+                                <li class="flex pt-4 border-t"><span class="font-bold text-orange-600 w-28 shrink-0">10:00 - 11:00</span><span>Opening Ceremony & Keynote 1</span></li>
+                                <li class="flex pt-4 border-t"><span class="font-bold text-orange-600 w-28 shrink-0">11:30 - 12:30</span><span>Technical Session 1</span></li>
+                                <li class="flex pt-4 border-t"><span class="font-bold text-orange-600 w-28 shrink-0">14:00 - 15:30</span><span>Workshop Sessions</span></li>
+                                <li class="flex pt-4 border-t"><span class="font-bold text-orange-600 w-28 shrink-0">16:00 - 17:00</span><span>Panel Discussion</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-6 border-b pb-4">Day 2 <span class="text-orange-600 font-medium text-lg">- July 2, 2026</span></h3>
+                             <ul class="space-y-4">
+                                <li class="flex"><span class="font-bold text-orange-600 w-28 shrink-0">09:00 - 10:00</span><span>Keynote 2</span></li>
+                                <li class="flex pt-4 border-t"><span class="font-bold text-orange-600 w-28 shrink-0">10:30 - 12:00</span><span>Technical Session 2</span></li>
+                                <li class="flex pt-4 border-t"><span class="font-bold text-orange-600 w-28 shrink-0">14:00 - 15:30</span><span>Industry Presentations</span></li>
+                                <li class="flex pt-4 border-t"><span class="font-bold text-orange-600 w-28 shrink-0">16:00 - 17:00</span><span>Networking Session</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                             <h3 class="text-2xl font-bold text-gray-900 mb-6 border-b pb-4">Day 3 <span class="text-orange-600 font-medium text-lg">- July 3, 2026</span></h3>
+                             <ul class="space-y-4">
+                                <li class="flex"><span class="font-bold text-orange-600 w-28 shrink-0">09:00 - 10:00</span><span>Keynote 3</span></li>
+                                <li class="flex pt-4 border-t"><span class="font-bold text-orange-600 w-28 shrink-0">10:30 - 12:00</span><span>Technical Session 3</span></li>
+                                <li class="flex pt-4 border-t"><span class="font-bold text-orange-600 w-28 shrink-0">14:00 - 15:00</span><span>Awards & Recognition</span></li>
+                                <li class="flex pt-4 border-t"><span class="font-bold text-orange-600 w-28 shrink_0">15:00 - 16:00</span><span>Closing Ceremony</span></li>
+                            </ul>
+                        </div>
+                    </div> -->
+                     <div class="text-center bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:-translate-y-2 transition-all duration-300">
+                           <i-lucide name="hourglass" class="w-16 h-16 text-orange-500 mx-auto"></i-lucide>
+  <h2 class="mt-4 text-2xl font-bold text-gray-900">Coming Soon</h2>
+                        </div> 
+                    <p class="text-center mt-12 text-gray-500 text-sm"><strong>Note:</strong> Detailed program with speaker information, session topics, and room assignments will be available closer to the conference date.</p>
+                </div>
+
+            </div>
+        </main>
+        
+            <footer class="bg-gray-800 text-gray-300">
+    <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <div class="md:col-span-2 lg:col-span-2">
+                <div class="flex items-center space-x-3 mb-4">
+                    <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="16" fill="#F97316"/>
+                        <circle cx="16" cy="16" r="12" fill="white" fill-opacity="0.2"/>
+                        <circle cx="16" cy="16" r="6" fill="white"/>
+                    </svg>
+                    <span class="text-2xl font-bold text-white">MetaSphere 2026</span>
+                </div>
+                <p class="text-sm text-gray-400 max-w-lg">
+                    MetaSphere 2026 is the premier global conference bridging the future of Cloud, Virtualization, and the Metaverse. We are dedicated to fostering innovation, connecting experts, and exploring the next digital frontier, all from the cultural heart of Kolkata.
+                </p>
+                <div class="flex space-x-4 mt-6">
+                    <a href="#" aria-label="Visit our Twitter page" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                    </a>
+                    <a href="#" aria-label="Visit our LinkedIn page" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                    <a href="#" aria-label="Visit our Instagram page" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-semibold text-white mb-4">Quick Links</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="index.html" class="hover:text-orange-400 transition-colors">Home</a></li>
+                    <li><a href="CallPapers.html" class="hover:text-orange-400 transition-colors">Call For Papers</a></li>
+                    <li><a href="/Pages/scientific-committee.html" class="hover:text-orange-400 transition-colors">Scientific Committee</a></li>
+                    <li><a href="/Pages/AdvisoryCommittee.html" class="hover:text-orange-400 transition-colors">Advisory Committee</a></li>
+                    <li><a href="/Pages/TechCommittee.html" class="hover:text-orange-400 transition-colors">Technical Program Committee</a></li>
+                    <!-- <li><a href="/#tracks" class="hover:text-orange-400 transition-colors">Tracks</a></li> -->
+                    <li><a href="/Pages/registration.html" class="hover:text-orange-400 transition-colors">Registration</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-semibold text-white mb-4">Contact & Venue</h4>
+                <div class="text-sm space-y-2">
+                    <p class="font-bold">IEM Ashram Building</p>
+                    <p class="text-gray-400">GN-34/2, Sector V, Bidhannagar, Kolkata, West Bengal 700091</p>
+                    <a href="mailto:info@metasphere2026.org" class="block hover:text-orange-400 transition-colors pt-2">info@metasphere2026.org</a>
+                    <a href="tel:+918100469743" class="block hover:text-orange-400 transition-colors">+91 810 046 9743</a>
+                </div>
+                <div class="mt-4 rounded-lg overflow-hidden">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.123456789!2d88.4296927!3d22.5701392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275b23d77ee27%3A0xcd498ec0d7bf6f54!2sInstitute%20of%20Engineering%20and%20Management%20(Ashram%20Building)!5e0!3m2!1sen!2sin!4v1690000000000" 
+                        width="100%" 
+                        height="150" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 pt-8 border-t border-gray-700 text-center">
+            <p class="text-sm text-gray-400">&copy; 2026 MetaSphere Conference Committee. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+    </div>
+<script src="/Pages/script.js"></script>
+    <script>
+        AOS.init()
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Dropdown Menu Logic
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const isHidden = dropdown.classList.contains('hidden');
+            document.querySelectorAll('nav .absolute').forEach(el => el.classList.add('hidden'));
+            if (isHidden) {
+                dropdown.classList.remove('hidden');
+            }
+        }
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            if (nav && !nav.contains(event.target)) {
+                document.querySelectorAll('nav .absolute').forEach(el => el.classList.add('hidden'));
+            }
+        });
+    </script>
+</body>
+<script>
+  AOS.init()
+</script>
+</html>

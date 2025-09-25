@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messy Card Stack Gallery</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            padding: 2rem;
+        }
+
+        .gallery-title {
+            position: absolute;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            z-index: 100;
+        }
+
+        .instructions {
+            position: absolute;
+            top: 6rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            z-index: 100;
+            text-align: center;
+        }
+
+        .gallery {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding-top: 120px;
+        }
+
+        .card {
+            position: absolute;
+            width: 280px;
+            height: 340px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: grab;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* Random positioning and rotation for messy effect */
+        .card:nth-child(1) {
+            top: 15%;
+            left: 20%;
+            transform: rotate(-12deg);
+            z-index: 6;
+        }
+
+        .card:nth-child(2) {
+            top: 25%;
+            left: 45%;
+            transform: rotate(8deg);
+            z-index: 5;
+        }
+
+        .card:nth-child(3) {
+            top: 40%;
+            left: 15%;
+            transform: rotate(15deg);
+            z-index: 4;
+        }
+
+        .card:nth-child(4) {
+            top: 35%;
+            left: 60%;
+            transform: rotate(-5deg);
+            z-index: 3;
+        }
+
+        .card:nth-child(5) {
+            top: 20%;
+            left: 70%;
+            transform: rotate(18deg);
+            z-index: 2;
+        }
+
+        .card:nth-child(6) {
+            top: 50%;
+            left: 40%;
+            transform: rotate(-18deg);
+            z-index: 1;
+        }
+
+        .card.active {
+            transform: rotate(0deg) scale(1.05) translateY(-10px) !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            z-index: 50 !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card:active {
+            cursor: grabbing;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+            border-radius: 15px 15px 0 0;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 140px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #f0f2f5, #e1e5e9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #667eea;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-description {
+            color: #666;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .card-date {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .card-likes {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: #667eea;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .sortable-ghost {
+            opacity: 0.3;
+            transform: rotate(25deg) scale(0.9);
+        }
+
+        .sortable-chosen {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            transform: rotate(0deg) scale(1.1) !important;
+            z-index: 100 !important;
+        }
+
+        .sortable-drag {
+            transform: rotate(12deg) scale(1.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            z-index: 100 !important;
+        }
+
+        /* Shuffle button */
+        .shuffle-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .shuffle-btn:hover {
+            transform: rotate(180deg) scale(1.1);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                width: 250px;
+                height: 320px;
+                padding: 1rem;
+            }
+            
+            .card:nth-child(1) { top: 20%; left: 10%; }
+            .card:nth-child(2) { top: 30%; left: 50%; }
+            .card:nth-child(3) { top: 45%; left: 5%; }
+            .card:nth-child(4) { top: 40%; left: 55%; }
+            .card:nth-child(5) { top: 25%; left: 65%; }
+            .card:nth-child(6) { top: 55%; left: 30%; }
+            
+            .gallery-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Scattered animation on load */
+        @keyframes scatter {
+            0% { 
+                transform: translate(50vw, 50vh) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            100% { 
+                opacity: 1;
+                transform: var(--final-transform);
+            }
+        }
+
+        .card-scattered {
+            animation: scatter 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        /* Paper texture effect */
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23000000' fill-opacity='0.02' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+            pointer-events: none;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery-container">
+        
+        <button class="shuffle-btn" onclick="shuffleCards()" title="Shuffle cards">🔀</button>
+        
+ <div class="gallery" id="gallery">
+    <!-- Card with image -->
+    <div class="card" style="top:15%; left:20%; transform: rotate(-12deg); z-index:6;">
+        <div class="card-image w-full h-64 overflow-hidden">
+            <img src="/Assets/Events/IMG-20250306-WA0090.jpg" 
+                 class="w-full h-full object-cover" alt="Event">
+        </div>
+        <div class="card-footer flex justify-between items-center px-4 py-2 bg-gray-100">
+            <span class="card-date text-sm text-gray-500">2 days ago</span>
+            <div class="card-likes text-red-500 font-semibold">❤️ 234</div>
+        </div>
+    </div>
+
+    <!-- Emoji / Placeholder cards -->
+    <div class="card" style="top:25%; left:45%; transform: rotate(8deg); z-index:5;">
+        <div class="card-image">🚀</div>
+        <h3 class="card-title">Space Journey</h3>
+        <p class="card-description">Journey through the cosmos and discover space travel wonders.</p>
+        <div class="card-tags">
+            <span class="tag">Space</span>
+            <span class="tag">Science</span>
+        </div>
+        <div class="card-footer">
+            <span class="card-date">1 week ago</span>
+            <div class="card-likes">❤️ 189</div>
+        </div>
+    </div>
+
+    <div class="card" style="top:40%; left:15%; transform: rotate(15deg); z-index:4;">
+        <div class="card-image">🌊</div>
+        <h3 class="card-title">Ocean Mysteries</h3>
+        <p class="card-description">Dive deep into unexplored ocean depths and hidden secrets.</p>
+        <div class="card-tags">
+            <span class="tag">Ocean</span>
+            <span class="tag">Nature</span>
+        </div>
+        <div class="card-footer">
+            <span class="card-date">3 days ago</span>
+            <div class="card-likes">❤️ 156</div>
+        </div>
+    </div>
+    
+    <!-- Add more cards as needed -->
+</div>
+
+    <script>
+        // Random positions and rotations for messy effect
+        const positions = [
+            { top: '15%', left: '20%', rotation: -12 },
+            { top: '25%', left: '45%', rotation: 8 },
+            { top: '40%', left: '15%', rotation: 15 },
+            { top: '35%', left: '60%', rotation: -5 },
+            { top: '20%', left: '70%', rotation: 18 },
+            { top: '50%', left: '40%', rotation: -18 }
+        ];
+
+        // Initialize Sortable
+        const gallery = document.getElementById('gallery');
+        
+        new Sortable(gallery, {
+            animation: 200,
+            ghostClass: 'sortable-ghost',
+            chosenClass: 'sortable-chosen',
+            dragClass: 'sortable-drag',
+            easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+            onStart: function(evt) {
+                evt.item.style.zIndex = '100';
+            },
+            onEnd: function(evt) {
+                // Don't reset position immediately, let it settle
+                setTimeout(() => {
+                    if (!evt.item.matches(':hover')) {
+                        evt.item.style.zIndex = '';
+                    }
+                }, 300);
+            }
+        });
+
+        // Animate cards on load
+        function animateCardsOnLoad() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                const pos = positions[index];
+                card.style.setProperty('--final-transform', 
+                    `translate(0, 0) rotate(${pos.rotation}deg) scale(1)`);
+                
+                setTimeout(() => {
+                    card.classList.add('card-scattered');
+                }, index * 100);
+            });
+        }
+
+        // Shuffle cards to new random positions
+        function shuffleCards() {
+            const cards = document.querySelectorAll('.card');
+            const shuffledPositions = [...positions].sort(() => Math.random() - 0.5);
+            
+            cards.forEach((card, index) => {
+                const newPos = shuffledPositions[index];
+                const randomRotation = (Math.random() - 0.5) * 40; // -20 to +20 degrees
+                
+                card.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                card.style.top = newPos.top;
+                card.style.left = newPos.left;
+                card.style.transform = `rotate(${randomRotation}deg)`;
+                card.style.zIndex = Math.floor(Math.random() * 10) + 1;
+            });
+        }
+
+        // Add click interaction to cards
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Prevent triggering during drag
+                if (this.classList.contains('sortable-chosen')) return;
+                
+                // Toggle active state
+                const isActive = this.classList.contains('active');
+                
+                // Remove active from all cards
+                cards.forEach(c => c.classList.remove('active'));
+                
+                // Add active to clicked card if it wasn't active
+                if (!isActive) {
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Close active card when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.card')) {
+                cards.forEach(c => c.classList.remove('active'));
+            }
+        });
+
+        // Initialize on load
+        window.addEventListener('load', animateCardsOnLoad);
+    </script>
+</body>
+</html>

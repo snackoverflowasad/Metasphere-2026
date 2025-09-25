@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advisory Committee | MetaSphere 2026</title>
+    
+    <link rel="stylesheet" href="../Style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFFBF5;
+            color: #1a202c;
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #F97316, #D946EF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+        .font-bengali {
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+        
+        /* Custom Styles for DataTables to match the theme */
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 0.5em 1em;
+            margin-left: 2px;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease-in-out;
+            border: 1px solid transparent;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: #F97316;
+            color: white !important;
+            border-color: #F97316;
+        }
+        .dataTables_wrapper .dataTables_info {
+             color: #4a5568;
+        }
+        #committeeTable thead {
+            background-color: #FEF3C7; /* A light orange to match the theme */
+        }
+        #committeeTable thead th {
+            color: #C2410C; /* Rich orange text to match the theme */
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        #committeeTable tbody td {
+            font-weight: 600;
+            color: #374151;
+        }
+        /* Hide default DataTables search/length */
+        .dataTables_filter, .dataTables_length {
+            display: none;
+        }
+        #customLength {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="main-container">
+
+<header class="bg-black/20 backdrop-blur-lg fixed top-0 left-0 right-0 z-30 py-3 px-4 sm:px-6">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <!-- Logo -->
+    <div class="flex items-center space-x-2">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16" cy="16" r="16" fill="#F97316"/>
+        <circle cx="16" cy="16" r="12" fill="white" fill-opacity="0.2"/>
+        <circle cx="16" cy="16" r="6" fill="white"/>
+      </svg>
+      <span class="text-xl font-bold text-white">MetaSphere 2026</span>
+    </div>
+
+    <!-- Desktop Nav -->
+    <div class="hidden md:flex items-center ">
+      <nav class="flex items-center space-x-5 text-sm font-medium">
+        <a href="/Pages/index.html" class="text-white hover:text-orange-400 transition">Home</a>
+
+        <!-- Authors Dropdown -->
+        <div class="relative">
+          <button onclick="toggleDropdown('authorsDropdown')" class="text-white hover:text-orange-400 transition flex items-center">
+            Authors <i data-lucide="chevron-down" class="w-3.5 h-3.5 ml-1"></i>
+          </button>
+          <div id="authorsDropdown" class="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50">
+            <a href="/Pages/CallPapers.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Call For Papers</a>
+            <a href="/Pages/PaperSubmit.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Paper Submission</a>
+            <a href="index.html#speakers" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Keynote Speakers</a>
+          </div>
+        </div>
+
+        <a href="/Pages/technical-programs.html" class="text-white hover:text-orange-400 transition">Technical Programs</a>
+        <!-- <a href="/Pages/gallery.html" class="text-white hover:text-orange-400 transition">Gallery</a> -->
+        <a href="/Pages/registration.html" class="text-white hover:text-orange-400 transition">Registration</a>
+
+        <!-- Committee Dropdown -->
+        <div class="relative">
+          <button onclick="toggleDropdown('committeeDropdown')" class="text-white hover:text-orange-400 transition flex items-center">
+            Committee <i data-lucide="chevron-down" class="w-3.5 h-3.5 ml-1"></i>
+          </button>
+          <div id="committeeDropdown" class="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50">
+            <a href="/Pages/scientific-committee.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Scientific Committee</a>
+            <a href="/Pages/AdvisoryCommittee.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Advisory Committee</a>
+            <a href="/Pages/TechCommittee.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Technical Programs Committee</a>
+            <a href="/Pages/dev.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Developers</a>
+          </div>
+        </div>
+
+        <a href="/Pages/TechSponsor.html" class="text-white hover:text-orange-400 transition">Technical Sponsors</a>
+        <a href="/Pages/Contact.html" class="text-white hover:text-orange-400 transition">Contact</a>
+      </nav>
+
+      <!-- Register Button -->
+      <a href="/Pages/registration.html" class="ml-6 px-4 py-1.5 rounded-md text-sm font-semibold shadow-md transition bg-orange-500 text-white hover:bg-orange-600">
+        Register Now
+      </a>
+    </div>
+
+    <!-- Mobile Hamburger -->
+    <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-md text-white hover:bg-orange-400">
+      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu">
+        <line x1="4" x2="20" y1="12" y2="12"/>
+        <line x1="4" x2="20" y1="6" y2="6"/>
+        <line x1="4" x2="20" y1="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="md:hidden hidden bg-black/50 text-white px-6 py-4 space-y-4">
+    <a href="/Pages/index.html" class="block hover:text-orange-400">Home</a>
+    <a href="/Pages/CallPapers.html" class="block hover:text-orange-400">Call for Papers</a>
+    <a href="/Pages/PaperSubmit.html" class="block hover:text-orange-400">Paper Submission</a>
+    <a href="/Pages/technical-programs.html" class="block hover:text-orange-400">Technical Programs</a>
+    <!-- <a href="#" class="block hover:text-orange-400">Gallery</a> -->
+    <a href="/Pages/registration.html" class="block hover:text-orange-400">Registration</a>
+    <a href="/Pages/scientific-committee.html" class="block hover:text-orange-400">Scientific Committee</a>
+    <a href="/Pages/AdvisoryCommittee.html" class="block hover:text-orange-400">Advisory Committee</a>
+    <a href="/Pages/TechCommittee.html" class="block hover:text-orange-400">Technical Program Committee</a>
+    <a href="/Pages/dev.html" class="block hover:text-orange-400">Developers</a>
+    <a href="/Pages/TechSponsor.html" class="block hover:text-orange-400">Technical Sponsors</a>
+    <a href="/Pages/Contact.html" class="block hover:text-orange-400">Contact</a>
+    <a href="/Pages/registration.html" class="block bg-orange-500 text-center rounded-md py-2 text-sm font-semibold hover:bg-orange-600">Register Now</a>
+  </div>
+</header>
+
+        <section class="relative pt-32 pb-20 sm:pt-60 sm:pb-24 overflow-hidden">
+            <div id="video-slideshow" class="absolute top-0 left-0 w-full h-full z-0">
+                <video autoplay loop muted class="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-100">
+                    <source src="/Assets/submit.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#FFFBF5] via-[#FFFBF5]/80 to-transparent z-10"></div>
+            
+            <div class="relative max-w-5xl mx-auto text-center px-4 z-20" data-aos="fade-up" data-aos-duration="2000" >
+                <div class="max-w-5xl mx-auto text-center px-4">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+                    Advisory <span class="gradient-text">Committee</span>
+                </h1>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Meet the members of our esteemed Advisory Committee.</p>
+            </div>
+            </div>
+        </section>
+
+        <main class="py-20 md:py-28">
+            <div class="max-w-5xl mx-auto px-4">
+        
+        <div class="w-4/5 max-w-3xl mx-auto bg-white p-10 md:p-16 rounded-2xl shadow-lg text-center border border-gray-100"
+             data-aos="zoom-out" data-aos-offset="200" data-aos-easing="ease-in-sine">
+            
+            <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">To Be Announced Soon</h3>
+            <p class="text-gray-600 text-lg">Stay tuned for exciting announcements from our partners.</p>
+        </div>
+        
+    </div>
+        </main>
+
+        <!-- <main class="py-20 md:py-28">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border border-gray-100">
+                    <div class="mb-6">
+                        <h2 class="text-3xl font-bold text-gray-900">Advisory Committee Members</h2>
+                        <h3 class="font-bengali text-2xl text-orange-600 mt-1">উপদেষ্টা কমিটির সদস্যবৃন্দ</h3>
+                        <p class="mt-4 text-gray-600">Their strategic guidance and vision are invaluable to the success of MetaSphere 2026.</p>
+                    </div>
+
+                    <div class="flex flex-col lg:flex-row gap-4 justify-between items-center mb-6 p-4 bg-orange-50/50 rounded-lg">
+                        
+                        <div class="flex flex-col sm:flex-row items-center gap-4">
+                            
+                            <div class="flex items-center gap-2 text-sm text-gray-700 font-semibold">
+                                <label for="customLength">Show</label>
+                                <select id="customLength" class="rounded-md border-gray-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="-1">All</option>
+                                </select>
+                                <span>Entries</span>
+                            </div>
+                            <div id="nationality-toggle" class="flex items-center rounded-lg shadow-sm bg-white border border-gray-300 text-sm font-semibold">
+                                <button type="button" id="allBtn" class="px-4 py-2 rounded-l-md transition-colors active">All</button>
+                                <button type="button" id="nationalBtn" class="px-4 py-2 border-l border-r transition-colors">National <span class="font-bengali font-normal">(জাতীয়)</span></button>
+                                <button type="button" id="internationalBtn" class="px-4 py-2 rounded-r-md transition-colors">International <span class="font-bengali font-normal">(আন্তর্জাতিক)</span></button>
+                                <style>#nationality-toggle button.active { background-color: #F97316; color: white; }</style>
+                            </div>
+                        </div>
+                        <div class="relative w-full sm:w-64">
+                            <input type="text" id="customSearch" class="pl-10 pr-4 py-2 w-full rounded-md border-gray-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" placeholder="Search members...">
+                            <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div class="rounded-xl overflow-hidden border border-gray-200">
+                        <table id="committeeTable" class="display responsive nowrap" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Affiliation</th>
+                                    <th>Nationality</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Prof. Dr. A. K. Sen</td><td>IIT Delhi</td><td>India</td></tr>
+                                <tr><td>Prof. Elena Petrova</td><td>University of Munich</td><td>Germany</td></tr>
+                                <tr><td>Dr. Hiroshi Tanaka</td><td>University of Tokyo</td><td>Japan</td></tr>
+                                <tr><td>Dr. Susan Richards</td><td>MIT</td><td>USA</td></tr>
+                                <tr><td>Prof. (Dr.) B. C. Roy</td><td>Jadavpur University</td><td>India</td></tr>
+                                <tr><td>Dr. Chen Wei</td><td>Tsinghua University</td><td>China</td></tr>
+                                <tr><td>Prof. David Adebayo</td><td>University of Lagos</td><td>Nigeria</td></tr>
+                                <tr><td>Dr. Sanghamitra Bandyopadhyay</td><td>Indian Statistical Institute</td><td>India</td></tr>
+                                <tr><td>Dr. Carlos Silva</td><td>University of São Paulo</td><td>Brazil</td></tr>
+                                <tr><td>Dr. Fiona Murray</td><td>University of Cambridge</td><td>UK</td></tr>
+                                <tr><td>Prof. Anil K. Gupta</td><td>IIM Ahmedabad</td><td>India</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main> -->
+        
+            <footer class="bg-gray-800 text-gray-300">
+    <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <div class="md:col-span-2 lg:col-span-2">
+                <div class="flex items-center space-x-3 mb-4">
+                    <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="16" fill="#F97316"/>
+                        <circle cx="16" cy="16" r="12" fill="white" fill-opacity="0.2"/>
+                        <circle cx="16" cy="16" r="6" fill="white"/>
+                    </svg>
+                    <span class="text-2xl font-bold text-white">MetaSphere 2026</span>
+                </div>
+                <p class="text-sm text-gray-400 max-w-lg">
+                    MetaSphere 2026 is the premier global conference bridging the future of Cloud, Virtualization, and the Metaverse. We are dedicated to fostering innovation, connecting experts, and exploring the next digital frontier, all from the cultural heart of Kolkata.
+                </p>
+                <div class="flex space-x-4 mt-6">
+                    <a href="#" aria-label="Visit our Twitter page" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                    </a>
+                    <a href="#" aria-label="Visit our LinkedIn page" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                    <a href="#" aria-label="Visit our Instagram page" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-semibold text-white mb-4">Quick Links</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="index.html" class="hover:text-orange-400 transition-colors">Home</a></li>
+                    <li><a href="CallPapers.html" class="hover:text-orange-400 transition-colors">Call For Papers</a></li>
+                    <li><a href="/Pages/scientific-committee.html" class="hover:text-orange-400 transition-colors">Scientific Committee</a></li>
+                    <li><a href="/Pages/AdvisoryCommittee.html" class="hover:text-orange-400 transition-colors">Advisory Committee</a></li>
+                    <li><a href="/Pages/TechCommittee.html" class="hover:text-orange-400 transition-colors">Technical Program Committee</a></li>
+                    <!-- <li><a href="/#tracks" class="hover:text-orange-400 transition-colors">Tracks</a></li> -->
+                    <li><a href="/Pages/registration.html" class="hover:text-orange-400 transition-colors">Registration</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-semibold text-white mb-4">Contact & Venue</h4>
+                <div class="text-sm space-y-2">
+                    <p class="font-bold">IEM Ashram Building</p>
+                    <p class="text-gray-400">GN-34/2, Sector V, Bidhannagar, Kolkata, West Bengal 700091</p>
+                    <a href="mailto:info@metasphere2026.org" class="block hover:text-orange-400 transition-colors pt-2">info@metasphere2026.org</a>
+                    <a href="tel:+918100469743" class="block hover:text-orange-400 transition-colors">+91 810 046 9743</a>
+                </div>
+                <div class="mt-4 rounded-lg overflow-hidden">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.123456789!2d88.4296927!3d22.5701392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275b23d77ee27%3A0xcd498ec0d7bf6f54!2sInstitute%20of%20Engineering%20and%20Management%20(Ashram%20Building)!5e0!3m2!1sen!2sin!4v1690000000000" 
+                        width="100%" 
+                        height="150" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 pt-8 border-t border-gray-700 text-center">
+            <p class="text-sm text-gray-400">&copy; 2026 MetaSphere Conference Committee. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Dropdown Menu Logic
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const isHidden = dropdown.classList.contains('hidden');
+            document.querySelectorAll('nav .absolute').forEach(el => el.classList.add('hidden'));
+            if (isHidden) { dropdown.classList.remove('hidden'); }
+        }
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            if (nav && !nav.contains(event.target)) {
+                document.querySelectorAll('nav .absolute').forEach(el => el.classList.add('hidden'));
+            }
+        });
+
+        // DataTables Initialization and Custom Controls
+        $(document).ready(function() {
+            const table = $('#committeeTable').DataTable({
+                responsive: true,
+                pageLength: 10,
+                dom: 't<"flex justify-between items-center mt-4"ip>' 
+            });
+
+            // Wire up custom controls
+            $('#customSearch').on('keyup', function(){ table.search($(this).val()).draw(); });
+            $('#customLength').on('change', function(){ table.page.len($(this).val()).draw(); });
+            $('#nationalBtn').on('click', function(){ table.column(2).search('^India$', true, false).draw(); updateButtons(this); });
+            $('#internationalBtn').on('click', function(){ table.column(2).search('^(?!India$).*$', true, false).draw(); updateButtons(this); });
+            $('#allBtn').on('click', function(){ table.column(2).search('').draw(); updateButtons(this); });
+
+            function updateButtons(activeBtn){
+                $('#nationality-toggle button').removeClass('active');
+                $(activeBtn).addClass('active');
+            }
+        });
+    </script>
+</body>
+</html>
