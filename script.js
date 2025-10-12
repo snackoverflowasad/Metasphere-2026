@@ -1,102 +1,101 @@
-const slides = document.querySelectorAll("#tech-carousel img");
-let current = 0;
+document.addEventListener("DOMContentLoaded", () => {
+  const slides = document.querySelectorAll("#tech-carousel img");
+  let current = 0;
 
-function showNextSlide() {
-  slides[current].classList.remove("opacity-100");
-  slides[current].classList.add("opacity-0");
+  function showNextSlide() {
+    slides[current].classList.remove("opacity-100");
+    slides[current].classList.add("opacity-0");
 
-  current = (current + 1) % slides.length;
+    current = (current + 1) % slides.length;
 
-  slides[current].classList.remove("opacity-0");
-  slides[current].classList.add("opacity-100");
-}
-
-// Change slide every 3 seconds
-setInterval(showNextSlide, 3000);
-
-function toggleDropdown(id) {
-  document.querySelectorAll('[id$="Dropdown"]').forEach((el) => {
-    if (el.id !== id) el.classList.add("hidden");
-  });
-  document.getElementById(id).classList.toggle("hidden");
-}
-
-// Mobile menu toggle
-function toggleMobileMenu() {
-  document.getElementById("mobileMenu").classList.toggle("hidden");
-}
-
-function toggleDropdown(id) {
-  const dropdown = document.getElementById(id);
-  const isHidden = dropdown.classList.contains("hidden");
-
-  // Hide all dropdowns first
-  document
-    .querySelectorAll("nav .absolute")
-    .forEach((el) => el.classList.add("hidden"));
-
-  // Toggle the clicked dropdown
-  if (isHidden) {
-    dropdown.classList.remove("hidden");
+    slides[current].classList.remove("opacity-0");
+    slides[current].classList.add("opacity-100");
   }
-}
 
-// Close dropdown when clicking outside
-document.addEventListener("click", function (event) {
-  const nav = document.querySelector("nav");
-  if (!nav.contains(event.target)) {
+  // Change slide every 3 seconds
+  setInterval(showNextSlide, 3000);
+
+  function toggleDropdown(id) {
+    document.querySelectorAll('[id$="Dropdown"]').forEach((el) => {
+      if (el.id !== id) el.classList.add("hidden");
+    });
+    document.getElementById(id).classList.toggle("hidden");
+  }
+
+  // Mobile menu toggle
+  function toggleMobileMenu() {
+    document.getElementById("mobileMenu").classList.toggle("hidden");
+  }
+
+  function toggleDropdown(id) {
+    const dropdown = document.getElementById(id);
+    const isHidden = dropdown.classList.contains("hidden");
+
+    // Hide all dropdowns first
     document
       .querySelectorAll("nav .absolute")
       .forEach((el) => el.classList.add("hidden"));
-  }
-});
 
-const iemImages = document.querySelectorAll('#iem-carousel img');
+    // Toggle the clicked dropdown
+    if (isHidden) {
+      dropdown.classList.remove("hidden");
+    }
+  }
+
+  // Close dropdown when clicking outside
+  document.addEventListener("click", function (event) {
+    const nav = document.querySelector("nav");
+    if (!nav.contains(event.target)) {
+      document
+        .querySelectorAll("nav .absolute")
+        .forEach((el) => el.classList.add("hidden"));
+    }
+  });
+
+  const iemImages = document.querySelectorAll("#iem-carousel img");
   let currentIem = 0;
 
   function showNextIemImage() {
-    iemImages[currentIem].classList.remove('opacity-100');
-    iemImages[currentIem].classList.add('opacity-0');
+    iemImages[currentIem].classList.remove("opacity-100");
+    iemImages[currentIem].classList.add("opacity-0");
 
     currentIem = (currentIem + 1) % iemImages.length;
 
-    iemImages[currentIem].classList.remove('opacity-0');
-    iemImages[currentIem].classList.add('opacity-100');
+    iemImages[currentIem].classList.remove("opacity-0");
+    iemImages[currentIem].classList.add("opacity-100");
   }
 
   setInterval(showNextIemImage, 5000);
 
-const countdownDate = new Date("2026-08-21T09:00:00").getTime();
+  const countdownDate = new Date("2026-08-21T09:00:00").getTime();
 
-function updateCountdown() {
-  const now = new Date().getTime();
-  const distance = countdownDate - now;
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = countdownDate - now;
 
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor(
-    (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  );
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  document.getElementById("days").innerText = days;
-  document.getElementById("hours").innerText = hours;
-  document.getElementById("minutes").innerText = minutes;
-  document.getElementById("seconds").innerText = seconds;
+    document.getElementById("days").innerText = days;
+    document.getElementById("hours").innerText = hours;
+    document.getElementById("minutes").innerText = minutes;
+    document.getElementById("seconds").innerText = seconds;
 
-  if (distance < 0) {
-    clearInterval(timer);
-    document.querySelector(".grid").innerHTML =
-      "<p class='text-2xl md:text-4xl font-bold'>The event has started!</p>";
+    if (distance < 0) {
+      clearInterval(timer);
+      document.querySelector(".grid").innerHTML =
+        "<p class='text-2xl md:text-4xl font-bold'>The event has started!</p>";
+    }
   }
-}
 
-const timer = setInterval(updateCountdown, 1000);
-updateCountdown(); // initialize immediately
+  const timer = setInterval(updateCountdown, 1000);
+  updateCountdown(); // initialize immediately
 
-lucide.createIcons();
-
-document.addEventListener("DOMContentLoaded", function () {
+  lucide.createIcons();
   function setupCarousel(carouselId) {
     const carousel = document.getElementById(carouselId);
     if (!carousel) return;
@@ -142,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
       slideWidth = slides[0].getBoundingClientRect().width;
       updateCarouselPosition();
     });
-  }
+  };
 
   function setupBackgroundSlideshow(containerId) {
     const slideshow = document.getElementById(containerId);
