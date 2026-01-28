@@ -1,638 +1,840 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="Style.css" />
-  <title>MetaSphere 2026: Global Conference in Kolkata</title>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    /* Base Styles */
-    body {
-      font-family: "Inter", sans-serif;
-      background-color: #fffbf5;
-      color: #1a202c;
-      overflow-x: hidden;
-      overflow-y: auto;
-      max-width: 100vw;
-    }
-
-    .btn-register {
-      background-color: #f97316;
-      color: white;
-    }
-
-    .btn-register:hover {
-      background-color: #ea580c;
-    }
-
-    .gradient-text {
-      background: linear-gradient(45deg, #f97316, #d946ef);
-      background: -webkit-linear-gradient(45deg, #f97316, #d946ef);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-    }
-
-    /* Carousel custom styles */
-    .carousel-container {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .carousel-track {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .carousel-slide {
-      flex-shrink: 0;
-      width: 100%;
-    }
-
-    @media (min-width: 768px) {
-      .carousel-slide {
-        width: 50%;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .carousel-slide {
-        width: 33.3333%;
-      }
-    }
-
-    /* Developer Page Styles */
-    /* Developer Container Fix */
-    #developer .bg-white {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 2rem;
-      padding: 1.5rem;
-    }
-
-    .profile-wrapper {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .profile-circle {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 4px solid white;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 48px;
-      font-weight: bold;
-      color: white;
-    }
-
-    .profile-circle:hover {
-      transform: scale(1.1);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-    }
-
-    .profile-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .popup {
-      position: absolute;
-      top: -20px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-100%);
-      background: white;
-      padding: 15px;
-      border-radius: 15px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-      z-index: 10;
-      min-width: 260px;
-      max-width: 90vw;
-      width: max-content;
-    }
-
-    .popup::after {
-      content: "";
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-top: 10px solid white;
-    }
-
-    .profile-wrapper:hover .popup {
-      opacity: 1;
-      visibility: visible;
-      transform: translateX(-50%) translateY(-110%);
-    }
-
-    .popup-header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .popup-name {
-      font-size: 20px;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 5px;
-    }
-
-    .popup-title {
-      font-size: 13px;
-      color: #666;
-    }
-
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-    }
-
-    .social-link {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
-
-    .social-link:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .linkedin {
-      background: #0077b5;
-    }
-
-    .github {
-      background: #333;
-    }
-
-    .gmail {
-      background: #ea4335;
-    }
-
-    .social-link svg {
-      width: 22px;
-      height: 22px;
-      fill: white;
-    }
-
-    .skills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 12px;
-      justify-content: center;
-      align-items: center;
-      max-width: 100%;
-    }
-
-    .skill {
-      background-color: #e0f2fe;
-      color: #0369a1;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 5px 10px;
-      border-radius: 9999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-      cursor: default;
-      white-space: nowrap;
-    }
-
-    .skill:hover {
-      background-color: #0369a1;
-      color: #ffffff;
-      transform: scale(1.05);
-    }
-
-    /* Mobile Responsive Styles */
-    @media (max-width: 768px) {
-      .container {
-        gap: 25px;
-        overflow-x: hidden;
-      }
-
-      #developer .bg-white {
-        gap: 1.5rem;
-        padding: 1rem;
-      }
-
-      .profile-circle {
-        width: 90px;
-        height: 90px;
-        font-size: 36px;
-      }
-
-      .popup {
-        min-width: 220px;
-        padding: 12px;
-      }
-
-      .popup-name {
-        font-size: 16px;
-      }
-
-      .popup-title {
-        font-size: 11px;
-      }
-
-      .social-link {
-        width: 35px;
-        height: 35px;
-      }
-
-      .social-link svg {
-        width: 18px;
-        height: 18px;
-      }
-
-      .skills {
-        gap: 4px;
-      }
-
-      .skill {
-        font-size: 10px;
-        padding: 4px 8px;
-      }
-
-      h1,
-      h2,
-      h3 {
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-      }
-    }
-
-    /* Loader Styles */
-    #loader-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      background-color: #fffbf5;
-      transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
-    }
-
-    #loader-container.hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    .loader-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #1a202c;
-      text-align: center;
-      padding: 0 20px;
-    }
-
-    .loader-logo {
-      margin-bottom: 40px;
-      animation: pulse-orange 2s infinite ease-in-out;
-    }
-
-    .loader-title h1 {
-      font-size: 48px;
-      font-weight: 800;
-      color: #1a202c;
-      margin-bottom: 8px;
-    }
-
-    .loader-subtitle {
-      font-size: 16px;
-      color: #ea580c;
-      margin-bottom: 40px;
-      letter-spacing: 1px;
-    }
-
-    .progress-bar {
-      width: 300px;
-      max-width: 80%;
-      height: 6px;
-      background: #f3eadd;
-      border-radius: 3px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: #f97316;
-      border-radius: 3px;
-      width: 0%;
-      animation: load 6s ease-out forwards;
-    }
-
-    @keyframes pulse-orange {
-      0% {
-        transform: scale(0.95);
-      }
-
-      70% {
-        transform: scale(1.05);
-      }
-
-      100% {
-        transform: scale(0.95);
-      }
-    }
-
-    @keyframes load {
-      0% {
-        width: 0%;
-      }
-
-      100% {
-        width: 100%;
-      }
-    }
-
-    /* Additional Overflow Prevention */
-    section {
-      max-width: 100vw;
-      overflow-x: hidden;
-    }
-
-    .max-w-7xl,
-    .max-w-6xl,
-    .max-w-5xl,
-    .max-w-3xl {
-      max-width: 100%;
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
-
-    @media (min-width: 640px) {
-      .max-w-3xl {
-        max-width: 48rem;
-      }
-    }
-
-    @media (min-width: 768px) {
-      .max-w-5xl {
-        max-width: 64rem;
-      }
-
-      .max-w-6xl {
-        max-width: 72rem;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .max-w-7xl {
-        max-width: 80rem;
-      }
-    }
-
-    /* Loader Mobile Responsive */
-    @media (max-width: 640px) {
-      .loader-title h1 {
-        font-size: 32px;
-      }
-
-      .loader-subtitle {
-        font-size: 14px;
-      }
-
-      .progress-bar {
-        width: 250px;
-      }
-    }
-  </style>
-</head>
-
-<body class="overflow-x-hidden">
-  <!-- loader -->
-  <div id="loader-container">
-    <div class="loader-content">
-      <div class="loader-logo">
-        <svg width="80" height="80" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="16" cy="16" r="16" fill="#F97316" />
-          <circle cx="16" cy="16" r="12" fill="white" fill-opacity="0.3" />
-          <circle cx="16" cy="16" r="6" fill="white" />
-        </svg>
-      </div>
-      <div class="loader-title">
-        <h1>MetaSphere 2026</h1>
-      </div>
-      <div class="loader-subtitle">Where Tradition Meets Tomorrow</div>
-      <div class="progress-bar">
-        <div class="progress-fill"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Nav -->
-  <header class="top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-lg shadow-md relative">
-    <!-- Banner Section -->
-    <div class="relative">
-      <img src="/Assets/01.svg" alt="Conference Banner" class="w-full h- object-cover" />
-      <!-- Optional dark overlay for readability -->
-      <div class="absolute inset-0"></div>
-    </div>
-
-    <!-- Navigation Bar -->
-    <div class="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 py-3">
-      <!-- Logo -->
-      <div class="flex flex-col space-x-2">
-        <span class="text-lg sm:text-xl font-bold text-white">MetaSphere 2026</span>
-        <!-- <span class="text-xs text-white "> Global Conference on Cloud, Virtualization & Metaverse</span> -->
-      </div>
-
-      <!-- Desktop Nav -->
-      <div class="hidden md:flex items-center">
-        <nav class="flex items-center space-x-5 text-sm font-medium">
-          <a href="/index.html" class="text-white hover:text-orange-400 transition">Home</a>
-
-          <!-- Authors Dropdown -->
-          <div class="relative">
-            <button onclick="toggleDropdown('authorsDropdown')"
-              class="text-white hover:text-orange-400 flex items-center">
-              Authors
-              <i data-lucide="chevron-down" class="w-3.5 h-3.5 ml-1"></i>
-            </button>
-            <div id="authorsDropdown" class="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50">
-              <a href="/CallPapers.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Call For Papers</a>
-              <a href="/PaperSubmit.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Paper Submission</a>
-              <a href="index.html#speakers" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Keynote
-                Speakers</a>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="Style.css" />
+        <title>MetaSphere 2026: Global Conference in Kolkata</title>
+        <link
+            href="https://unpkg.com/aos@2.3.1/dist/aos.css"
+            rel="stylesheet"
+        />
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <style>
+            /* Base Styles */
+            body {
+                font-family: "Inter", sans-serif;
+                background-color: #fffbf5;
+                color: #1a202c;
+                overflow-x: hidden;
+                overflow-y: auto;
+                max-width: 100vw;
+            }
+
+            .btn-register {
+                background-color: #f97316;
+                color: white;
+            }
+
+            .btn-register:hover {
+                background-color: #ea580c;
+            }
+
+            .gradient-text {
+                background: linear-gradient(45deg, #f97316, #d946ef);
+                background: -webkit-linear-gradient(45deg, #f97316, #d946ef);
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                color: transparent;
+            }
+
+            /* Carousel custom styles */
+            .carousel-container {
+                position: relative;
+                overflow: hidden;
+            }
+
+            .carousel-track {
+                display: flex;
+                transition: transform 0.5s ease-in-out;
+            }
+
+            .carousel-slide {
+                flex-shrink: 0;
+                width: 100%;
+            }
+
+            @media (min-width: 768px) {
+                .carousel-slide {
+                    width: 50%;
+                }
+            }
+
+            @media (min-width: 1024px) {
+                .carousel-slide {
+                    width: 33.3333%;
+                }
+            }
+
+            /* Developer Page Styles */
+            /* Developer Container Fix */
+            #developer .bg-white {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                padding: 1.5rem;
+            }
+
+            .profile-wrapper {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .profile-circle {
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                overflow: hidden;
+                border: 4px solid white;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+                cursor: pointer;
+                transition:
+                    transform 0.3s ease,
+                    box-shadow 0.3s ease;
+                background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 48px;
+                font-weight: bold;
+                color: white;
+            }
+
+            .profile-circle:hover {
+                transform: scale(1.1);
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            }
+
+            .profile-circle img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .popup {
+                position: absolute;
+                top: -20px;
+                left: 50%;
+                transform: translateX(-50%) translateY(-100%);
+                background: white;
+                padding: 15px;
+                border-radius: 15px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                z-index: 10;
+                min-width: 260px;
+                max-width: 90vw;
+                width: max-content;
+            }
+
+            .popup::after {
+                content: "";
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 0;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-top: 10px solid white;
+            }
+
+            .profile-wrapper:hover .popup {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(-50%) translateY(-110%);
+            }
+
+            .popup-header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .popup-name {
+                font-size: 20px;
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 5px;
+            }
+
+            .popup-title {
+                font-size: 13px;
+                color: #666;
+            }
+
+            .social-links {
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .social-link {
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                transition: all 0.3s ease;
+                text-decoration: none;
+            }
+
+            .social-link:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            .linkedin {
+                background: #0077b5;
+            }
+
+            .github {
+                background: #333;
+            }
+
+            .gmail {
+                background: #ea4335;
+            }
+
+            .social-link svg {
+                width: 22px;
+                height: 22px;
+                fill: white;
+            }
+
+            .skills {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                margin-top: 12px;
+                justify-content: center;
+                align-items: center;
+                max-width: 100%;
+            }
+
+            .skill {
+                background-color: #e0f2fe;
+                color: #0369a1;
+                font-size: 11px;
+                font-weight: 600;
+                padding: 5px 10px;
+                border-radius: 9999px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.2s ease;
+                cursor: default;
+                white-space: nowrap;
+            }
+
+            .skill:hover {
+                background-color: #0369a1;
+                color: #ffffff;
+                transform: scale(1.05);
+            }
+
+            /* Mobile Responsive Styles */
+            @media (max-width: 768px) {
+                .container {
+                    gap: 25px;
+                    overflow-x: hidden;
+                }
+
+                #developer .bg-white {
+                    gap: 1.5rem;
+                    padding: 1rem;
+                }
+
+                .profile-circle {
+                    width: 90px;
+                    height: 90px;
+                    font-size: 36px;
+                }
+
+                .popup {
+                    min-width: 220px;
+                    padding: 12px;
+                }
+
+                .popup-name {
+                    font-size: 16px;
+                }
+
+                .popup-title {
+                    font-size: 11px;
+                }
+
+                .social-link {
+                    width: 35px;
+                    height: 35px;
+                }
+
+                .social-link svg {
+                    width: 18px;
+                    height: 18px;
+                }
+
+                .skills {
+                    gap: 4px;
+                }
+
+                .skill {
+                    font-size: 10px;
+                    padding: 4px 8px;
+                }
+
+                h1,
+                h2,
+                h3 {
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
+                }
+            }
+
+            /* Loader Styles */
+            #loader-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+                background-color: #fffbf5;
+                transition:
+                    opacity 0.8s ease-out,
+                    visibility 0.8s ease-out;
+            }
+
+            #loader-container.hidden {
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            .loader-content {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                color: #1a202c;
+                text-align: center;
+                padding: 0 20px;
+            }
+
+            .loader-logo {
+                margin-bottom: 40px;
+                animation: pulse-orange 2s infinite ease-in-out;
+            }
+
+            .loader-title h1 {
+                font-size: 48px;
+                font-weight: 800;
+                color: #1a202c;
+                margin-bottom: 8px;
+            }
+
+            .loader-subtitle {
+                font-size: 16px;
+                color: #ea580c;
+                margin-bottom: 40px;
+                letter-spacing: 1px;
+            }
+
+            .progress-bar {
+                width: 300px;
+                max-width: 80%;
+                height: 6px;
+                background: #f3eadd;
+                border-radius: 3px;
+                overflow: hidden;
+            }
+
+            .progress-fill {
+                height: 100%;
+                background: #f97316;
+                border-radius: 3px;
+                width: 0%;
+                animation: load 6s ease-out forwards;
+            }
+
+            @keyframes pulse-orange {
+                0% {
+                    transform: scale(0.95);
+                }
+
+                70% {
+                    transform: scale(1.05);
+                }
+
+                100% {
+                    transform: scale(0.95);
+                }
+            }
+
+            @keyframes load {
+                0% {
+                    width: 0%;
+                }
+
+                100% {
+                    width: 100%;
+                }
+            }
+
+            /* Additional Overflow Prevention */
+            section {
+                max-width: 100vw;
+                overflow-x: hidden;
+            }
+
+            .max-w-7xl,
+            .max-w-6xl,
+            .max-w-5xl,
+            .max-w-3xl {
+                max-width: 100%;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            @media (min-width: 640px) {
+                .max-w-3xl {
+                    max-width: 48rem;
+                }
+            }
+
+            @media (min-width: 768px) {
+                .max-w-5xl {
+                    max-width: 64rem;
+                }
+
+                .max-w-6xl {
+                    max-width: 72rem;
+                }
+            }
+
+            @media (min-width: 1024px) {
+                .max-w-7xl {
+                    max-width: 80rem;
+                }
+            }
+
+            /* Loader Mobile Responsive */
+            @media (max-width: 640px) {
+                .loader-title h1 {
+                    font-size: 32px;
+                }
+
+                .loader-subtitle {
+                    font-size: 14px;
+                }
+
+                .progress-bar {
+                    width: 250px;
+                }
+            }
+        </style>
+    </head>
+
+    <body class="overflow-x-hidden">
+        <!-- loader -->
+        <div id="loader-container">
+            <div class="loader-content">
+                <div class="loader-logo">
+                    <svg
+                        width="80"
+                        height="80"
+                        viewBox="0 0 32 32"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <circle cx="16" cy="16" r="16" fill="#F97316" />
+                        <circle
+                            cx="16"
+                            cy="16"
+                            r="12"
+                            fill="white"
+                            fill-opacity="0.3"
+                        />
+                        <circle cx="16" cy="16" r="6" fill="white" />
+                    </svg>
+                </div>
+                <div class="loader-title">
+                    <h1>MetaSphere 2026</h1>
+                </div>
+                <div class="loader-subtitle">
+                    Where Tradition Meets Tomorrow
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
             </div>
-          </div>
+        </div>
 
-          <a href="/technical-programs.html" class="text-white hover:text-orange-400 transition">Technical Programs</a>
-          <a href="/registration.html" class="text-white hover:text-orange-400 transition">Registration</a>
-
-          <!-- Committee Dropdown -->
-          <div class="relative">
-            <button onclick="toggleDropdown('committeeDropdown')"
-              class="text-white hover:text-orange-400 flex items-center">
-              Committee
-              <i data-lucide="chevron-down" class="w-3.5 h-3.5 ml-1"></i>
-            </button>
-            <div id="committeeDropdown" class="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50">
-              <a href="/scientific-committee.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Scientific
-                Committee</a>
-              <a href="/AdvisoryCommittee.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Advisory
-                Committee</a>
-              <a href="/TechCommittee.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Technical Programs
-                Committee</a>
-              <a href="/AAIA.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">AAIA Committee</a>
+        <!-- Nav -->
+        <header
+            class="top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-lg shadow-md relative"
+        >
+            <!-- Banner Section -->
+            <div class="relative">
+                <img
+                    src="/Assets/01.svg"
+                    alt="Conference Banner"
+                    class="w-full h- object-cover"
+                />
+                <!-- Optional dark overlay for readability -->
+                <div class="absolute inset-0"></div>
             </div>
-          </div>
 
-          <a href="/TechSponsor.html" class="text-white hover:text-orange-400 transition">Technical Sponsors</a>
-          <a href="/Contact.html" class="text-white hover:text-orange-400 transition">Contact</a>
-        </nav>
+            <!-- Navigation Bar -->
+            <div
+                class="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 py-3"
+            >
+                <!-- Logo -->
+                <div class="flex flex-col space-x-2">
+                    <span class="text-lg sm:text-xl font-bold text-white"
+                        >MetaSphere 2026</span
+                    >
+                    <!-- <span class="text-xs text-white "> Global Conference on Cloud, Virtualization & Metaverse</span> -->
+                </div>
 
-        <!-- Register Button -->
-        <a href="/registration.html"
-          class="ml-6 px-4 py-1.5 rounded-md text-sm font-semibold shadow-md transition bg-orange-500 text-white hover:bg-orange-600">
-          Register Now
-        </a>
-      </div>
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center">
+                    <nav
+                        class="flex items-center space-x-5 text-sm font-medium"
+                    >
+                        <a
+                            href="/index.html"
+                            class="text-white hover:text-orange-400 transition"
+                            >Home</a
+                        >
 
-      <!-- Mobile Hamburger -->
-      <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-md text-white hover:bg-orange-400">
-        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="4" x2="20" y1="12" y2="12" />
-          <line x1="4" x2="20" y1="6" y2="6" />
-          <line x1="4" x2="20" y1="18" y2="18" />
-        </svg>
-      </button>
-    </div>
+                        <!-- Authors Dropdown -->
+                        <div class="relative">
+                            <button
+                                onclick="toggleDropdown('authorsDropdown')"
+                                class="text-white hover:text-orange-400 flex items-center"
+                            >
+                                Authors
+                                <i
+                                    data-lucide="chevron-down"
+                                    class="w-3.5 h-3.5 ml-1"
+                                ></i>
+                            </button>
+                            <div
+                                id="authorsDropdown"
+                                class="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50"
+                            >
+                                <a
+                                    href="/CallPapers.html"
+                                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
+                                    >Call For Papers</a
+                                >
+                                <a
+                                    href="/PaperSubmit.html"
+                                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
+                                    >Paper Submission</a
+                                >
+                                <a
+                                    href="index.html#speakers"
+                                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
+                                    >Keynote Speakers</a
+                                >
+                            </div>
+                        </div>
 
-    <!-- Mobile Menu -->
-    <div id="mobileMenu" class="md:hidden hidden bg-black/70 text-white px-6 py-4 space-y-4">
-      <a href="/index.html" class="block hover:text-orange-400">Home</a>
-      <a href="/CallPapers.html" class="block hover:text-orange-400">Call for Papers</a>
-      <a href="/PaperSubmit.html" class="block hover:text-orange-400">Paper Submission</a>
-      <a href="/technical-programs.html" class="block hover:text-orange-400">Technical Programs</a>
-      <a href="/registration.html" class="block hover:text-orange-400">Registration</a>
-      <a href="/scientific-committee.html" class="block hover:text-orange-400">Scientific Committee</a>
-      <a href="/AdvisoryCommittee.html" class="block hover:text-orange-400">Advisory Committee</a>
-      <a href="/TechCommittee.html" class="block hover:text-orange-400">Technical Program Committee</a>
-      <a href="/AAIA.html" class="block hover:text-orange-400">AAIA Committee</a>
-      <a href="/TechSponsor.html" class="block hover:text-orange-400">Technical Sponsors</a>
-      <a href="/Contact.html" class="block hover:text-orange-400">Contact</a>
-      <a href="/registration.html"
-        class="block bg-orange-500 text-center rounded-md py-2 text-sm font-semibold hover:bg-orange-600">Register
-        Now</a>
-    </div>
-  </header>
-  <!-- Hero Sec -->
-  <section class="relative pt-25 pb-20 overflow-hidden">
-    <div id="video-slideshow" class="absolute top-0 left-0 w-full h-full z-0">
-      <video autoplay loop muted
-        class="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-100">
-        <source src="/Assets/20784261-hd_1280_720_30fps.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <!-- <video autoplay loop muted class="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-0">
+                        <a
+                            href="/technical-programs.html"
+                            class="text-white hover:text-orange-400 transition"
+                            >Technical Programs</a
+                        >
+                        <a
+                            href="/registration.html"
+                            class="text-white hover:text-orange-400 transition"
+                            >Registration</a
+                        >
+
+                        <!-- Committee Dropdown -->
+                        <div class="relative">
+                            <button
+                                onclick="toggleDropdown('committeeDropdown')"
+                                class="text-white hover:text-orange-400 flex items-center"
+                            >
+                                Committee
+                                <i
+                                    data-lucide="chevron-down"
+                                    class="w-3.5 h-3.5 ml-1"
+                                ></i>
+                            </button>
+                            <div
+                                id="committeeDropdown"
+                                class="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50"
+                            >
+                                <a
+                                    href="/scientific-committee.html"
+                                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
+                                    >Scientific Committee</a
+                                >
+                                <a
+                                    href="/AdvisoryCommittee.html"
+                                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
+                                    >Advisory Committee</a
+                                >
+                                <a
+                                    href="/TechCommittee.html"
+                                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
+                                    >Technical Programs Committee</a
+                                >
+                                <a
+                                    href="/AAIA.html"
+                                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
+                                    >AAIA Committee</a
+                                >
+                            </div>
+                        </div>
+
+                        <a
+                            href="/TechSponsor.html"
+                            class="text-white hover:text-orange-400 transition"
+                            >Technical Sponsors</a
+                        >
+                        <a
+                            href="/Contact.html"
+                            class="text-white hover:text-orange-400 transition"
+                            >Contact</a
+                        >
+                    </nav>
+
+                    <!-- Register Button -->
+                    <a
+                        href="/registration.html"
+                        class="ml-6 px-4 py-1.5 rounded-md text-sm font-semibold shadow-md transition bg-orange-500 text-white hover:bg-orange-600"
+                    >
+                        Register Now
+                    </a>
+                </div>
+
+                <!-- Mobile Hamburger -->
+                <button
+                    onclick="toggleMobileMenu()"
+                    class="md:hidden p-2 rounded-md text-white hover:bg-orange-400"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="26"
+                        height="26"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <line x1="4" x2="20" y1="12" y2="12" />
+                        <line x1="4" x2="20" y1="6" y2="6" />
+                        <line x1="4" x2="20" y1="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div
+                id="mobileMenu"
+                class="md:hidden hidden bg-black/70 text-white px-6 py-4 space-y-4"
+            >
+                <a href="/index.html" class="block hover:text-orange-400"
+                    >Home</a
+                >
+                <a href="/CallPapers.html" class="block hover:text-orange-400"
+                    >Call for Papers</a
+                >
+                <a href="/PaperSubmit.html" class="block hover:text-orange-400"
+                    >Paper Submission</a
+                >
+                <a
+                    href="/technical-programs.html"
+                    class="block hover:text-orange-400"
+                    >Technical Programs</a
+                >
+                <a href="/registration.html" class="block hover:text-orange-400"
+                    >Registration</a
+                >
+                <a
+                    href="/scientific-committee.html"
+                    class="block hover:text-orange-400"
+                    >Scientific Committee</a
+                >
+                <a
+                    href="/AdvisoryCommittee.html"
+                    class="block hover:text-orange-400"
+                    >Advisory Committee</a
+                >
+                <a
+                    href="/TechCommittee.html"
+                    class="block hover:text-orange-400"
+                    >Technical Program Committee</a
+                >
+                <a href="/AAIA.html" class="block hover:text-orange-400"
+                    >AAIA Committee</a
+                >
+                <a href="/TechSponsor.html" class="block hover:text-orange-400"
+                    >Technical Sponsors</a
+                >
+                <a href="/Contact.html" class="block hover:text-orange-400"
+                    >Contact</a
+                >
+                <a
+                    href="/registration.html"
+                    class="block bg-orange-500 text-center rounded-md py-2 text-sm font-semibold hover:bg-orange-600"
+                    >Register Now</a
+                >
+            </div>
+        </header>
+        <!-- Hero Sec -->
+        <section class="relative pt-25 pb-20 overflow-hidden">
+            <div
+                id="video-slideshow"
+                class="absolute top-0 left-0 w-full h-full z-0"
+            >
+                <video
+                    autoplay
+                    loop
+                    muted
+                    class="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-100"
+                >
+                    <source
+                        src="/Assets/20784261-hd_1280_720_30fps.mp4"
+                        type="video/mp4"
+                    />
+                    Your browser does not support the video tag.
+                </video>
+                <!-- <video autoplay loop muted class="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-0">
                     <source src="/Assets/12672475_1920_1080_30fps.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video> -->
-      <video autoplay loop muted
-        class="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-0">
-        <source src="/Assets/20784261-hd_1280_720_30fps.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <video autoplay loop muted
-        class="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-0">
-        <source src="/Assets/4200196-hd_1920_1080_30fps.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <video autoplay loop muted
-        class="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-0">
-        <source src="/Assets/988047-hd_1280_720_60fps.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    </div>
-    <div
-      class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#FFFBF5] via-[#FFFBF5]/80 to-transparent z-10">
-    </div>
+                <video
+                    autoplay
+                    loop
+                    muted
+                    class="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-0"
+                >
+                    <source
+                        src="/Assets/20784261-hd_1280_720_30fps.mp4"
+                        type="video/mp4"
+                    />
+                    Your browser does not support the video tag.
+                </video>
+                <video
+                    autoplay
+                    loop
+                    muted
+                    class="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-0"
+                >
+                    <source
+                        src="/Assets/4200196-hd_1920_1080_30fps.mp4"
+                        type="video/mp4"
+                    />
+                    Your browser does not support the video tag.
+                </video>
+                <video
+                    autoplay
+                    loop
+                    muted
+                    class="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-0"
+                >
+                    <source
+                        src="/Assets/988047-hd_1280_720_60fps.mp4"
+                        type="video/mp4"
+                    />
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div
+                class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#FFFBF5] via-[#FFFBF5]/80 to-transparent z-10"
+            ></div>
 
-    <div class="relative max-w-5xl mx-auto text-center px-4 z-20" data-aos="fade-up" data-aos-duration="5000">
-      <div class="inline-block bg-orange-100 text-orange-800 text-sm font-semibold px-4 py-1 rounded-full mb-6">
-        <span class="mr-2">🏛️</span> Kolkata's Heritage Meets Future Tech
-      </div>
-      <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-tight">
-        MetaSphere 2026: Global Conference on <br class="hidden md:block" />
-        <span class="gradient-text">Cloud Computing, Virtualization & Metaverse</span>
-      </h1>
+            <div
+                class="relative max-w-5xl mx-auto text-center px-4 z-20"
+                data-aos="fade-up"
+                data-aos-duration="5000"
+            >
+                <div
+                    class="inline-block bg-orange-100 text-orange-800 text-sm font-semibold px-4 py-1 rounded-full mb-6"
+                >
+                    <span class="mr-2">🏛️</span> Kolkata's Heritage Meets Future
+                    Tech
+                </div>
+                <h1
+                    class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-tight"
+                >
+                    MetaSphere 2026: Global Conference on
+                    <br class="hidden md:block" />
+                    <span class="gradient-text"
+                        >Cloud Computing, Virtualization & Metaverse</span
+                    >
+                </h1>
 
-      <div class="mx-5 text-orange-600">
-        <h3 class="font-semibold">Organized by</h3>
-        <p class="text-lg font-bold">
-          The Department of Computer Application and Science (BCA).
-        </p>
-        <p class="text-lg font-bold">
-          IEM Centre of Excellence for Cloud Computing & IoT.
-        </p>
-      </div>
+                <div class="mx-5 text-orange-600">
+                    <h3 class="font-semibold">Organized by</h3>
+                    <p class="text-lg font-bold">
+                        The Department of Computer Application and Science
+                        (BCA).
+                    </p>
+                    <p class="text-lg font-bold">
+                        IEM Centre of Excellence for Cloud Computing & IoT.
+                    </p>
+                </div>
 
-      <div
-        class="mt-8 flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-6 text-xl text-gray-700">
-        <div class="flex items-center space-x-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="text-orange-600">
-            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-            <circle cx="12" cy="10" r="3" />
-          </svg>
-          <span>Institute of Engineering & Management (IEM), Ashram, Kolkata,
-            India</span>
-        </div>
-      </div>
-      <!-- bengali quote -->
-      <!-- <p class="mt-4 text-2xl gradient-text font-bold">
+                <div
+                    class="mt-8 flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-6 text-xl text-gray-700"
+                >
+                    <div class="flex items-center space-x-2">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="text-orange-600"
+                        >
+                            <path
+                                d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"
+                            />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg>
+                        <span
+                            >Institute of Engineering & Management (IEM),
+                            Ashram, Kolkata, India</span
+                        >
+                    </div>
+                </div>
+                <!-- bengali quote -->
+                <!-- <p class="mt-4 text-2xl gradient-text font-bold">
         প্রযুক্তির ভবিষ্যৎ, বাংলার মাটিতে
       </p> -->
-      <!-- <p class="mt-1 text-sm text-gray-500">
+                <!-- <p class="mt-1 text-sm text-gray-500">
         (Technology's Future, on Bengali Soil)
       </p> -->
 
-      <!-- <div class="mt-10 bg-black/30 backdrop-blur-sm p-4 border border-gray-200 rounded-xl max-w-2xl mx-auto">
+                <!-- <div class="mt-10 bg-black/30 backdrop-blur-sm p-4 border border-gray-200 rounded-xl max-w-2xl mx-auto">
         <p class="text-white font-semibold italic">
           "যেখানে চিত্ত ভয় শূন্য, উচ্চ সেথা শির..."
         </p>
@@ -641,491 +843,765 @@
         </p>
       </div> -->
 
-      <div class="mt-10 flex flex-wrap justify-center gap-4">
-        <a href="registration.html"
-          class="flex items-center space-x-2 btn-register px-6 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
-            <path d="M12 8v8" />
-            <path d="M8 12h8" />
-          </svg>
-          <span>Register Now</span>
-        </a>
-        <a href="#tracks"
-          class="flex items-center space-x-2 bg-white px-6 py-3 rounded-lg font-semibold text-gray-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 border border-gray-200">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
-            <line x1="16" x2="16" y1="2" y2="6" />
-            <line x1="8" x2="8" y1="2" y2="6" />
-            <line x1="3" x2="21" y1="10" y2="10" />
-          </svg>
-          <span>View Tracks</span>
-        </a>
-      </div>
-    </div>
-  </section>
+                <div class="mt-10 flex flex-wrap justify-center gap-4">
+                    <a
+                        href="registration.html"
+                        class="flex items-center space-x-2 btn-register px-6 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path
+                                d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
+                            />
+                            <path d="M12 8v8" />
+                            <path d="M8 12h8" />
+                        </svg>
+                        <span>Register Now</span>
+                    </a>
+                    <a
+                        href="#tracks"
+                        class="flex items-center space-x-2 bg-white px-6 py-3 rounded-lg font-semibold text-gray-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 border border-gray-200"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <rect
+                                width="18"
+                                height="18"
+                                x="3"
+                                y="4"
+                                rx="2"
+                                ry="2"
+                            />
+                            <line x1="16" x2="16" y1="2" y2="6" />
+                            <line x1="8" x2="8" y1="2" y2="6" />
+                            <line x1="3" x2="21" y1="10" y2="10" />
+                        </svg>
+                        <span>View Tracks</span>
+                    </a>
+                </div>
+            </div>
+        </section>
 
-  <!-- Countdown -->
-  <section class="py-10 bg-white/50">
-    <div class="max-w-6xl mx-auto px-4">
-      <h3 class="text-orange-400 font-semibold text-center text-3xl mb-3">
-        Countdown
-      </h3>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-        <div>
-          <p id="days" class="text-4xl md:text-5xl font-bold gradient-text">
-            0
-          </p>
-          <p class="mt-2 text-gray-600">Days</p>
-        </div>
-        <div>
-          <p id="hours" class="text-4xl md:text-5xl font-bold gradient-text">
-            0
-          </p>
-          <p class="mt-2 text-gray-600">Hours</p>
-        </div>
-        <div>
-          <p id="minutes" class="text-4xl md:text-5xl font-bold gradient-text">
-            0
-          </p>
-          <p class="mt-2 text-gray-600">Minutes</p>
-        </div>
-        <div>
-          <p id="seconds" class="text-4xl md:text-5xl font-bold gradient-text">
-            0
-          </p>
-          <p class="mt-2 text-gray-600">Seconds</p>
-        </div>
-      </div>
-    </div>
-    <div class="text-center mt-12 animate-bounce">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-        class="mx-auto text-gray-400">
-        <path d="M12 5v14" />
-        <path d="m19 12-7 7-7-7" />
-      </svg>
-    </div>
-  </section>
+        <!-- Countdown -->
+        <!-- <section class="py-10 bg-white/50">
+            <div class="max-w-6xl mx-auto px-4">
+                <h3
+                    class="text-orange-400 font-semibold text-center text-3xl mb-3"
+                >
+                    Countdown
+                </h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div>
+                        <p
+                            id="days"
+                            class="text-4xl md:text-5xl font-bold gradient-text"
+                        >
+                            0
+                        </p>
+                        <p class="mt-2 text-gray-600">Days</p>
+                    </div>
+                    <div>
+                        <p
+                            id="hours"
+                            class="text-4xl md:text-5xl font-bold gradient-text"
+                        >
+                            0
+                        </p>
+                        <p class="mt-2 text-gray-600">Hours</p>
+                    </div>
+                    <div>
+                        <p
+                            id="minutes"
+                            class="text-4xl md:text-5xl font-bold gradient-text"
+                        >
+                            0
+                        </p>
+                        <p class="mt-2 text-gray-600">Minutes</p>
+                    </div>
+                    <div>
+                        <p
+                            id="seconds"
+                            class="text-4xl md:text-5xl font-bold gradient-text"
+                        >
+                            0
+                        </p>
+                        <p class="mt-2 text-gray-600">Seconds</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12 animate-bounce">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="mx-auto text-gray-400"
+                >
+                    <path d="M12 5v14" />
+                    <path d="m19 12-7 7-7-7" />
+                </svg>
+            </div>
+        </section> -->
 
-  <!-- About sec -->
-  <section id="about" data-aos="fade-up" data-aos-duration="2000" class="py-20 md:py-28 bg-white/50">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-          About MetaSphere
-        </h2>
-        <p class="text-gray-700 max-w-3xl mx-auto text-lg">
-          Bringing together researchers, industry leaders, technologists,
-          policymakers, and practitioners working at the intersection of cloud
-          technologies, virtualization, and metaverse / spatial computing.
-        </p>
-      </div>
+        <!-- About sec -->
+        <section
+            id="about"
+            data-aos="fade-up"
+            data-aos-duration="2000"
+            class="py-20 md:py-28 bg-white/50"
+        >
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2
+                        class="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+                    >
+                        Welcome to MetaSphere 2026!
+                    </h2>
+                    <p class="text-gray-700 max-w-3xl mx-auto text-lg">
+                        The Global Conference on Cloud Computing, Virtualization
+                        & Metaverse (MetaSphere 2026) will be held in Kolkata,
+                        India, on 21st & 22nd August, 2026. This conference is
+                        organized by the Department of Computer Application and
+                        Science, and IEM Centre of Excellence for Cloud
+                        Computing & IoT, Kolkata, India, in collaboration with
+                        Internet of Things and Applications Lab (iTHACA),
+                        Department of Electrical and Computer Engineering,
+                        University of Western Macedonia Campus, Kozani, Greece,
+                        and MetaMind Innovations (First spin-off of the
+                        University of Western Macedonia), Greece.
+                    </p>
+                </div>
 
-      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <!-- Carousel -->
-        <div class="w-full relative overflow-hidden rounded-xl shadow-lg">
-          <div id="tech-carousel" class="relative w-full h-80 overflow-hidden">
-            <img src="/Assets/Cloud.jpg"
-              class="absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-1000" />
-            <img src="/Assets/Meta.jpeg"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-            <img src="/Assets/AI.webp"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-            <img src="/Assets/Data-Visualization-thumbnail.jpg"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-            <img src="/Assets/Quantum.jpg"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-          </div>
-        </div>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <!-- Carousel -->
+                    <div
+                        class="w-full relative overflow-hidden rounded-xl shadow-lg"
+                    >
+                        <div
+                            id="tech-carousel"
+                            class="relative w-full h-80 overflow-hidden"
+                        >
+                            <img
+                                src="/Assets/Cloud.jpg"
+                                class="absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-1000"
+                            />
+                            <img
+                                src="/Assets/Meta.jpeg"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                            <img
+                                src="/Assets/AI.webp"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                            <img
+                                src="/Assets/Data-Visualization-thumbnail.jpg"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                            <img
+                                src="/Assets/Quantum.jpg"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                        </div>
+                    </div>
 
-        <!-- About Text -->
-        <div class="space-y-6 text-gray-700">
-          <h3 class="text-2xl font-semibold text-gray-900">
-            MetaSphere Overview
-          </h3>
-          <p>
-            The aim is to foster cross-disciplinary dialogue, showcase
-            cutting-edge work, explore challenges and opportunities, and
-            accelerate deployment of integrated systems that underpin future
-            metaverse infrastructures.
-          </p>
-          <ul class="list-disc list-inside space-y-2">
-            <li>
-              The metaverse requires robust underlying infrastructure:
-              scalable cloud, virtualization, edge computing, and distributed
-              services.
-            </li>
-            <li>
-              Virtualization technologies (compute, network, storage) are
-              foundational to how metaverse systems will scale, isolate, and
-              orchestrate workloads.
-            </li>
-            <li>
-              Integrating real-world systems (IoT, digital twins, real-time
-              simulation) with metaverse layers requires new architectural
-              patterns.
-            </li>
-            <li>
-              Business, governance, security, privacy, economics, and user
-              experience challenges abound; this conference addresses them
-              jointly.
-            </li>
-            <li>
-              The conference is timely: the global metaverse market is
-              projected to grow dramatically by 2026.
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+                    <!-- About Text -->
+                    <div class="space-y-6 text-gray-700">
+                        <h3 class="text-2xl font-semibold text-gray-900">
+                            MetaSphere Overview
+                        </h3>
+                        <p>
+                            The aim is to foster cross-disciplinary dialogue,
+                            showcase cutting-edge work, explore challenges and
+                            opportunities, and accelerate deployment of
+                            integrated systems that underpin future metaverse
+                            infrastructures.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2">
+                            <li>
+                                The metaverse requires robust underlying
+                                infrastructure: scalable cloud, virtualization,
+                                edge computing, and distributed services.
+                            </li>
+                            <li>
+                                Virtualization technologies (compute, network,
+                                storage) are foundational to how metaverse
+                                systems will scale, isolate, and orchestrate
+                                workloads.
+                            </li>
+                            <li>
+                                Integrating real-world systems (IoT, digital
+                                twins, real-time simulation) with metaverse
+                                layers requires new architectural patterns.
+                            </li>
+                            <li>
+                                Business, governance, security, privacy,
+                                economics, and user experience challenges
+                                abound; this conference addresses them jointly.
+                            </li>
+                            <li>
+                                The conference is timely: the global metaverse
+                                market is projected to grow dramatically by
+                                2026.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <!-- About IEM -->
-  <section id="about-iem" data-aos="fade-up" data-aos-duration="2000" class="py-20 md:py-28 bg-white/40">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-          About IEM
-        </h2>
-        <p class="text-gray-700 max-w-3xl mx-auto text-lg">
-          The IEM group is an acclaimed educational group amongst
-          industry-centred academic training organisations, setting high
-          standards in technical and managerial education while focusing on
-          research and development.
-        </p>
-      </div>
+        <!-- About IEM -->
+        <section
+            id="about-iem"
+            data-aos="fade-up"
+            data-aos-duration="2000"
+            class="py-20 md:py-28 bg-white/40"
+        >
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2
+                        class="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+                    >
+                        About IEM
+                    </h2>
+                    <p class="text-gray-700 max-w-3xl mx-auto text-lg">
+                        The IEM group is an acclaimed educational group amongst
+                        industry-centred academic training organisations,
+                        setting high standards in technical and managerial
+                        education while focusing on research and development.
+                    </p>
+                </div>
 
-      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <!-- Carousel -->
-        <div class="w-full relative overflow-hidden rounded-xl shadow-lg">
-          <div id="iem-carousel" class="relative w-full h-80 overflow-hidden">
-            <!-- <img src="/Assets/iem.webp" class="absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-1000" /> -->
-            <img src="/Assets/iem2.jpeg"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-            <img src="/Assets/Events/IMG_5134.JPG"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-            <!-- <img src="/Assets/Events/IMG_5671.JPG"
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <!-- Carousel -->
+                    <div
+                        class="w-full relative overflow-hidden rounded-xl shadow-lg"
+                    >
+                        <div
+                            id="iem-carousel"
+                            class="relative w-full h-80 overflow-hidden"
+                        >
+                            <!-- <img src="/Assets/iem.webp" class="absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-1000" /> -->
+                            <img
+                                src="/Assets/iem2.jpeg"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                            <img
+                                src="/Assets/Events/IMG_5134.JPG"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                            <!-- <img src="/Assets/Events/IMG_5671.JPG"
               class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" /> -->
-            <img src="/Assets/Events/IMG-20250306-WA0075.jpg"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-            <!-- <img src="/Assets/Developers/src.jpeg"
+                            <img
+                                src="/Assets/Events/IMG-20250306-WA0075.jpg"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                            <!-- <img src="/Assets/Developers/src.jpeg"
               class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" /> -->
-            <img src="/Assets/Events/IMG_5520.JPG"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-            <img src="/Assets/Events/IMG_5171.JPG"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-            <img src="/Assets/Events/DSC01429.JPG.jpeg"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-            <img src="/Assets/Events/IMG_5359.JPG"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-            <img src="/Assets/Events/recent2.jpeg"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-            <img src="/Assets/Events/recent3.jpeg"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-            <img src="/Assets/Events/IMG_5616.JPG"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-            <img src="/Assets/Events/IMG-20250306-WA0079.jpg"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-            <img src="/Assets/Events/IMG-20250306-WA0090.jpg"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-            <img src="/Assets/Events/IMG-20250306-WA0102.jpg"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-            <img src="/Assets/Events/recent1.jpeg"
-              class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
-            <!-- <img
+                            <img
+                                src="/Assets/Events/IMG_5520.JPG"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                            <img
+                                src="/Assets/Events/IMG_5171.JPG"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                            <img
+                                src="/Assets/Events/DSC01429.JPG.jpeg"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                            <img
+                                src="/Assets/Events/IMG_5359.JPG"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                            <img
+                                src="/Assets/Events/recent2.jpeg"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                            <img
+                                src="/Assets/Events/recent3.jpeg"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                            <img
+                                src="/Assets/Events/IMG_5616.JPG"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                            <img
+                                src="/Assets/Events/IMG-20250306-WA0079.jpg"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                            <img
+                                src="/Assets/Events/IMG-20250306-WA0090.jpg"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                            <img
+                                src="/Assets/Events/IMG-20250306-WA0102.jpg"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                            <img
+                                src="/Assets/Events/recent1.jpeg"
+                                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+                            />
+                            <!-- <img
                 src="/Assets/Events/IMG-20250306-WA0116.jpg"
                 class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
               /> -->
-            <!-- <img src="/Assets/iem3.jpg" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" /> -->
-            <!-- <img src="https://picsum.photos/800/600?random=14" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
+                            <!-- <img src="/Assets/iem3.jpg" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" /> -->
+                            <!-- <img src="https://picsum.photos/800/600?random=14" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
           <img src="https://picsum.photos/800/600?random=15" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" /> -->
-          </div>
-        </div>
+                        </div>
+                    </div>
 
-        <!-- About Text -->
-        <div class="space-y-6 text-gray-700">
-          <h3 class="text-2xl font-semibold text-gray-900">IEM Overview</h3>
-          <p>
-            IEM has established a strong foundation in teaching and R&D across
-            multiple fields and aims to serve the future generation and the
-            nation with excellence. The institute provides top-ranked
-            engineering courses in Kolkata and Eastern India with excellent
-            placement support.
-          </p>
-          <ul class="list-disc list-inside space-y-2">
-            <li>
-              Ranked ‘A’ Category by NAAC (National Assessment and
-              Accreditation Council)
-            </li>
-            <li>Winner of the “Jewel of the East” title by Telegraph</li>
-            <li>
-              Ranked 3rd best engineering college in West Bengal by NIRF,
-              Ministry of HRD, Govt of India, and 79th all over India
-            </li>
-            <li>Awarded “Picture Perfect” by ABP Group</li>
-            <li>Achieved Best Institute of India in Star News Award</li>
-            <li>
-              Strong placement record: 1-2 job offers on average for every
-              student since inception
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Tracks -->
-  <!-- Tracks -->
-  <section id="tracks" class="py-20 md:py-28">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="text-center mb-16" data-aos="fade-up" data-aos-duration="2000">
-        <h2 class="text-4xl md:text-5xl font-bold gradient-text mb-6">
-          Conference Tracks
-        </h2>
-        <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-          Exploring the core pillars of modern digital infrastructure,
-          immersive worlds, and intelligent systems.
-        </p>
-      </div>
-
-      <div class="grid lg:grid-cols-3 gap-8">
-        <!-- Track 1 -->
-        <div class="flip-card bg-white shadow-black/40 shadow-xl p-4 rounded" data-aos="fade-up"
-          data-aos-duration="1000">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <div class="text-6xl mb-4"></div>
-              <h3 class="text-lg font-bold text-gray-900 mb-2">
-                Cloud Computing & Virtualization
-              </h3>
-              <p class="text-gray-600">
-                Exploring cutting-edge advancements in cloud ecosystems,
-                virtualization technologies, and sustainable infrastructures.
-              </p>
+                    <!-- About Text -->
+                    <div class="space-y-6 text-gray-700">
+                        <h3 class="text-2xl font-semibold text-gray-900">
+                            IEM Overview
+                        </h3>
+                        <p>
+                            IEM has established a strong foundation in teaching
+                            and R&D across multiple fields and aims to serve the
+                            future generation and the nation with excellence.
+                            The institute provides top-ranked engineering
+                            courses in Kolkata and Eastern India with excellent
+                            placement support.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2">
+                            <li>
+                                Ranked ‘A’ Category by NAAC (National Assessment
+                                and Accreditation Council)
+                            </li>
+                            <li>
+                                Winner of the “Jewel of the East” title by
+                                Telegraph
+                            </li>
+                            <li>
+                                Ranked 3rd best engineering college in West
+                                Bengal by NIRF, Ministry of HRD, Govt of India,
+                                and 79th all over India
+                            </li>
+                            <li>Awarded “Picture Perfect” by ABP Group</li>
+                            <li>
+                                Achieved Best Institute of India in Star News
+                                Award
+                            </li>
+                            <li>
+                                Strong placement record: 1-2 job offers on
+                                average for every student since inception
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="flip-card-back">
-              <h4 class="text-lg font-bold text-gray-900 mb-4">Subtracks</h4>
-              <ul class="list-disc list-inside space-y-2 text-gray-700 text-sm">
-                <li>
-                  <b>Next-Gen Cloud Architectures</b> – Hybrid, Multi-Cloud,
-                  and Serverless Models
-                </li>
-                <li>
-                  <b>Edge & Fog Computing</b> – Low-latency Computing for IoT
-                  and AI Applications
-                </li>
-                <li>
-                  <b>Cloud Security & Compliance</b> – Zero Trust, Data
-                  Privacy, and Cyber-Resilience
-                </li>
-                <li>
-                  <b>Virtualization Advances</b> – Containers, Kubernetes, and
-                  Resource Optimization
-                </li>
-                <li>
-                  <b>Green Cloud</b> – Energy-Efficient Data Centers and
-                  Sustainable Cloud Models
-                </li>
-              </ul>
+        </section>
+
+        <!-- Tracks -->
+        <!-- Tracks -->
+        <section id="tracks" class="py-20 md:py-28">
+            <div class="max-w-7xl mx-auto px-4">
+                <div
+                    class="text-center mb-16"
+                    data-aos="fade-up"
+                    data-aos-duration="2000"
+                >
+                    <h2
+                        class="text-4xl md:text-5xl font-bold gradient-text mb-6"
+                    >
+                        Conference Tracks
+                    </h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                        Exploring the core pillars of modern digital
+                        infrastructure, immersive worlds, and intelligent
+                        systems.
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Track 1 -->
+                    <div
+                        class="flip-card bg-white shadow-black/40 shadow-xl p-4 rounded"
+                        data-aos="fade-up"
+                        data-aos-duration="1000"
+                    >
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="text-6xl mb-4"></div>
+                                <h3
+                                    class="text-lg font-bold text-gray-900 mb-2"
+                                >
+                                    Cloud Computing & Virtualization
+                                </h3>
+                                <p class="text-gray-600">
+                                    Exploring cutting-edge advancements in cloud
+                                    ecosystems, virtualization technologies, and
+                                    sustainable infrastructures.
+                                </p>
+                            </div>
+                            <div class="flip-card-back">
+                                <h4
+                                    class="text-lg font-bold text-gray-900 mb-4"
+                                >
+                                    Subtracks
+                                </h4>
+                                <ul
+                                    class="list-disc list-inside space-y-2 text-gray-700 text-sm"
+                                >
+                                    <li>
+                                        <b>Next-Gen Cloud Architectures</b> –
+                                        Hybrid, Multi-Cloud, and Serverless
+                                        Models
+                                    </li>
+                                    <li>
+                                        <b>Edge & Fog Computing</b> –
+                                        Low-latency Computing for IoT and AI
+                                        Applications
+                                    </li>
+                                    <li>
+                                        <b>Cloud Security & Compliance</b> –
+                                        Zero Trust, Data Privacy, and
+                                        Cyber-Resilience
+                                    </li>
+                                    <li>
+                                        <b>Virtualization Advances</b> –
+                                        Containers, Kubernetes, and Resource
+                                        Optimization
+                                    </li>
+                                    <li>
+                                        <b>Green Cloud</b> – Energy-Efficient
+                                        Data Centers and Sustainable Cloud
+                                        Models
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Track 2 -->
+                    <div
+                        class="flip-card bg-white shadow-black/40 shadow-xl p-4 rounded"
+                        data-aos="fade-up"
+                        data-aos-delay="100"
+                        data-aos-duration="1000"
+                    >
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="text-6xl mb-4"></div>
+                                <h3
+                                    class="text-lg font-bold text-gray-900 mb-2"
+                                >
+                                    Metaverse & Quantum Metaverse
+                                </h3>
+                                <p class="text-gray-600">
+                                    Delving into the infrastructures, platforms,
+                                    and experiences shaping the future of
+                                    immersive digital worlds.
+                                </p>
+                            </div>
+                            <div class="flip-card-back">
+                                <h4
+                                    class="text-lg font-bold text-gray-900 mb-4"
+                                >
+                                    Subtracks
+                                </h4>
+                                <ul
+                                    class="list-disc list-inside space-y-2 text-gray-700 text-sm"
+                                >
+                                    <li>
+                                        <b
+                                            >Virtual & Augmented Reality
+                                            (VR/AR/XR)</b
+                                        >
+                                        – Platforms, Hardware, and User
+                                        Experience
+                                    </li>
+                                    <li>
+                                        <b
+                                            >Blockchain & Web3 in the
+                                            Metaverse</b
+                                        >
+                                        – NFTs, Digital Assets, and
+                                        Decentralized Economies
+                                    </li>
+                                    <li>
+                                        <b
+                                            >Human–Computer Interaction in the
+                                            Metaverse</b
+                                        >
+                                        – Avatars, Accessibility, and Ethics
+                                    </li>
+                                    <li>
+                                        <b>Interoperability & Open Standards</b>
+                                        – Building bridges between virtual
+                                        worlds for a seamless metaverse
+                                        experience.
+                                    </li>
+                                    <li>
+                                        <b
+                                            >Quantum Computing for the
+                                            Metaverse</b
+                                        >
+                                        – Powering faster, smarter virtual
+                                        worlds.
+                                    </li>
+                                    <li>
+                                        <b
+                                            >Cross-Disciplinary Applications of
+                                            the Quantum Metaverse</b
+                                        >
+                                        – Fusing science, art, and tech.
+                                    </li>
+                                    <li>
+                                        <b>Quantum AI & Machine Learning</b> –
+                                        Boosting intelligence with quantum
+                                        speed.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Track 3 -->
+                    <div
+                        class="bg-white shadow-black/40 transition-all duration-300 ease-out delay-75 shadow-xl p-4 rounded"
+                        data-aos="fade-up"
+                        data-aos-delay="200"
+                        data-aos-duration="1000"
+                    >
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="text-6xl mb-4"></div>
+                                <h3
+                                    class="text-lg font-bold text-gray-900 mb-2"
+                                >
+                                    AI, Data, & Future Connectivity
+                                </h3>
+                                <p class="text-gray-600">
+                                    Uncovering the role of AI, big data, and
+                                    next-gen connectivity in enabling
+                                    intelligent cloud and metaverse ecosystems.
+                                </p>
+                            </div>
+
+                            <div class="flip-card-back">
+                                <h4
+                                    class="text-lg font-bold text-gray-900 mb-4"
+                                >
+                                    Subtracks
+                                </h4>
+                                <ul
+                                    class="list-disc list-inside space-y-2 text-gray-700 text-sm"
+                                >
+                                    <li>
+                                        <b>AI-Driven Cloud & Metaverse</b> –
+                                        Intelligent Workflows, Predictive
+                                        Analytics, and Generative AI
+                                    </li>
+                                    <li>
+                                        <b>6G and Beyond for the Metaverse</b> –
+                                        Ultra-Reliable Low-Latency Communication
+                                        (URLLC) and NOMA-Enabled IoT
+                                    </li>
+                                    <li>
+                                        <b>Big Data & Real-Time Analytics</b> –
+                                        Processing at Scale for Immersive
+                                        Experiences
+                                    </li>
+                                    <li>
+                                        <b>Security, Privacy & Digital Trust</b>
+                                        – Ethical AI, Identity Protection, and
+                                        Cybersecurity Challenges
+                                    </li>
+                                    <li>
+                                        <b>Cross-Disciplinary Applications</b> –
+                                        Education, Healthcare, FinTech, and
+                                        Entertainment in Cloud & Metaverse
+                                    </li>
+                                    <li>
+                                        <b>IoT Integration & Digital Twins</b> –
+                                        Connecting the Physical and Digital
+                                        Worlds
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
+        </section>
 
-        <!-- Track 2 -->
-        <div class="flip-card bg-white shadow-black/40 shadow-xl p-4 rounded" data-aos="fade-up" data-aos-delay="100"
-          data-aos-duration="1000">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <div class="text-6xl mb-4"></div>
-              <h3 class="text-lg font-bold text-gray-900 mb-2">
-                Metaverse & Quantum Metaverse
-              </h3>
-              <p class="text-gray-600">
-                Delving into the infrastructures, platforms, and experiences
-                shaping the future of immersive digital worlds.
-              </p>
+        <!-- Speakers -->
+        <section
+            id="speakers"
+            class="bg-white/40 h-screen flex flex-col items-center justify-center"
+        >
+            <div
+                class="text-center mb-16"
+                data-aos="fade-up"
+                data-aos-duration="2000"
+            >
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900">
+                    Meet Our Keynote Speakers
+                </h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                    Insights from the visionaries shaping our digital future.
+                </p>
             </div>
-            <div class="flip-card-back">
-              <h4 class="text-lg font-bold text-gray-900 mb-4">Subtracks</h4>
-              <ul class="list-disc list-inside space-y-2 text-gray-700 text-sm">
-                <li>
-                  <b>Virtual & Augmented Reality (VR/AR/XR)</b> – Platforms,
-                  Hardware, and User Experience
-                </li>
-                <li>
-                  <b>Blockchain & Web3 in the Metaverse</b> – NFTs, Digital
-                  Assets, and Decentralized Economies
-                </li>
-                <li>
-                  <b>Human–Computer Interaction in the Metaverse</b> –
-                  Avatars, Accessibility, and Ethics
-                </li>
-                <li>
-                  <b>Interoperability & Open Standards</b> – Building bridges
-                  between virtual worlds for a seamless metaverse experience.
-                </li>
-                <li>
-                  <b>Quantum Computing for the Metaverse</b> – Powering
-                  faster, smarter virtual worlds.
-                </li>
-                <li>
-                  <b>Cross-Disciplinary Applications of the Quantum
-                    Metaverse</b>
-                  – Fusing science, art, and tech.
-                </li>
-                <li>
-                  <b>Quantum AI & Machine Learning</b> – Boosting intelligence
-                  with quantum speed.
-                </li>
-              </ul>
+            <div
+                class="w-4/5 max-w-3xl bg-white p-10 md:p-16 rounded-2xl shadow-md text-center border border-gray-100"
+                data-aos="zoom-out"
+                data-aos-offset="200"
+                data-aos-easing="ease-in-sine"
+            >
+                <h3
+                    class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 p-4"
+                >
+                    To Be Announced Soon
+                </h3>
+                <p class="text-gray-600 text-lg">
+                    Stay tuned for exciting announcements.
+                </p>
             </div>
-          </div>
-        </div>
+        </section>
 
-        <!-- Track 3 -->
-        <div class="bg-white shadow-black/40 transition-all duration-300 ease-out delay-75 shadow-xl p-4 rounded"
-          data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <div class="text-6xl mb-4"></div>
-              <h3 class="text-lg font-bold text-gray-900 mb-2">
-                AI, Data, & Future Connectivity
-              </h3>
-              <p class="text-gray-600">
-                Uncovering the role of AI, big data, and next-gen connectivity
-                in enabling intelligent cloud and metaverse ecosystems.
-              </p>
+        <!-- Sponsor -->
+        <section id="sponsors" class="bg-white/50 py-20 place-items-center">
+            <div class="max-w-5xl mx-auto px-4">
+                <!-- Header -->
+                <div
+                    class="text-center mb-12"
+                    data-aos="fade-up"
+                    data-aos-duration="2000"
+                >
+                    <h2
+                        class="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+                    >
+                        Technical Sponsors
+                    </h2>
+                    <p class="text-gray-600 text-lg">
+                        Proudly supported by our technology partners
+                    </p>
+                </div>
+
+                <!-- Sponsors Grid -->
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-4 gap-4"
+                    data-aos="zoom-in"
+                    data-aos-offset="200"
+                    data-aos-duration="1000"
+                    data-aos-easing="ease-in-sine"
+                >
+                    <!-- Sponsor 1 -->
+                    <div
+                        class="bg-white p-8 rounded-2xl shadow-md border border-gray-100 flex items-center justify-center hover:scale-105 transition-transform duration-300"
+                    >
+                        <img
+                            src="/Assets/techSponsor1.png"
+                            alt="Sponsor 1"
+                            class="h-16 md:h-20 w-auto object-contain"
+                            loading="lazy"
+                        />
+                    </div>
+
+                    <!-- Sponsor 3 -->
+                    <div
+                        class="bg-white p-8 rounded-2xl shadow-md border border-gray-100 flex items-center justify-center hover:scale-105 transition-transform duration-300"
+                    >
+                        <img
+                            src="/Assets/techSponsor3.jpg"
+                            alt="Sponsor 3"
+                            class="h-16 md:h-20 w-auto object-contain"
+                            loading="lazy"
+                        />
+                    </div>
+
+                    <!-- Sponsor 4 -->
+                    <div
+                        class="bg-white p-8 rounded-2xl shadow-md border border-gray-100 flex items-center justify-center hover:scale-105 transition-transform duration-300"
+                    >
+                        <img
+                            src="/Assets/techSponsor4.jpg"
+                            alt="Sponsor 4"
+                            class="h-16 md:h-20 w-auto object-contain"
+                            loading="lazy"
+                        />
+                    </div>
+
+                    <!-- Spmosro 5 -->
+                    <div
+                        class="bg-white p-8 rounded-2xl shadow-md border border-gray-100 flex items-center justify-center hover:scale-105 transition-transform duration-300"
+                    >
+                        <img
+                            src="/Assets/techSponsor5.jpg"
+                            alt="Sponsor 5"
+                            class="h-16 md:h-20 w-auto object-contain"
+                            loading="lazy"
+                        />
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <div class="flip-card-back">
-              <h4 class="text-lg font-bold text-gray-900 mb-4">Subtracks</h4>
-              <ul class="list-disc list-inside space-y-2 text-gray-700 text-sm">
-                <li>
-                  <b>AI-Driven Cloud & Metaverse</b> – Intelligent Workflows,
-                  Predictive Analytics, and Generative AI
-                </li>
-                <li>
-                  <b>6G and Beyond for the Metaverse</b> – Ultra-Reliable
-                  Low-Latency Communication (URLLC) and NOMA-Enabled IoT
-                </li>
-                <li>
-                  <b>Big Data & Real-Time Analytics</b> – Processing at Scale
-                  for Immersive Experiences
-                </li>
-                <li>
-                  <b>Security, Privacy & Digital Trust</b> – Ethical AI,
-                  Identity Protection, and Cybersecurity Challenges
-                </li>
-                <li>
-                  <b>Cross-Disciplinary Applications</b> – Education,
-                  Healthcare, FinTech, and Entertainment in Cloud & Metaverse
-                </li>
-                <li>
-                  <b>IoT Integration & Digital Twins</b> – Connecting the
-                  Physical and Digital Worlds
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        <!-- devloper removed -->
 
-  <!-- Speakers -->
-  <section id="speakers" class="bg-white/40 h-screen flex flex-col items-center justify-center">
-    <div class="text-center mb-16" data-aos="fade-up" data-aos-duration="2000">
-      <h2 class="text-4xl md:text-5xl font-bold text-gray-900">
-        Meet Our Keynote Speakers
-      </h2>
-      <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-        Insights from the visionaries shaping our digital future.
-      </p>
-    </div>
-    <div class="w-4/5 max-w-3xl bg-white p-10 md:p-16 rounded-2xl shadow-md text-center border border-gray-100"
-      data-aos="zoom-out" data-aos-offset="200" data-aos-easing="ease-in-sine">
-      <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 p-4">
-        To Be Announced Soon
-      </h3>
-      <p class="text-gray-600 text-lg">
-        Stay tuned for exciting announcements.
-      </p>
-    </div>
-  </section>
-
-  <!-- Sponsor -->
-  <section id="sponsors" class="bg-white/50 py-20 place-items-center">
-    <div class="max-w-5xl mx-auto px-4">
-      <!-- Header -->
-      <div class="text-center mb-12" data-aos="fade-up" data-aos-duration="2000">
-        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-          Technical Sponsors
-        </h2>
-        <p class="text-gray-600 text-lg">
-          Proudly supported by our technology partners
-        </p>
-      </div>
-
-      <!-- Sponsors Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-4 gap-4" data-aos="zoom-in" data-aos-offset="200"
-        data-aos-duration="1000" data-aos-easing="ease-in-sine">
-        <!-- Sponsor 1 -->
-        <div
-          class="bg-white p-8 rounded-2xl shadow-md border border-gray-100 flex items-center justify-center hover:scale-105 transition-transform duration-300">
-          <img src="/Assets/techSponsor1.png" alt="Sponsor 1" class="h-16 md:h-20 w-auto object-contain"
-            loading="lazy" />
-        </div>
-
-        <!-- Sponsor 3 -->
-        <div
-          class="bg-white p-8 rounded-2xl shadow-md border border-gray-100 flex items-center justify-center hover:scale-105 transition-transform duration-300">
-          <img src="/Assets/techSponsor3.jpg" alt="Sponsor 3" class="h-16 md:h-20 w-auto object-contain"
-            loading="lazy" />
-        </div>
-
-        <!-- Sponsor 4 -->
-        <div
-          class="bg-white p-8 rounded-2xl shadow-md border border-gray-100 flex items-center justify-center hover:scale-105 transition-transform duration-300">
-          <img src="/Assets/techSponsor4.jpg" alt="Sponsor 4" class="h-16 md:h-20 w-auto object-contain"
-            loading="lazy" />
-        </div>
-
-        <!-- Spmosro 5 -->
-        <div
-          class="bg-white p-8 rounded-2xl shadow-md border border-gray-100 flex items-center justify-center hover:scale-105 transition-transform duration-300">
-          <img src="/Assets/techSponsor5.jpg" alt="Sponsor 5" class="h-16 md:h-20 w-auto object-contain"
-            loading="lazy" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- devloper removed -->
-
-  <!-- footer -->
-  <footer class="bg-gray-800 text-gray-300">
-    <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div class="md:col-span-2 lg:col-span-2">
-          <div class="flex items-center space-x-3 mb-4">
-            <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="16" cy="16" r="16" fill="#F97316" />
-              <circle cx="16" cy="16" r="12" fill="white" fill-opacity="0.2" />
-              <circle cx="16" cy="16" r="6" fill="white" />
-            </svg>
-            <span class="text-2xl font-bold text-white">MetaSphere 2026</span>
-          </div>
-          <p class="text-sm text-gray-400 max-w-lg">
-            MetaSphere 2026 is the premier global conference bridging the
-            future of Cloud, Virtualization, and the Metaverse. We are
-            dedicated to fostering innovation, connecting experts, and
-            exploring the next digital frontier, all from the cultural heart
-            of Kolkata.
-          </p>
-          <!-- <div class="flex space-x-4 mt-6">
+        <!-- footer -->
+        <footer class="bg-gray-800 text-gray-300">
+            <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+                >
+                    <div class="md:col-span-2 lg:col-span-2">
+                        <div class="flex items-center space-x-3 mb-4">
+                            <svg
+                                width="36"
+                                height="36"
+                                viewBox="0 0 32 32"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <circle cx="16" cy="16" r="16" fill="#F97316" />
+                                <circle
+                                    cx="16"
+                                    cy="16"
+                                    r="12"
+                                    fill="white"
+                                    fill-opacity="0.2"
+                                />
+                                <circle cx="16" cy="16" r="6" fill="white" />
+                            </svg>
+                            <span class="text-2xl font-bold text-white"
+                                >MetaSphere 2026</span
+                            >
+                        </div>
+                        <p class="text-sm text-gray-400 max-w-lg">
+                            MetaSphere 2026 is the premier global conference
+                            bridging the future of Cloud, Virtualization, and
+                            the Metaverse. We are dedicated to fostering
+                            innovation, connecting experts, and exploring the
+                            next digital frontier, all from the cultural heart
+                            of Kolkata.
+                        </p>
+                        <!-- <div class="flex space-x-4 mt-6">
             <a href="#" aria-label="Visit our Twitter page" class="text-gray-400 hover:text-white transition-colors">
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path
@@ -1145,89 +1621,126 @@
               </svg>
             </a>
           </div> -->
-        </div>
+                    </div>
 
-        <div>
-          <h4 class="font-semibold text-white mb-4">Quick Links</h4>
-          <ul class="space-y-2 text-sm">
-            <li>
-              <a href="index.html" class="hover:text-orange-400 transition-colors">Home</a>
-            </li>
-            <li>
-              <a href="CallPapers.html" class="hover:text-orange-400 transition-colors">Call For Papers</a>
-            </li>
-            <li>
-              <a href="/scientific-committee.html" class="hover:text-orange-400 transition-colors">Scientific
-                Committee</a>
-            </li>
-            <li>
-              <a href="/AdvisoryCommittee.html" class="hover:text-orange-400 transition-colors">Advisory Committee</a>
-            </li>
-            <li>
-              <a href="/TechCommittee.html" class="hover:text-orange-400 transition-colors">Technical Program
-                Committee</a>
-            </li>
-            <!-- <li><a href="/#tracks" class="hover:text-orange-400 transition-colors">Tracks</a></li> -->
-            <li>
-              <a href="/registration.html" class="hover:text-orange-400 transition-colors">Registration</a>
-            </li>
-          </ul>
-        </div>
+                    <div>
+                        <h4 class="font-semibold text-white mb-4">
+                            Quick Links
+                        </h4>
+                        <ul class="space-y-2 text-sm">
+                            <li>
+                                <a
+                                    href="index.html"
+                                    class="hover:text-orange-400 transition-colors"
+                                    >Home</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    href="CallPapers.html"
+                                    class="hover:text-orange-400 transition-colors"
+                                    >Call For Papers</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    href="/scientific-committee.html"
+                                    class="hover:text-orange-400 transition-colors"
+                                    >Scientific Committee</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    href="/AdvisoryCommittee.html"
+                                    class="hover:text-orange-400 transition-colors"
+                                    >Advisory Committee</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    href="/TechCommittee.html"
+                                    class="hover:text-orange-400 transition-colors"
+                                    >Technical Program Committee</a
+                                >
+                            </li>
+                            <!-- <li><a href="/#tracks" class="hover:text-orange-400 transition-colors">Tracks</a></li> -->
+                            <li>
+                                <a
+                                    href="/registration.html"
+                                    class="hover:text-orange-400 transition-colors"
+                                    >Registration</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
 
-        <div>
-          <h4 class="font-semibold text-white mb-4">Contact & Venue</h4>
-          <div class="text-sm space-y-2">
-            <p class="font-bold">IEM Ashram Building</p>
-            <p class="text-gray-400">
-              GN-34/2, Sector V, Bidhannagar, Kolkata, West Bengal 700091
-            </p>
-            <a href="mailto:metaSphere2026@iem.edu.in"
-              class="block hover:text-orange-400 transition-colors pt-2">metaSphere2026@iem.edu.in</a>
-            <a href="tel:+919874465365" class="block hover:text-orange-400 transition-colors">+91 987 446 5375</a>
-          </div>
-          <div class="mt-4 rounded-lg overflow-hidden">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.123456789!2d88.4296927!3d22.5701392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275b23d77ee27%3A0xcd498ec0d7bf6f54!2sInstitute%20of%20Engineering%20and%20Management%20(Ashram%20Building)!5e0!3m2!1sen!2sin!4v1690000000000"
-              width="100%" height="150" style="border: 0" allowfullscreen="" loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-          </div>
-        </div>
-      </div>
+                    <div>
+                        <h4 class="font-semibold text-white mb-4">
+                            Contact & Venue
+                        </h4>
+                        <div class="text-sm space-y-2">
+                            <p class="font-bold">IEM Ashram Building</p>
+                            <p class="text-gray-400">
+                                GN-34/2, Sector V, Bidhannagar, Kolkata, West
+                                Bengal 700091
+                            </p>
+                            <a
+                                href="mailto:metaSphere2026@iem.edu.in"
+                                class="block hover:text-orange-400 transition-colors pt-2"
+                                >metaSphere2026@iem.edu.in</a
+                            >
+                            <a
+                                href="tel:+919874465365"
+                                class="block hover:text-orange-400 transition-colors"
+                                >+91 987 446 5375</a
+                            >
+                        </div>
+                        <div class="mt-4 rounded-lg overflow-hidden">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.123456789!2d88.4296927!3d22.5701392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275b23d77ee27%3A0xcd498ec0d7bf6f54!2sInstitute%20of%20Engineering%20and%20Management%20(Ashram%20Building)!5e0!3m2!1sen!2sin!4v1690000000000"
+                                width="100%"
+                                height="150"
+                                style="border: 0"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"
+                            >
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="mt-8 pt-8 border-t border-gray-700 text-center">
-        <p class="text-sm text-gray-400">
-          &copy; 2026 MetaSphere Conference Committee. All Rights Reserved.
-        </p>
-      </div>
-    </div>
-  </footer>
+                <div class="mt-8 pt-8 border-t border-gray-700 text-center">
+                    <p class="text-sm text-gray-400">
+                        &copy; 2026 MetaSphere Conference Committee. All Rights
+                        Reserved.
+                    </p>
+                </div>
+            </div>
+        </footer>
 
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script src="script.js"></script>
-  <script>
-    AOS.init();
-    // --- LOADER SCRIPT ---
-    window.addEventListener("load", () => {
-      const loader = document.getElementById("loader-container");
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="script.js"></script>
+        <script>
+            AOS.init();
+            // --- LOADER SCRIPT ---
+            window.addEventListener("load", () => {
+                const loader = document.getElementById("loader-container");
 
+                setTimeout(() => {
+                    if (loader) {
+                        loader.classList.add("hidden");
+                    }
 
-      setTimeout(() => {
-        if (loader) {
-          loader.classList.add("hidden");
-        }
+                    document.body.style.overflowY = "auto";
+                }, 3000);
 
-        document.body.style.overflowY = "auto";
-      }, 3000);
-
-
-      setTimeout(() => {
-        if (loader) {
-          loader.remove();
-        }
-      }, 3800);
-    });
-  </script>
-</body>
-
+                setTimeout(() => {
+                    if (loader) {
+                        loader.remove();
+                    }
+                }, 3800);
+            });
+        </script>
+    </body>
 </html>
