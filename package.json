@@ -1,0 +1,23 @@
+{
+  "name": "Metasphere 2k26",
+  "version": "1.0.0",
+  "description": "<a href=\"https://github.com/Asad-bot07/Project-IEM/graphs/contributors\">\r   <img src=\"https://contrib.rocks/image?repo=Asad-bot07/Project-IEM\" />\r </a>\r <!-- Hey from Asad bot  -->\r <!-- test commit -->",
+  "main": "script.js",
+  "devDependencies": {
+    "tailwindcss": "^4.1.18"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Asad-bot07/Project-IEM.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Asad-bot07/Project-IEM/issues"
+  },
+  "homepage": "https://github.com/Asad-bot07/Project-IEM#readme"
+}
