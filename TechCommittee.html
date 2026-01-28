@@ -1,1099 +1,1181 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Technical Program Committee | MetaSphere 2026</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Technical Program Committee | MetaSphere 2026</title>
 
-    <link rel="stylesheet" href="/Style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family:Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://unpkg.com/lucide@latest"></script>
+        <link rel="stylesheet" href="/Style.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family:Inter:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://unpkg.com/lucide@latest"></script>
 
-    <style>
-      body {
-        font-family: "Inter", sans-serif;
-        background-color: #fffbf5;
-        color: #1a202c;
-      }
-      .gradient-text {
-        background: linear-gradient(45deg, #f97316, #d946ef);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        color: transparent;
-      }
-      .dataTables_wrapper .dataTables_length select,
-      .dataTables_wrapper .dataTables_filter input {
-        color: #1a202c;
-        border: 1px solid #e2e8f0;
-        border-radius: 0.5rem;
-        padding: 0.5rem 0.75rem;
-        transition: all 0.2s ease-in-out;
-      }
+        <style>
+            body {
+                font-family: "Inter", sans-serif;
+                background-color: #fffbf5;
+                color: #1a202c;
+            }
+            .gradient-text {
+                background: linear-gradient(45deg, #f97316, #d946ef);
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                color: transparent;
+            }
+            .dataTables_wrapper .dataTables_length select,
+            .dataTables_wrapper .dataTables_filter input {
+                color: #1a202c;
+                border: 1px solid #e2e8f0;
+                border-radius: 0.5rem;
+                padding: 0.5rem 0.75rem;
+                transition: all 0.2s ease-in-out;
+            }
 
-      .dataTables_wrapper .dataTables_length select:focus,
-      .dataTables_wrapper .dataTables_filter input:focus {
-        outline: none;
-        border-color: #f97316;
-        box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.3);
-      }
+            .dataTables_wrapper .dataTables_length select:focus,
+            .dataTables_wrapper .dataTables_filter input:focus {
+                outline: none;
+                border-color: #f97316;
+                box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.3);
+            }
 
-      .dataTables_wrapper .dataTables_paginate .paginate_button {
-        padding: 0.5em 1em;
-        margin-left: 2px;
-        border-radius: 0.5rem;
-        transition: all 0.2s ease-in-out;
-      }
+            .dataTables_wrapper .dataTables_paginate .paginate_button {
+                padding: 0.5em 1em;
+                margin-left: 2px;
+                border-radius: 0.5rem;
+                transition: all 0.2s ease-in-out;
+            }
 
-      .dataTables_wrapper .dataTables_paginate .paginate_button.current,
-      .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-        background: #f97316;
-        color: white !important;
-        border: 1px solid #f97316;
-      }
+            .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+            .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+                background: #f97316;
+                color: white !important;
+                border: 1px solid #f97316;
+            }
 
-      .dataTables_wrapper .dataTables_info,
-      .dataTables_wrapper .dataTables_length label,
-      .dataTables_wrapper .dataTables_filter label {
-        color: #4a5568;
-      }
+            .dataTables_wrapper .dataTables_info,
+            .dataTables_wrapper .dataTables_length label,
+            .dataTables_wrapper .dataTables_filter label {
+                color: #4a5568;
+            }
 
-      #committeeTable thead {
-        background-color: #fef3c7;
-        /* A light orange to match the theme */
-      }
-    </style>
-  </head>
-  <body class="antialiased">
-    <div class="main-container">
-      <header
-        class="top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-lg shadow-md relative"
-      >
-        <!-- Banner Section -->
-        <div class="relative">
-          <img
-            src="Assets/01.svg"
-            alt="Conference Banner"
-            class="w-full h- object-cover"
-          />
-          <!-- Optional dark overlay for readability -->
-          <div class="absolute inset-0"></div>
-        </div>
-
-        <!-- Navigation Bar -->
-        <div
-          class="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 py-3"
-        >
-          <!-- Logo -->
-          <div class="flex flex-col space-x-2">
-            <span class="text-lg sm:text-xl font-bold text-white"
-              >MetaSphere 2026</span
+            #committeeTable thead {
+                background-color: #fef3c7;
+                /* A light orange to match the theme */
+            }
+        </style>
+    </head>
+    <body class="antialiased">
+        <div class="main-container">
+            <header
+                class="top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-lg shadow-md relative"
             >
-            <!-- <span class="text-xs text-white "> Global Conference on Cloud, Virtualization & Metaverse</span> -->
-          </div>
-
-          <!-- Desktop Nav -->
-          <div class="hidden md:flex items-center">
-            <nav class="flex items-center space-x-5 text-sm font-medium">
-              <a
-                href="/index.html"
-                class="text-white hover:text-orange-400 transition"
-                >Home</a
-              >
-
-              <!-- Authors Dropdown -->
-              <div class="relative">
-                <button
-                  onclick="toggleDropdown('authorsDropdown')"
-                  class="text-white hover:text-orange-400 flex items-center"
-                >
-                  Authors
-                  <i data-lucide="chevron-down" class="w-3.5 h-3.5 ml-1"></i>
-                </button>
-                <div
-                  id="authorsDropdown"
-                  class="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50"
-                >
-                  <a
-                    href="/CallPapers.html"
-                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
-                    >Call For Papers</a
-                  >
-                  <a
-                    href="/PaperSubmit.html"
-                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
-                    >Paper Submission</a
-                  >
-                  <a
-                    href="index.html#speakers"
-                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
-                    >Keynote Speakers</a
-                  >
+                <!-- Banner Section -->
+                <div class="relative">
+                    <img
+                        src="Assets/01.svg"
+                        alt="Conference Banner"
+                        class="w-full h- object-cover"
+                    />
+                    <!-- Optional dark overlay for readability -->
+                    <div class="absolute inset-0"></div>
                 </div>
-              </div>
 
-              <a
-                href="/technical-programs.html"
-                class="text-white hover:text-orange-400 transition"
-                >Technical Programs</a
-              >
-              <a
-                href="/registration.html"
-                class="text-white hover:text-orange-400 transition"
-                >Registration</a
-              >
-
-              <!-- Committee Dropdown -->
-              <div class="relative">
-                <button
-                  onclick="toggleDropdown('committeeDropdown')"
-                  class="text-white hover:text-orange-400 flex items-center"
-                >
-                  Committee
-                  <i data-lucide="chevron-down" class="w-3.5 h-3.5 ml-1"></i>
-                </button>
+                <!-- Navigation Bar -->
                 <div
-                  id="committeeDropdown"
-                  class="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50"
+                    class="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 py-3"
                 >
-                  <a
-                    href="/scientific-committee.html"
-                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
-                    >Scientific Committee</a
-                  >
-                  <a
-                    href="/AdvisoryCommittee.html"
-                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
-                    >Advisory Committee</a
-                  >
-                  <a
-                    href="/TechCommittee.html"
-                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
-                    >Technical Programs Committee</a
-                  >
-                  <a
-                    href="/AAIA.html"
-                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
-                    >AAIA Committee</a
-                  >
+                    <!-- Logo -->
+                    <div class="flex flex-col space-x-2">
+                        <span class="text-lg sm:text-xl font-bold text-white"
+                            >MetaSphere 2026</span
+                        >
+                        <!-- <span class="text-xs text-white "> Global Conference on Cloud, Virtualization & Metaverse</span> -->
+                    </div>
+
+                    <!-- Desktop Nav -->
+                    <div class="hidden md:flex items-center">
+                        <nav
+                            class="flex items-center space-x-5 text-sm font-medium"
+                        >
+                            <a
+                                href="/index.html"
+                                class="text-white hover:text-orange-400 transition"
+                                >Home</a
+                            >
+
+                            <!-- Authors Dropdown -->
+                            <div class="relative">
+                                <button
+                                    onclick="toggleDropdown('authorsDropdown')"
+                                    class="text-white hover:text-orange-400 flex items-center"
+                                >
+                                    Authors
+                                    <i
+                                        data-lucide="chevron-down"
+                                        class="w-3.5 h-3.5 ml-1"
+                                    ></i>
+                                </button>
+                                <div
+                                    id="authorsDropdown"
+                                    class="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50"
+                                >
+                                    <a
+                                        href="/CallPapers.html"
+                                        class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
+                                        >Call For Papers</a
+                                    >
+                                    <a
+                                        href="/PaperSubmit.html"
+                                        class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
+                                        >Paper Submission</a
+                                    >
+                                    <a
+                                        href="Keynote_Speaker.html"
+                                        class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
+                                        >Keynote Speakers</a
+                                    >
+                                </div>
+                            </div>
+
+                            <a
+                                href="/technical-programs.html"
+                                class="text-white hover:text-orange-400 transition"
+                                >Technical Programs</a
+                            >
+                            <a
+                                href="/registration.html"
+                                class="text-white hover:text-orange-400 transition"
+                                >Registration</a
+                            >
+
+                            <!-- Committee Dropdown -->
+                            <div class="relative">
+                                <button
+                                    onclick="
+                                        toggleDropdown('committeeDropdown')
+                                    "
+                                    class="text-white hover:text-orange-400 flex items-center"
+                                >
+                                    Committee
+                                    <i
+                                        data-lucide="chevron-down"
+                                        class="w-3.5 h-3.5 ml-1"
+                                    ></i>
+                                </button>
+                                <div
+                                    id="committeeDropdown"
+                                    class="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50"
+                                >
+                                    <a
+                                        href="/scientific-committee.html"
+                                        class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
+                                        >Scientific Committee</a
+                                    >
+                                    <a
+                                        href="/AdvisoryCommittee.html"
+                                        class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
+                                        >Advisory Committee</a
+                                    >
+                                    <a
+                                        href="/TechCommittee.html"
+                                        class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
+                                        >Technical Programs Committee</a
+                                    >
+                                    <a
+                                        href="/AAIA.html"
+                                        class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
+                                        >AAIA Committee</a
+                                    >
+                                </div>
+                            </div>
+
+                            <a
+                                href="/TechSponsor.html"
+                                class="text-white hover:text-orange-400 transition"
+                                >Technical Sponsors</a
+                            >
+                            <a
+                                href="/Contact.html"
+                                class="text-white hover:text-orange-400 transition"
+                                >Contact</a
+                            >
+                        </nav>
+
+                        <!-- Register Button -->
+                        <a
+                            href="/registration.html"
+                            class="ml-6 px-4 py-1.5 rounded-md text-sm font-semibold shadow-md transition bg-orange-500 text-white hover:bg-orange-600"
+                        >
+                            Register Now
+                        </a>
+                    </div>
+
+                    <!-- Mobile Hamburger -->
+                    <button
+                        onclick="toggleMobileMenu()"
+                        class="md:hidden p-2 rounded-md text-white hover:bg-orange-400"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="26"
+                            height="26"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <line x1="4" x2="20" y1="12" y2="12" />
+                            <line x1="4" x2="20" y1="6" y2="6" />
+                            <line x1="4" x2="20" y1="18" y2="18" />
+                        </svg>
+                    </button>
                 </div>
-              </div>
 
-              <a
-                href="/TechSponsor.html"
-                class="text-white hover:text-orange-400 transition"
-                >Technical Sponsors</a
-              >
-              <a
-                href="/Contact.html"
-                class="text-white hover:text-orange-400 transition"
-                >Contact</a
-              >
-            </nav>
+                <!-- Mobile Menu -->
+                <div
+                    id="mobileMenu"
+                    class="md:hidden hidden bg-black/70 text-white px-6 py-4 space-y-4"
+                >
+                    <a href="/index.html" class="block hover:text-orange-400"
+                        >Home</a
+                    >
+                    <a
+                        href="/CallPapers.html"
+                        class="block hover:text-orange-400"
+                        >Call for Papers</a
+                    >
+                    <a
+                        href="/Keynote_Speaker.html"
+                        class="block hover:text-orange-400"
+                        >Keynote Speakers</a
+                    >
+                    <a
+                        href="/PaperSubmit.html"
+                        class="block hover:text-orange-400"
+                        >Paper Submission</a
+                    >
+                    <a
+                        href="/technical-programs.html"
+                        class="block hover:text-orange-400"
+                        >Technical Programs</a
+                    >
+                    <a
+                        href="/registration.html"
+                        class="block hover:text-orange-400"
+                        >Registration</a
+                    >
+                    <a
+                        href="/scientific-committee.html"
+                        class="block hover:text-orange-400"
+                        >Scientific Committee</a
+                    >
+                    <a
+                        href="/AdvisoryCommittee.html"
+                        class="block hover:text-orange-400"
+                        >Advisory Committee</a
+                    >
+                    <a
+                        href="/TechCommittee.html"
+                        class="block hover:text-orange-400"
+                        >Technical Program Committee</a
+                    >
+                    <a href="/AAIA.html" class="block hover:text-orange-400"
+                        >AAIA Committee</a
+                    >
+                    <a
+                        href="/TechSponsor.html"
+                        class="block hover:text-orange-400"
+                        >Technical Sponsors</a
+                    >
+                    <a href="/Contact.html" class="block hover:text-orange-400"
+                        >Contact</a
+                    >
+                    <a
+                        href="/registration.html"
+                        class="block bg-orange-500 text-center rounded-md py-2 text-sm font-semibold hover:bg-orange-600"
+                        >Register Now</a
+                    >
+                </div>
+            </header>
 
-            <!-- Register Button -->
-            <a
-              href="/registration.html"
-              class="ml-6 px-4 py-1.5 rounded-md text-sm font-semibold shadow-md transition bg-orange-500 text-white hover:bg-orange-600"
+            <section
+                class="relative pt-32 pb-20 sm:pt-60 sm:pb-24 overflow-hidden"
             >
-              Register Now
-            </a>
-          </div>
+                <div
+                    id="video-slideshow"
+                    class="absolute top-0 left-0 w-full h-full z-0"
+                >
+                    <video
+                        autoplay
+                        loop
+                        muted
+                        class="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-100"
+                    >
+                        <source src="/Assets/MB.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div
+                    class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#FFFBF5] via-[#FFFBF5]/80 to-transparent z-10"
+                ></div>
 
-          <!-- Mobile Hamburger -->
-          <button
-            onclick="toggleMobileMenu()"
-            class="md:hidden p-2 rounded-md text-white hover:bg-orange-400"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="26"
-              height="26"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <line x1="4" x2="20" y1="12" y2="12" />
-              <line x1="4" x2="20" y1="6" y2="6" />
-              <line x1="4" x2="20" y1="18" y2="18" />
-            </svg>
-          </button>
-        </div>
+                <div
+                    class="relative max-w-5xl mx-auto text-center px-4 z-20"
+                    data-aos="fade-up"
+                    data-aos-duration="2000"
+                >
+                    <div class="max-w-5xl mx-auto text-center px-4">
+                        <h1
+                            class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight"
+                        >
+                            Technical Program
+                            <span class="gradient-text">Committee</span>
+                        </h1>
+                        <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                            Meet the distinguished members of our Technical
+                            Program Committee.
+                        </p>
+                    </div>
+                </div>
+            </section>
 
-        <!-- Mobile Menu -->
-        <div
-          id="mobileMenu"
-          class="md:hidden hidden bg-black/70 text-white px-6 py-4 space-y-4"
-        >
-          <a href="/index.html" class="block hover:text-orange-400">Home</a>
-          <a href="/CallPapers.html" class="block hover:text-orange-400"
-            >Call for Papers</a
-          >
-          <a href="/PaperSubmit.html" class="block hover:text-orange-400"
-            >Paper Submission</a
-          >
-          <a href="/technical-programs.html" class="block hover:text-orange-400"
-            >Technical Programs</a
-          >
-          <a href="/registration.html" class="block hover:text-orange-400"
-            >Registration</a
-          >
-          <a
-            href="/scientific-committee.html"
-            class="block hover:text-orange-400"
-            >Scientific Committee</a
-          >
-          <a href="/AdvisoryCommittee.html" class="block hover:text-orange-400"
-            >Advisory Committee</a
-          >
-          <a href="/TechCommittee.html" class="block hover:text-orange-400"
-            >Technical Program Committee</a
-          >
-          <a href="/AAIA.html" class="block hover:text-orange-400"
-            >AAIA Committee</a
-          >
-          <a href="/TechSponsor.html" class="block hover:text-orange-400"
-            >Technical Sponsors</a
-          >
-          <a href="/Contact.html" class="block hover:text-orange-400"
-            >Contact</a
-          >
-          <a
-            href="/registration.html"
-            class="block bg-orange-500 text-center rounded-md py-2 text-sm font-semibold hover:bg-orange-600"
-            >Register Now</a
-          >
-        </div>
-      </header>
-
-      <section class="relative pt-32 pb-20 sm:pt-60 sm:pb-24 overflow-hidden">
-        <div
-          id="video-slideshow"
-          class="absolute top-0 left-0 w-full h-full z-0"
-        >
-          <video
-            autoplay
-            loop
-            muted
-            class="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-100"
-          >
-            <source src="/Assets/MB.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </div>
-        <div
-          class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#FFFBF5] via-[#FFFBF5]/80 to-transparent z-10"
-        ></div>
-
-        <div
-          class="relative max-w-5xl mx-auto text-center px-4 z-20"
-          data-aos="fade-up"
-          data-aos-duration="2000"
-        >
-          <div class="max-w-5xl mx-auto text-center px-4">
-            <h1
-              class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight"
-            >
-              Technical Program <span class="gradient-text">Committee</span>
-            </h1>
-            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-              Meet the distinguished members of our Technical Program Committee.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <main class="mb-12">
-        <div class="max-w-7xl mx-auto px-4">
-          <table id="committeeTable" class="display" style="width: 100%">
-            <thead>
-              <tr>
-                <th class="text-left p-4">Name</th>
-                <th class="text-left p-4">Affiliation</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Arpan Adhikary</td>
-                <td>Haldia Institute of Technology</td>
-              </tr>
-              <tr>
-                <td>Renu Devi</td>
-                <td>ICFAI University</td>
-              </tr>
-              <tr>
-                <td>Ashok P</td>
-                <td>
-                  Symbiosis Institute of Digital and Telecom Management (SIDTM),
-                  Symbiosis International (Deemed University), Lavale, Pune,
-                  Maharashtra, India
-                </td>
-              </tr>
-              <tr>
-                <td>Kanchan Govind Rathi</td>
-                <td>MIT ACS College, Alandi, Pune</td>
-              </tr>
-              <tr>
-                <td>Akoramurthy B</td>
-                <td>National Institute of Technology Puducherry</td>
-              </tr>
-              <tr>
-                <td>Dr. Priti Deb</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Manas Kumar Yogi</td>
-                <td>Pragati Engineering College (Autonomous)</td>
-              </tr>
-              <tr>
-                <td>Lycel Lagnason Pacheco</td>
-                <td>Central Philippines State University</td>
-              </tr>
-              <tr>
-                <td>Siparna Rabi Das</td>
-                <td>BPPIMT Kolkata</td>
-              </tr>
-              <tr>
-                <td>Nayantara Mitra</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Kaushiki Roy</td>
-                <td>IIIT Raichur</td>
-              </tr>
-              <tr>
-                <td>Dr. Archana J. N</td>
-                <td>Vimal Jyothi Engineering College (Autonomous)</td>
-              </tr>
-              <tr>
-                <td>Patrali Pradhan</td>
-                <td>Haldia Institute of Technology</td>
-              </tr>
-              <tr>
-                <td>Dr. Priyanka Das</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Arnab Das</td>
-                <td>Swami Vivekananda University</td>
-              </tr>
-              <tr>
-                <td>Anandaraj M</td>
-                <td>PSNA College of Engineering and Technology</td>
-              </tr>
-              <tr>
-                <td>Dr. Soamdeep Singha</td>
-                <td>Vidyasagar University</td>
-              </tr>
-              <tr>
-                <td>Mr. Ranjit Subba</td>
-                <td>
-                  Department of Computer Science, Hijli College, Kharagpur,
-                  Paschim Medinipur, West Bengal
-                </td>
-              </tr>
-              <tr>
-                <td>Bhagyashree Hambarde</td>
-                <td>
-                  St. Vincent Pallotti College of Engineering and Technology,
-                  Nagpur
-                </td>
-              </tr>
-              <!-- <tr>
+            <main class="mb-12">
+                <div class="max-w-7xl mx-auto px-4">
+                    <table
+                        id="committeeTable"
+                        class="display"
+                        style="width: 100%"
+                    >
+                        <thead>
+                            <tr>
+                                <th class="text-left p-4">Name</th>
+                                <th class="text-left p-4">Affiliation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Arpan Adhikary</td>
+                                <td>Haldia Institute of Technology</td>
+                            </tr>
+                            <tr>
+                                <td>Renu Devi</td>
+                                <td>ICFAI University</td>
+                            </tr>
+                            <tr>
+                                <td>Ashok P</td>
+                                <td>
+                                    Symbiosis Institute of Digital and Telecom
+                                    Management (SIDTM), Symbiosis International
+                                    (Deemed University), Lavale, Pune,
+                                    Maharashtra, India
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Kanchan Govind Rathi</td>
+                                <td>MIT ACS College, Alandi, Pune</td>
+                            </tr>
+                            <tr>
+                                <td>Akoramurthy B</td>
+                                <td>
+                                    National Institute of Technology Puducherry
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Priti Deb</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Manas Kumar Yogi</td>
+                                <td>
+                                    Pragati Engineering College (Autonomous)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Lycel Lagnason Pacheco</td>
+                                <td>Central Philippines State University</td>
+                            </tr>
+                            <tr>
+                                <td>Siparna Rabi Das</td>
+                                <td>BPPIMT Kolkata</td>
+                            </tr>
+                            <tr>
+                                <td>Nayantara Mitra</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Kaushiki Roy</td>
+                                <td>IIIT Raichur</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Archana J. N</td>
+                                <td>
+                                    Vimal Jyothi Engineering College
+                                    (Autonomous)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Patrali Pradhan</td>
+                                <td>Haldia Institute of Technology</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Priyanka Das</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Arnab Das</td>
+                                <td>Swami Vivekananda University</td>
+                            </tr>
+                            <tr>
+                                <td>Anandaraj M</td>
+                                <td>
+                                    PSNA College of Engineering and Technology
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Soamdeep Singha</td>
+                                <td>Vidyasagar University</td>
+                            </tr>
+                            <tr>
+                                <td>Mr. Ranjit Subba</td>
+                                <td>
+                                    Department of Computer Science, Hijli
+                                    College, Kharagpur, Paschim Medinipur, West
+                                    Bengal
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Bhagyashree Hambarde</td>
+                                <td>
+                                    St. Vincent Pallotti College of Engineering
+                                    and Technology, Nagpur
+                                </td>
+                            </tr>
+                            <!-- <tr>
                 <td>Dr. Biswajit Maity</td>
                 <td>
                   Institute of Engineering and Management, Kolkata (Salt Lake
                   Campus)
                 </td>
               </tr> -->
-              <tr>
-                <td>Priyajit Sen</td>
-                <td>Indian Statistical Institute, Kolkata</td>
-              </tr>
-              <tr>
-                <td>Dr. Kyamelia Roy</td>
-                <td>Siliguri Government Polytechnic</td>
-              </tr>
-              <tr>
-                <td>Kaustav Nandi</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Nitu Saha</td>
-                <td>University of Engineering and Management, Kolkata</td>
-              </tr>
-              <tr>
-                <td>Dr. I. Karthiga Kathiravan</td>
-                <td>
-                  BS Abdur Rahman Crescent Institute of Science and Technology
-                </td>
-              </tr>
-              <tr>
-                <td>Kaustav Sarkar</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Dr. Syed Abdul S</td>
-                <td>BSACIST-UGC</td>
-              </tr>
-              <tr>
-                <td>Dr. Remya Chandran</td>
-                <td>Vimal Jyothi Engineering College (Autonomous)</td>
-              </tr>
-              <tr>
-                <td>Tahamina Yesmin</td>
-                <td>Adamas University</td>
-              </tr>
-              <tr>
-                <td>Faisal Firdous</td>
-                <td>JUIT, Solan</td>
-              </tr>
-              <tr>
-                <td>Sikhriti Saha</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Koyel Chakraborty</td>
-                <td>Supreme Knowledge Foundation Group of Institutions</td>
-              </tr>
-              <tr>
-                <td>Bipradash Pandit</td>
-                <td>Meghnad Saha Institute of Technology</td>
-              </tr>
-              <tr>
-                <td>Dr. Aritra Bandyopadhyay</td>
-                <td>Supreme Knowledge Foundation Group of Institutions</td>
-              </tr>
-              <tr>
-                <td>Proshanta Sarkar</td>
-                <td>B. P. Poddar Institute of Management & Technology</td>
-              </tr>
-              <tr>
-                <td>Maloy Kumar Dey</td>
-                <td>NIT Nagaland</td>
-              </tr>
-              <tr>
-                <td>Rohit Kumar Nonia</td>
-                <td>NIT Jamshedpur</td>
-              </tr>
-              <tr>
-                <td>Dr. Rajendrani Mukherjee</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Dr. Moumita Das</td>
-                <td>Haldia Institute of Technology</td>
-              </tr>
-              <tr>
-                <td>Soham Goswami</td>
-                <td>MCKV Institute of Engineering, Howrah</td>
-              </tr>
-              <tr>
-                <td>Sasmita Subhadarsinee Choudhury</td>
-                <td>MCKV Institute of Engineering</td>
-              </tr>
-              <tr>
-                <td>Dr. Sivaprakash S</td>
-                <td>Vellore Institute of Technology, Vellore</td>
-              </tr>
-              <tr>
-                <td>Anjul Bhardwaj</td>
-                <td>
-                  Divine Institute of Management & Studies, Ziradei, Bihar
-                </td>
-              </tr>
-              <tr>
-                <td>Dr. Rahul Soni</td>
-                <td>Navrachana University</td>
-              </tr>
-              <tr>
-                <td>Piyali Bhanja</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Moumita Chatterjee</td>
-                <td>
-                  Department of Computer Science and Engineering, Aliah
-                  University
-                </td>
-              </tr>
-              <tr>
-                <td>Surojit Bhattacharyya</td>
-                <td>MCKV Institute of Engineering</td>
-              </tr>
-              <tr>
-                <td>Sevda Rzayeva</td>
-                <td>Azerbaijan State Oil and Industry University</td>
-              </tr>
-              <tr>
-                <td>Arunima Banerjee</td>
-                <td>Calcutta Institute of Technology</td>
-              </tr>
-              <tr>
-                <td>Dr. Priti Subramanium</td>
-                <td>
-                  Shri Sant Gadge Baba College of Engineering and Technology,
-                  Bhusawal
-                </td>
-              </tr>
-              <tr>
-                <td>Dr. Mohd Danish</td>
-                <td>Greater Noida Institute of Technology</td>
-              </tr>
-              <tr>
-                <td>Manab Kumar Das</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Niranchana Shri Viswanathan</td>
-                <td>Sapthagiri NPS University</td>
-              </tr>
-              <tr>
-                <td>Dr. Ashwin R. Dobariya</td>
-                <td>Marwadi University, Rajkot</td>
-              </tr>
-              <tr>
-                <td>Dr. Lowlesh Nandkishor Yadav</td>
-                <td>
-                  Head of Department, Computer Engineering, Suryodaya College of
-                  Engineering and Technology, Nagpur, Maharashtra, India
-                </td>
-              </tr>
-              <tr>
-                <td>Dr. Aakanksha Mahajan</td>
-                <td>PIET, Samalkha</td>
-              </tr>
-              <tr>
-                <td>Dr. Goldina Ghosh</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Deborsi Basu</td>
-                <td>
-                  CONNECT Research Centre, Trinity College Dublin, The
-                  University of Dublin, Ireland
-                </td>
-              </tr>
-              <tr>
-                <td>Hemprasad Yashwant Patil</td>
-                <td>MCTE, Ministry of Defense, Government of India</td>
-              </tr>
-              <tr>
-                <td>Dr. Pardeep Kumar</td>
-                <td>Chandigarh University</td>
-              </tr>
-              <tr>
-                <td>Trupti Vinayak Parkar</td>
-                <td>Microsoft</td>
-              </tr>
-              <tr>
-                <td>Ayan Mondal</td>
-                <td>IIT Indore</td>
-              </tr>
-              <tr>
-                <td>Heerok Banerjee</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Dr. Vijayarajan V</td>
-                <td>Vellore Institute of Technology</td>
-              </tr>
-              <tr>
-                <td>Dr. Perepi Raja Rajeswari</td>
-                <td>
-                  School of Computer Science, Vellore Institute of Technology,
-                  Vellore, Tamil Nadu, India
-                </td>
-              </tr>
-              <tr>
-                <td>Sampath Kumar H. K.</td>
-                <td>Bodyclone Innovations Pvt. Ltd., NMIT</td>
-              </tr>
-              <tr>
-                <td>Sunirmal Khatua</td>
-                <td>University of Calcutta</td>
-              </tr>
-              <tr>
-                <td>Sreelekha Biswas</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Mahesh Kumar Singh</td>
-                <td>
-                  SRM Institute of Science and Technology, Delhi NCR Campus,
-                  Modinagar, Ghaziabad, Uttar Pradesh, India
-                </td>
-              </tr>
-              <tr>
-                <td>Pabak Indu</td>
-                <td>Institute of Engineering and Management</td>
-              </tr>
-              <tr>
-                <td>Khaja Mannanuddin</td>
-                <td>School of Computer Science & AI, SR University</td>
-              </tr>
-              <tr>
-                <td>Dr. Anuradha Bhardwaj</td>
-                <td>Amity University</td>
-              </tr>
-              <tr>
-                <td>Sucheta Chandra</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Ayanabha Ghosh</td>
-                <td>Indian Institute of Technology, Jodhpur</td>
-              </tr>
-              <tr>
-                <td>Ankita Mondal</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Dr. Gourav Jain</td>
-                <td>IIIT Sonepat</td>
-              </tr>
-              <tr>
-                <td>Debayan Ganguly</td>
-                <td>Directorate of Technical Education, West Bengal</td>
-              </tr>
-              <tr>
-                <td>Anwesha Mukherjee</td>
-                <td>Mahishadal Raj College</td>
-              </tr>
-              <tr>
-                <td>Pritusna Banik</td>
-                <td>Narula Institute of Technology</td>
-              </tr>
-              <tr>
-                <td>Manjima Saha</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Sanjukta Majumder</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Debasish Swapnesh Kumar Nayak</td>
-                <td>Centurion University of Technology and Management</td>
-              </tr>
-              <tr>
-                <td>Rohit Kumar</td>
-                <td>ABV-IIITM Gwalior</td>
-              </tr>
-              <tr>
-                <td>Naga Venkata Rajareddy Goluguri</td>
-                <td>University of Saskatchewan</td>
-              </tr>
-              <tr>
-                <td>Dr. Ayush Kumar Agrawal</td>
-                <td>Dr. C. V. Raman University</td>
-              </tr>
-              <tr>
-                <td>Dr. Sandeep Dwarkanath Pande</td>
-                <td>MIT Academy of Engineering, Alandi</td>
-              </tr>
-              <tr>
-                <td>Aashish Ramdasji Dandekar</td>
-                <td>RTMNU</td>
-              </tr>
-              <tr>
-                <td>Rabindranath Bera</td>
-                <td>Indian Institute of Information Technology</td>
-              </tr>
-              <tr>
-                <td>Monu Bhagat</td>
-                <td>Birla Institute of Technology, Mesra, Ranchi</td>
-              </tr>
-              <tr>
-                <td>Sahana Das</td>
-                <td>Adamas University</td>
-              </tr>
-              <tr>
-                <td>Archisman Adhikary</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Dr. Dipankar Das</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Tanmoy Kundu</td>
-                <td>AIT</td>
-              </tr>
-              <tr>
-                <td>Prof. Swapnesh Taterh</td>
-                <td>
-                  Maharashtra Academy of Engineering Education and Research, MIT
-                  ACSC
-                </td>
-              </tr>
-              <tr>
-                <td>Dr. Gajanan Uttam Patil</td>
-                <td>HSM’S SSGBCOE&T, Bhusawal</td>
-              </tr>
-              <tr>
-                <td>Senjuti Khanra</td>
-                <td>Techno Main, Salt Lake</td>
-              </tr>
-              <tr>
-                <td>Ankan Bhowmick</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Pritam Chakraborty</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Dr. Jayanta Paul</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Abriti Paul</td>
-                <td>
-                  Institute of Engineering and Management, Kolkata (Salt Lake
-                  Campus)
-                </td>
-              </tr>
-              <tr>
-                <td>Pradipta Roy</td>
-                <td>B. C. Roy Institute of Technology</td>
-              </tr>
-              <tr>
-                <td>Dr. Anindita Roychowdhuri</td>
-                <td>Sarojini Naidu College for Women</td>
-              </tr>
-              <tr>
-                <td>Saikat Mondal</td>
-                <td>Amity University, Ranchi</td>
-              </tr>
-              <tr>
-                <td>Dr. Jadav Kumar Das</td>
-                <td>MAKAUT, West Bengal</td>
-              </tr>
-              <tr>
-                <td>Dr. Subha Ghosh</td>
-                <td>Amity University, Kolkata</td>
-              </tr>
-              <tr>
-                <td>Dr. Biplab Das</td>
-                <td>St. Xavier’s University, Kolkata</td>
-              </tr>
-              <tr>
-                <td>Dr. Samarjit Roy</td>
-                <td>
-                  School of Computing and Information Technology, Eastern
-                  International University, Vietnam
-                </td>
-              </tr>
-              <tr>
-                <td>Dr. Anand Motwani</td>
-                <td>VIT Bhopal University</td>
-              </tr>
-              <tr>
-                <td>Subhajit Adhikari</td>
-                <td>
-                  Department of Computer Application, Techno India University,
-                  West Bengal
-                </td>
-              </tr>
-              <tr>
-                <td>Dr. Pabitra Pal</td>
-                <td>MAKAUT</td>
-              </tr>
-              <tr>
-                <td>Dr. Debarati Dey Roy</td>
-                <td>
-                  B. P. Poddar Institute of Management and Technology, Applied
-                  Artificial Intelligence Research Centre, UNEC, Baku,
-                  Azerbaijan
-                </td>
-              </tr>
-              <tr>
-                <td>Anindita Kundu</td>
-                <td>VIT Vellore</td>
-              </tr>
-              <tr>
-                <td>Dr. Ramesh Saha</td>
-                <td>
-                  Indian Institute of Information Technology (IIIT) Sonepat
-                </td>
-              </tr>
-              <tr>
-                <td>Abhijit Das</td>
-                <td>BITS Pilani</td>
-              </tr>
-              <tr>
-                <td>Rajib Bag</td>
-                <td>Bankura University</td>
-              </tr>
-              <tr>
-                <td>Dr. Sudakshina Mandal</td>
-                <td>Narula Institute of Technology</td>
-              </tr>
-              <tr>
-                <td>Baiju B. V.</td>
-                <td>Vellore Institute of Technology</td>
-              </tr>
-            </tbody>
-          </table>
+                            <tr>
+                                <td>Priyajit Sen</td>
+                                <td>Indian Statistical Institute, Kolkata</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Kyamelia Roy</td>
+                                <td>Siliguri Government Polytechnic</td>
+                            </tr>
+                            <tr>
+                                <td>Kaustav Nandi</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Nitu Saha</td>
+                                <td>
+                                    University of Engineering and Management,
+                                    Kolkata
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dr. I. Karthiga Kathiravan</td>
+                                <td>
+                                    BS Abdur Rahman Crescent Institute of
+                                    Science and Technology
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Kaustav Sarkar</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Syed Abdul S</td>
+                                <td>BSACIST-UGC</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Remya Chandran</td>
+                                <td>
+                                    Vimal Jyothi Engineering College
+                                    (Autonomous)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tahamina Yesmin</td>
+                                <td>Adamas University</td>
+                            </tr>
+                            <tr>
+                                <td>Faisal Firdous</td>
+                                <td>JUIT, Solan</td>
+                            </tr>
+                            <tr>
+                                <td>Sikhriti Saha</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Koyel Chakraborty</td>
+                                <td>
+                                    Supreme Knowledge Foundation Group of
+                                    Institutions
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Bipradash Pandit</td>
+                                <td>Meghnad Saha Institute of Technology</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Aritra Bandyopadhyay</td>
+                                <td>
+                                    Supreme Knowledge Foundation Group of
+                                    Institutions
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Proshanta Sarkar</td>
+                                <td>
+                                    B. P. Poddar Institute of Management &
+                                    Technology
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Maloy Kumar Dey</td>
+                                <td>NIT Nagaland</td>
+                            </tr>
+                            <tr>
+                                <td>Rohit Kumar Nonia</td>
+                                <td>NIT Jamshedpur</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Rajendrani Mukherjee</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Moumita Das</td>
+                                <td>Haldia Institute of Technology</td>
+                            </tr>
+                            <tr>
+                                <td>Soham Goswami</td>
+                                <td>MCKV Institute of Engineering, Howrah</td>
+                            </tr>
+                            <tr>
+                                <td>Sasmita Subhadarsinee Choudhury</td>
+                                <td>MCKV Institute of Engineering</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Sivaprakash S</td>
+                                <td>
+                                    Vellore Institute of Technology, Vellore
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Anjul Bhardwaj</td>
+                                <td>
+                                    Divine Institute of Management & Studies,
+                                    Ziradei, Bihar
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Rahul Soni</td>
+                                <td>Navrachana University</td>
+                            </tr>
+                            <tr>
+                                <td>Piyali Bhanja</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Moumita Chatterjee</td>
+                                <td>
+                                    Department of Computer Science and
+                                    Engineering, Aliah University
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Surojit Bhattacharyya</td>
+                                <td>MCKV Institute of Engineering</td>
+                            </tr>
+                            <tr>
+                                <td>Sevda Rzayeva</td>
+                                <td>
+                                    Azerbaijan State Oil and Industry University
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Arunima Banerjee</td>
+                                <td>Calcutta Institute of Technology</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Priti Subramanium</td>
+                                <td>
+                                    Shri Sant Gadge Baba College of Engineering
+                                    and Technology, Bhusawal
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Mohd Danish</td>
+                                <td>Greater Noida Institute of Technology</td>
+                            </tr>
+                            <tr>
+                                <td>Manab Kumar Das</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Niranchana Shri Viswanathan</td>
+                                <td>Sapthagiri NPS University</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Ashwin R. Dobariya</td>
+                                <td>Marwadi University, Rajkot</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Lowlesh Nandkishor Yadav</td>
+                                <td>
+                                    Head of Department, Computer Engineering,
+                                    Suryodaya College of Engineering and
+                                    Technology, Nagpur, Maharashtra, India
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Aakanksha Mahajan</td>
+                                <td>PIET, Samalkha</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Goldina Ghosh</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Deborsi Basu</td>
+                                <td>
+                                    CONNECT Research Centre, Trinity College
+                                    Dublin, The University of Dublin, Ireland
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Hemprasad Yashwant Patil</td>
+                                <td>
+                                    MCTE, Ministry of Defense, Government of
+                                    India
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Pardeep Kumar</td>
+                                <td>Chandigarh University</td>
+                            </tr>
+                            <tr>
+                                <td>Trupti Vinayak Parkar</td>
+                                <td>Microsoft</td>
+                            </tr>
+                            <tr>
+                                <td>Ayan Mondal</td>
+                                <td>IIT Indore</td>
+                            </tr>
+                            <tr>
+                                <td>Heerok Banerjee</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Vijayarajan V</td>
+                                <td>Vellore Institute of Technology</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Perepi Raja Rajeswari</td>
+                                <td>
+                                    School of Computer Science, Vellore
+                                    Institute of Technology, Vellore, Tamil
+                                    Nadu, India
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Sampath Kumar H. K.</td>
+                                <td>Bodyclone Innovations Pvt. Ltd., NMIT</td>
+                            </tr>
+                            <tr>
+                                <td>Sunirmal Khatua</td>
+                                <td>University of Calcutta</td>
+                            </tr>
+                            <tr>
+                                <td>Sreelekha Biswas</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Mahesh Kumar Singh</td>
+                                <td>
+                                    SRM Institute of Science and Technology,
+                                    Delhi NCR Campus, Modinagar, Ghaziabad,
+                                    Uttar Pradesh, India
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Pabak Indu</td>
+                                <td>Institute of Engineering and Management</td>
+                            </tr>
+                            <tr>
+                                <td>Khaja Mannanuddin</td>
+                                <td>
+                                    School of Computer Science & AI, SR
+                                    University
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Anuradha Bhardwaj</td>
+                                <td>Amity University</td>
+                            </tr>
+                            <tr>
+                                <td>Sucheta Chandra</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Ayanabha Ghosh</td>
+                                <td>Indian Institute of Technology, Jodhpur</td>
+                            </tr>
+                            <tr>
+                                <td>Ankita Mondal</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Gourav Jain</td>
+                                <td>IIIT Sonepat</td>
+                            </tr>
+                            <tr>
+                                <td>Debayan Ganguly</td>
+                                <td>
+                                    Directorate of Technical Education, West
+                                    Bengal
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Anwesha Mukherjee</td>
+                                <td>Mahishadal Raj College</td>
+                            </tr>
+                            <tr>
+                                <td>Pritusna Banik</td>
+                                <td>Narula Institute of Technology</td>
+                            </tr>
+                            <tr>
+                                <td>Manjima Saha</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Sanjukta Majumder</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Debasish Swapnesh Kumar Nayak</td>
+                                <td>
+                                    Centurion University of Technology and
+                                    Management
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Rohit Kumar</td>
+                                <td>ABV-IIITM Gwalior</td>
+                            </tr>
+                            <tr>
+                                <td>Naga Venkata Rajareddy Goluguri</td>
+                                <td>University of Saskatchewan</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Ayush Kumar Agrawal</td>
+                                <td>Dr. C. V. Raman University</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Sandeep Dwarkanath Pande</td>
+                                <td>MIT Academy of Engineering, Alandi</td>
+                            </tr>
+                            <tr>
+                                <td>Aashish Ramdasji Dandekar</td>
+                                <td>RTMNU</td>
+                            </tr>
+                            <tr>
+                                <td>Rabindranath Bera</td>
+                                <td>
+                                    Indian Institute of Information Technology
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Monu Bhagat</td>
+                                <td>
+                                    Birla Institute of Technology, Mesra, Ranchi
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Sahana Das</td>
+                                <td>Adamas University</td>
+                            </tr>
+                            <tr>
+                                <td>Archisman Adhikary</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Dipankar Das</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tanmoy Kundu</td>
+                                <td>AIT</td>
+                            </tr>
+                            <tr>
+                                <td>Prof. Swapnesh Taterh</td>
+                                <td>
+                                    Maharashtra Academy of Engineering Education
+                                    and Research, MIT ACSC
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Gajanan Uttam Patil</td>
+                                <td>HSM’S SSGBCOE&T, Bhusawal</td>
+                            </tr>
+                            <tr>
+                                <td>Senjuti Khanra</td>
+                                <td>Techno Main, Salt Lake</td>
+                            </tr>
+                            <tr>
+                                <td>Ankan Bhowmick</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Pritam Chakraborty</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Jayanta Paul</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Abriti Paul</td>
+                                <td>
+                                    Institute of Engineering and Management,
+                                    Kolkata (Salt Lake Campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Pradipta Roy</td>
+                                <td>B. C. Roy Institute of Technology</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Anindita Roychowdhuri</td>
+                                <td>Sarojini Naidu College for Women</td>
+                            </tr>
+                            <tr>
+                                <td>Saikat Mondal</td>
+                                <td>Amity University, Ranchi</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Jadav Kumar Das</td>
+                                <td>MAKAUT, West Bengal</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Subha Ghosh</td>
+                                <td>Amity University, Kolkata</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Biplab Das</td>
+                                <td>St. Xavier’s University, Kolkata</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Samarjit Roy</td>
+                                <td>
+                                    School of Computing and Information
+                                    Technology, Eastern International
+                                    University, Vietnam
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Anand Motwani</td>
+                                <td>VIT Bhopal University</td>
+                            </tr>
+                            <tr>
+                                <td>Subhajit Adhikari</td>
+                                <td>
+                                    Department of Computer Application, Techno
+                                    India University, West Bengal
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Pabitra Pal</td>
+                                <td>MAKAUT</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Debarati Dey Roy</td>
+                                <td>
+                                    B. P. Poddar Institute of Management and
+                                    Technology, Applied Artificial Intelligence
+                                    Research Centre, UNEC, Baku, Azerbaijan
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Anindita Kundu</td>
+                                <td>VIT Vellore</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Ramesh Saha</td>
+                                <td>
+                                    Indian Institute of Information Technology
+                                    (IIIT) Sonepat
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Abhijit Das</td>
+                                <td>BITS Pilani</td>
+                            </tr>
+                            <tr>
+                                <td>Rajib Bag</td>
+                                <td>Bankura University</td>
+                            </tr>
+                            <tr>
+                                <td>Dr. Sudakshina Mandal</td>
+                                <td>Narula Institute of Technology</td>
+                            </tr>
+                            <tr>
+                                <td>Baiju B. V.</td>
+                                <td>Vellore Institute of Technology</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+
+            <footer class="bg-gray-800 text-gray-300">
+                <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+                    >
+                        <div class="md:col-span-2 lg:col-span-2">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <svg
+                                    width="36"
+                                    height="36"
+                                    viewBox="0 0 32 32"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <circle
+                                        cx="16"
+                                        cy="16"
+                                        r="16"
+                                        fill="#F97316"
+                                    />
+                                    <circle
+                                        cx="16"
+                                        cy="16"
+                                        r="12"
+                                        fill="white"
+                                        fill-opacity="0.2"
+                                    />
+                                    <circle
+                                        cx="16"
+                                        cy="16"
+                                        r="6"
+                                        fill="white"
+                                    />
+                                </svg>
+                                <span class="text-2xl font-bold text-white"
+                                    >MetaSphere 2026</span
+                                >
+                            </div>
+                            <p class="text-sm text-gray-400 max-w-lg">
+                                MetaSphere 2026 is the premier global conference
+                                bridging the future of Cloud, Virtualization,
+                                and the Metaverse. We are dedicated to fostering
+                                innovation, connecting experts, and exploring
+                                the next digital frontier, all from the cultural
+                                heart of Kolkata.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-semibold text-white mb-4">
+                                Quick Links
+                            </h4>
+                            <ul class="space-y-2 text-sm">
+                                <li>
+                                    <a
+                                        href="index.html"
+                                        class="hover:text-orange-400 transition-colors"
+                                        >Home</a
+                                    >
+                                </li>
+                                <li>
+                                    <a
+                                        href="CallPapers.html"
+                                        class="hover:text-orange-400 transition-colors"
+                                        >Call For Papers</a
+                                    >
+                                </li>
+                                <li>
+                                    <a
+                                        href="/scientific-committee.html"
+                                        class="hover:text-orange-400 transition-colors"
+                                        >Scientific Committee</a
+                                    >
+                                </li>
+                                <li>
+                                    <a
+                                        href="/AdvisoryCommittee.html"
+                                        class="hover:text-orange-400 transition-colors"
+                                        >Advisory Committee</a
+                                    >
+                                </li>
+                                <li>
+                                    <a
+                                        href="/TechCommittee.html"
+                                        class="hover:text-orange-400 transition-colors"
+                                        >Technical Program Committee</a
+                                    >
+                                </li>
+                                <li>
+                                    <a
+                                        href="/Keynote_Speaker.html"
+                                        class="hover:text-orange-400 transition-colors"
+                                        >Keynote Speakers</a
+                                    >
+                                </li>
+                                <li>
+                                    <a
+                                        href="/registration.html"
+                                        class="hover:text-orange-400 transition-colors"
+                                        >Registration</a
+                                    >
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="font-semibold text-white mb-4">
+                                Contact & Venue
+                            </h4>
+                            <div class="text-sm space-y-2">
+                                <p class="font-bold">IEM Ashram Building</p>
+                                <p class="text-gray-400">
+                                    GN-34/2, Sector V, Bidhannagar, Kolkata,
+                                    West Bengal 700091
+                                </p>
+                                <a
+                                    href="mailto:metaSphere2026@iem.edu.in"
+                                    class="block hover:text-orange-400 transition-colors pt-2"
+                                    >metaSphere2026@iem.edu.in</a
+                                >
+                                <a
+                                    href="tel:+919874465365"
+                                    class="block hover:text-orange-400 transition-colors"
+                                    >+91 987 446 5375</a
+                                >
+                            </div>
+                            <div class="mt-4 rounded-lg overflow-hidden">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.123456789!2d88.4296927!3d22.5701392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275b23d77ee27%3A0xcd498ec0d7bf6f54!2sInstitute%20of%20Engineering%20and%20Management%20(Ashram%20Building)!5e0!3m2!1sen!2sin!4v1690000000000"
+                                    width="100%"
+                                    height="150"
+                                    style="border: 0"
+                                    allowfullscreen=""
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                >
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-8 border-t border-gray-700 text-center">
+                        <p class="text-sm text-gray-400">
+                            &copy; 2026 MetaSphere Conference Committee. All
+                            Rights Reserved.
+                        </p>
+                    </div>
+                </div>
+            </footer>
         </div>
-      </main>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="/script.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#committeeTable").DataTable({
+                    pageLength: 10,
+                    responsive: true,
+                    language: {
+                        search: "Filter members:",
+                        lengthMenu: "Show _MENU_ entries",
+                    },
+                });
 
-      <footer class="bg-gray-800 text-gray-300">
-        <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="md:col-span-2 lg:col-span-2">
-              <div class="flex items-center space-x-3 mb-4">
-                <svg
-                  width="36"
-                  height="36"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <circle cx="16" cy="16" r="16" fill="#F97316" />
-                  <circle
-                    cx="16"
-                    cy="16"
-                    r="12"
-                    fill="white"
-                    fill-opacity="0.2"
-                  />
-                  <circle cx="16" cy="16" r="6" fill="white" />
-                </svg>
-                <span class="text-2xl font-bold text-white"
-                  >MetaSphere 2026</span
-                >
-              </div>
-              <p class="text-sm text-gray-400 max-w-lg">
-                MetaSphere 2026 is the premier global conference bridging the
-                future of Cloud, Virtualization, and the Metaverse. We are
-                dedicated to fostering innovation, connecting experts, and
-                exploring the next digital frontier, all from the cultural heart
-                of Kolkata.
-              </p>
-              <!-- <div class="flex space-x-4 mt-6">
-                <a
-                  href="#"
-                  aria-label="Visit our Twitter page"
-                  class="text-gray-400 hover:text-white transition-colors"
-                >
-                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path
-                      d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
-                    />
-                  </svg>
-                </a>
-                <a
-                  href="#"
-                  aria-label="Visit our LinkedIn page"
-                  class="text-gray-400 hover:text-white transition-colors"
-                >
-                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path
-                      d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
-                    />
-                  </svg>
-                </a>
-                <a
-                  href="#"
-                  aria-label="Visit our Instagram page"
-                  class="text-gray-400 hover:text-white transition-colors"
-                >
-                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path
-                      d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
-                    />
-                  </svg>
-                </a>
-              </div> -->
-            </div>
+                // Initialize Lucide Icons HERE
+                lucide.createIcons();
+            });
 
-            <div>
-              <h4 class="font-semibold text-white mb-4">Quick Links</h4>
-              <ul class="space-y-2 text-sm">
-                <li>
-                  <a
-                    href="index.html"
-                    class="hover:text-orange-400 transition-colors"
-                    >Home</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="CallPapers.html"
-                    class="hover:text-orange-400 transition-colors"
-                    >Call For Papers</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="/scientific-committee.html"
-                    class="hover:text-orange-400 transition-colors"
-                    >Scientific Committee</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="/AdvisoryCommittee.html"
-                    class="hover:text-orange-400 transition-colors"
-                    >Advisory Committee</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="/TechCommittee.html"
-                    class="hover:text-orange-400 transition-colors"
-                    >Technical Program Committee</a
-                  >
-                </li>
-                <!-- <li><a href="/#tracks" class="hover:text-orange-400 transition-colors">Tracks</a></li> -->
-                <li>
-                  <a
-                    href="/registration.html"
-                    class="hover:text-orange-400 transition-colors"
-                    >Registration</a
-                  >
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 class="font-semibold text-white mb-4">Contact & Venue</h4>
-              <div class="text-sm space-y-2">
-                <p class="font-bold">IEM Ashram Building</p>
-                <p class="text-gray-400">
-                  GN-34/2, Sector V, Bidhannagar, Kolkata, West Bengal 700091
-                </p>
-                <a
-                  href="mailto:metaSphere2026@iem.edu.in"
-                  class="block hover:text-orange-400 transition-colors pt-2"
-                  >metaSphere2026@iem.edu.in</a
-                >
-                <a
-                  href="tel:+919874465365"
-                  class="block hover:text-orange-400 transition-colors"
-                  >+91 987 446 5375</a
-                >
-              </div>
-              <div class="mt-4 rounded-lg overflow-hidden">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.123456789!2d88.4296927!3d22.5701392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275b23d77ee27%3A0xcd498ec0d7bf6f54!2sInstitute%20of%20Engineering%20and%20Management%20(Ashram%20Building)!5e0!3m2!1sen!2sin!4v1690000000000"
-                  width="100%"
-                  height="150"
-                  style="border: 0"
-                  allowfullscreen=""
-                  loading="lazy"
-                  referrerpolicy="no-referrer-when-downgrade"
-                >
-                </iframe>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-8 pt-8 border-t border-gray-700 text-center">
-            <p class="text-sm text-gray-400">
-              &copy; 2026 MetaSphere Conference Committee. All Rights Reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="/script.js"></script>
-    <script>
-      $(document).ready(function () {
-        $("#committeeTable").DataTable({
-          pageLength: 10,
-          responsive: true,
-          language: {
-            search: "Filter members:",
-            lengthMenu: "Show _MENU_ entries",
-          },
-        });
-
-        // Initialize Lucide Icons HERE
-        lucide.createIcons();
-      });
-
-      // AOS can stay outside since it initializes immediately
-      AOS.init();
-    </script>
-  </body>
+            // AOS can stay outside since it initializes immediately
+            AOS.init();
+        </script>
+    </body>
 </html>
