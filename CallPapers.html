@@ -1,306 +1,176 @@
 <!doctype html>
 <html lang="en" class="scroll-smooth">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Call for Papers | MetaSphere 2026</title>
-        <link rel="stylesheet" href="/Style.css" />
-        <link
-            href="https://unpkg.com/aos@2.3.1/dist/aos.css"
-            rel="stylesheet"
-        />
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-            rel="stylesheet"
-        />
-        <script src="https://unpkg.com/lucide@latest"></script>
-        <style>
-            html,
-            body {
-                padding: 0;
-                margin: 0;
-                font-family: "Inter", sans-serif;
-                background-color: #fffbf5;
-                color: #1a202c;
-                /* FIX: Prevents horizontal scrolling/overflow on all screen sizes */
-                overflow-x: hidden;
-            }
-            .btn-register {
-                background-color: #f97316;
-                color: white;
-            }
-            .btn-register:hover {
-                background-color: #ea580c;
-            }
-            .gradient-text {
-                background: linear-gradient(45deg, #f97316, #d946ef);
-                -webkit-background-clip: text;
-                background-clip: text;
-                -webkit-text-fill-color: transparent;
-                color: transparent;
-            }
-            .sidebar-card {
-                border: 1px solid #e2e8f0;
-                background-color: #ffffff;
-            }
-        </style>
-    </head>
-    <body class="antialiased">
-        <header
-            class="top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-lg shadow-md relative"
-        >
-            <!-- Banner Section -->
-            <div class="relative">
-                <img
-                    src="Assets/01.svg"
-                    alt="Conference Banner"
-                    class="w-full h- object-cover"
-                />
-                <!-- Optional dark overlay for readability -->
-                <div class="absolute inset-0"></div>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Call for Papers | MetaSphere 2026</title>
+    <link rel="stylesheet" href="/Style.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            font-family: "Inter", sans-serif;
+            background-color: #fffbf5;
+            color: #1a202c;
+            /* FIX: Prevents horizontal scrolling/overflow on all screen sizes */
+            overflow-x: hidden;
+        }
+
+        .btn-register {
+            background-color: #f97316;
+            color: white;
+        }
+
+        .btn-register:hover {
+            background-color: #ea580c;
+        }
+
+        .gradient-text {
+            background: linear-gradient(45deg, #f97316, #d946ef);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .sidebar-card {
+            border: 1px solid #e2e8f0;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <header class="top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-lg shadow-md relative">
+        <!-- Banner Section -->
+        <div class="relative">
+            <img src="Assets/01.svg" alt="Conference Banner" class="w-full h- object-cover" />
+            <!-- Optional dark overlay for readability -->
+            <div class="absolute inset-0"></div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 py-3">
+            <!-- Logo -->
+            <div class="flex flex-col space-x-2">
+                <span class="text-lg sm:text-xl font-bold text-white">MetaSphere 2026</span>
+                <!-- <span class="text-xs text-white "> Global Conference on Cloud, Virtualization & Metaverse</span> -->
             </div>
 
-            <!-- Navigation Bar -->
-            <div
-                class="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 py-3"
-            >
-                <!-- Logo -->
-                <div class="flex flex-col space-x-2">
-                    <span class="text-lg sm:text-xl font-bold text-white"
-                        >MetaSphere 2026</span
-                    >
-                    <!-- <span class="text-xs text-white "> Global Conference on Cloud, Virtualization & Metaverse</span> -->
-                </div>
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center">
+                <nav class="flex items-center space-x-5 text-sm font-medium">
+                    <a href="/index.html" class="text-white hover:text-orange-400 transition">Home</a>
 
-                <!-- Desktop Nav -->
-                <div class="hidden md:flex items-center">
-                    <nav
-                        class="flex items-center space-x-5 text-sm font-medium"
-                    >
-                        <a
-                            href="/index.html"
-                            class="text-white hover:text-orange-400 transition"
-                            >Home</a
-                        >
-
-                        <!-- Authors Dropdown -->
-                        <div class="relative">
-                            <button
-                                onclick="toggleDropdown('authorsDropdown')"
-                                class="text-white hover:text-orange-400 flex items-center"
-                            >
-                                Authors
-                                <i
-                                    data-lucide="chevron-down"
-                                    class="w-3.5 h-3.5 ml-1"
-                                ></i>
-                            </button>
-                            <div
-                                id="authorsDropdown"
-                                class="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50"
-                            >
-                                <a
-                                    href="/CallPapers.html"
-                                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
-                                    >Call For Papers</a
-                                >
-                                <a
-                                    href="/PaperSubmit.html"
-                                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
-                                    >Paper Submission</a
-                                >
-                            </div>
+                    <!-- Authors Dropdown -->
+                    <div class="relative">
+                        <button onclick="toggleDropdown('authorsDropdown')"
+                            class="text-white hover:text-orange-400 flex items-center">
+                            Authors
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 ml-1"></i>
+                        </button>
+                        <div id="authorsDropdown"
+                            class="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50">
+                            <a href="/CallPapers.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Call
+                                For Papers</a>
+                            <a href="/PaperSubmit.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Paper
+                                Submission</a>
                         </div>
+                    </div>
 
-                        <a
-                            href="/technical-programs.html"
-                            class="text-white hover:text-orange-400 transition"
-                            >Technical Programs</a
-                        >
-                        <a
-                            href="/registration.html"
-                            class="text-white hover:text-orange-400 transition"
-                            >Registration</a
-                        >
-                        <a
-                            href="/Keynote_Speaker.html"
-                            class="text-white hover:text-orange-400 transition"
-                            >Keynote Speakers</a
-                        >
+                    <a href="/technical-programs.html" class="text-white hover:text-orange-400 transition">Technical
+                        Programs</a>
+                    <a href="/registration.html" class="text-white hover:text-orange-400 transition">Registration</a>
+                    <a href="/Keynote_Speaker.html" class="text-white hover:text-orange-400 transition">Keynote
+                        Speakers</a>
 
-                        <!-- Committee Dropdown -->
-                        <div class="relative">
-                            <button
-                                onclick="toggleDropdown('committeeDropdown')"
-                                class="text-white hover:text-orange-400 flex items-center"
-                            >
-                                Committee
-                                <i
-                                    data-lucide="chevron-down"
-                                    class="w-3.5 h-3.5 ml-1"
-                                ></i>
-                            </button>
-                            <div
-                                id="committeeDropdown"
-                                class="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50"
-                            >
-                                <a
-                                    href="/scientific-committee.html"
-                                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
-                                    >Scientific Committee</a
-                                >
-                                <a
-                                    href="/AdvisoryCommittee.html"
-                                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
-                                    >Advisory Committee</a
-                                >
-                                <a
-                                    href="/TechCommittee.html"
-                                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
-                                    >Technical Programs Committee</a
-                                >
-                                <a
-                                    href="/AAIA.html"
-                                    class="block px-4 py-2 text-gray-700 hover:bg-orange-100"
-                                    >AAIA Committee</a
-                                >
-                            </div>
+                    <!-- Committee Dropdown -->
+                    <div class="relative">
+                        <button onclick="toggleDropdown('committeeDropdown')"
+                            class="text-white hover:text-orange-400 flex items-center">
+                            Committee
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 ml-1"></i>
+                        </button>
+                        <div id="committeeDropdown"
+                            class="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50">
+                            <a href="/scientific-committee.html"
+                                class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Scientific Committee</a>
+                            <a href="/AdvisoryCommittee.html"
+                                class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Advisory Committee</a>
+                            <a href="/TechCommittee.html"
+                                class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Technical Programs
+                                Committee</a>
+                            <a href="/AAIA.html" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">AAIA
+                                Committee</a>
                         </div>
+                    </div>
 
-                        <a
-                            href="/TechSponsor.html"
-                            class="text-white hover:text-orange-400 transition"
-                            >Technical Sponsors</a
-                        >
-                        <a
-                            href="/Contact.html"
-                            class="text-white hover:text-orange-400 transition"
-                            >Contact</a
-                        >
-                    </nav>
+                    <a href="/TechSponsor.html" class="text-white hover:text-orange-400 transition">Technical
+                        Sponsors</a>
+                    <a href="/Contact.html" class="text-white hover:text-orange-400 transition">Contact</a>
+                </nav>
 
-                    <!-- Register Button -->
-                    <a
-                        href="/registration.html"
-                        class="ml-6 px-4 py-1.5 rounded-md text-sm font-semibold shadow-md transition bg-orange-500 text-white hover:bg-orange-600"
-                    >
-                        Register Now
-                    </a>
-                </div>
-
-                <!-- Mobile Hamburger -->
-                <button
-                    onclick="toggleMobileMenu()"
-                    class="md:hidden p-2 rounded-md text-white hover:bg-orange-400"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="26"
-                        height="26"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <line x1="4" x2="20" y1="12" y2="12" />
-                        <line x1="4" x2="20" y1="6" y2="6" />
-                        <line x1="4" x2="20" y1="18" y2="18" />
-                    </svg>
-                </button>
+                <!-- Register Button -->
+                <a href="/registration.html"
+                    class="ml-6 px-4 py-1.5 rounded-md text-sm font-semibold shadow-md transition bg-orange-500 text-white hover:bg-orange-600">
+                    Register Now
+                </a>
             </div>
 
-            <!-- Mobile Menu -->
+            <!-- Mobile Hamburger -->
+            <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-md text-white hover:bg-orange-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" x2="20" y1="12" y2="12" />
+                    <line x1="4" x2="20" y1="6" y2="6" />
+                    <line x1="4" x2="20" y1="18" y2="18" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-black/70 text-white px-6 py-4 space-y-4">
+            <a href="/index.html" class="block hover:text-orange-400">Home</a>
+            <a href="/CallPapers.html" class="block hover:text-orange-400">Call for Papers</a>
+            <a href="/Keynote_Speaker.html" class="block hover:text-orange-400">Keynote Speakers</a>
+            <a href="/PaperSubmit.html" class="block hover:text-orange-400">Paper Submission</a>
+            <a href="/technical-programs.html" class="block hover:text-orange-400">Technical Programs</a>
+            <a href="/registration.html" class="block hover:text-orange-400">Registration</a>
+            <a href="/scientific-committee.html" class="block hover:text-orange-400">Scientific Committee</a>
+            <a href="/AdvisoryCommittee.html" class="block hover:text-orange-400">Advisory Committee</a>
+            <a href="/TechCommittee.html" class="block hover:text-orange-400">Technical Program Committee</a>
+            <a href="/AAIA.html" class="block hover:text-orange-400">AAIA Committee</a>
+            <a href="/TechSponsor.html" class="block hover:text-orange-400">Technical Sponsors</a>
+            <a href="/Contact.html" class="block hover:text-orange-400">Contact</a>
+            <a href="/registration.html"
+                class="block bg-orange-500 text-center rounded-md py-2 text-sm font-semibold hover:bg-orange-600">Register
+                Now</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="relative pt-32 pb-20 sm:pt-40 sm:pb-24 overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full z-0">
+                <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover">
+                    <source src="/Assets/Paper.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+            </div>
             <div
-                id="mobileMenu"
-                class="md:hidden hidden bg-black/70 text-white px-6 py-4 space-y-4"
-            >
-                <a href="/index.html" class="block hover:text-orange-400"
-                    >Home</a
-                >
-                <a href="/CallPapers.html" class="block hover:text-orange-400"
-                    >Call for Papers</a
-                >
-                <a
-                    href="/Keynote_Speaker.html"
-                    class="block hover:text-orange-400"
-                    >Keynote Speakers</a
-                >
-                <a href="/PaperSubmit.html" class="block hover:text-orange-400"
-                    >Paper Submission</a
-                >
-                <a
-                    href="/technical-programs.html"
-                    class="block hover:text-orange-400"
-                    >Technical Programs</a
-                >
-                <a href="/registration.html" class="block hover:text-orange-400"
-                    >Registration</a
-                >
-                <a
-                    href="/scientific-committee.html"
-                    class="block hover:text-orange-400"
-                    >Scientific Committee</a
-                >
-                <a
-                    href="/AdvisoryCommittee.html"
-                    class="block hover:text-orange-400"
-                    >Advisory Committee</a
-                >
-                <a
-                    href="/TechCommittee.html"
-                    class="block hover:text-orange-400"
-                    >Technical Program Committee</a
-                >
-                <a href="/AAIA.html" class="block hover:text-orange-400"
-                    >AAIA Committee</a
-                >
-                <a href="/TechSponsor.html" class="block hover:text-orange-400"
-                    >Technical Sponsors</a
-                >
-                <a href="/Contact.html" class="block hover:text-orange-400"
-                    >Contact</a
-                >
-                <a
-                    href="/registration.html"
-                    class="block bg-orange-500 text-center rounded-md py-2 text-sm font-semibold hover:bg-orange-600"
-                    >Register Now</a
-                >
+                class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#FFFBF5] via-[#FFFBF5]/80 to-transparent z-10">
             </div>
-        </header>
-
-        <main>
-            <section
-                class="relative pt-32 pb-20 sm:pt-40 sm:pb-24 overflow-hidden"
-            >
-                <div class="absolute top-0 left-0 w-full h-full z-0">
-                    <video
-                        autoplay
-                        loop
-                        muted
-                        playsinline
-                        class="absolute top-0 left-0 w-full h-full object-cover"
-                    >
-                        <source src="/Assets/Paper.mp4" type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                <div
-                    class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#FFFBF5] via-[#FFFBF5]/80 to-transparent z-10"
-                ></div>
-                <div
-                    class="relative max-w-5xl mx-auto text-center px-4 z-20"
-                    data-aos="fade-up"
-                    data-aos-duration="1000"
-                >
-                    <h1
-                        class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight"
-                    >
-                        Call for <span class="gradient-text">Papers</span>
-                    </h1>
-                    <p
+            <div class="relative max-w-5xl mx-auto text-center px-4 z-20" data-aos="fade-up" data-aos-duration="1000">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+                    Call for <span class="gradient-text">Papers</span>
+                </h1>
+                <!-- <p
                         style="text-align: justify"
                         class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto"
                     >
@@ -318,85 +188,69 @@
                         conference addresses the systemic shifts currently
                         redefining global communication, commerce, healthcare,
                         and immersive experiences.
-                    </p>
-                    <p
-                        style="text-align: justify"
-                        class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto"
-                    >
-                        The proceedings emphasize critical developments in
-                        scalable cloud architectures, intelligent virtual
-                        environments, digital twins, and cybersecurity within
-                        virtual domains. Through a structured program of plenary
-                        addresses by global authorities, peer-reviewed technical
-                        sessions, and industrial exhibitions, MetaSphere 2026
-                        fosters high-level interdisciplinary dialogue. This
-                        collaborative environment is specifically engineered to
-                        bridge the gap between academic theory and real-world
-                        application, establishing a robust framework for the
-                        future of connected virtual ecosystems.
-                    </p>
-                </div>
-            </section>
+                    </p> -->
+                <!-- <p style="text-align: justify" class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                    The proceedings emphasize critical developments in
+                    scalable cloud architectures, intelligent virtual
+                    environments, digital twins, and cybersecurity within
+                    virtual domains. Through a structured program of plenary
+                    addresses by global authorities, peer-reviewed technical
+                    sessions, and industrial exhibitions, MetaSphere 2026
+                    fosters high-level interdisciplinary dialogue. This
+                    collaborative environment is specifically engineered to
+                    bridge the gap between academic theory and real-world
+                    application, establishing a robust framework for the
+                    future of connected virtual ecosystems.
+                </p> -->
+            </div>
+        </section>
 
-            <div class="container mx-auto px-4 sm:px-6 py-12 sm:py-20">
-                <div class="flex flex-col lg:flex-row gap-12">
-                    <div class="w-full lg:w-2/3" data-aos="fade-right">
-                        <div
-                            class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border border-gray-100"
-                        >
-                            <h2
-                                class="text-2xl sm:text-3xl font-bold text-gray-900"
-                            >
-                                Submission Guidelines
-                            </h2>
-                            <p
-                                style="text-align: justify"
-                                class="mt-4 text-gray-600 leading-relaxed text-sm sm:text-base"
-                            >
-                                Authors are invited to submit original,
-                                unpublished research papers that are not being
-                                considered for publication elsewhere. All
-                                submissions will be peer-reviewed based on
-                                originality, technical quality, and relevance to
-                                the conference themes. Papers should be
-                                formatted according to the provided templates
-                                and submitted electronically via the online
-                                submission portal.
-                            </p>
-                            <p
-                                style="text-align: justify"
-                                class="mt-4 text-gray-600 leading-relaxed text-sm sm:text-base"
-                            >
-                                Topics of interest include, but are not limited
-                                to, the areas listed below. We welcome
-                                submissions that explore innovative ideas, novel
-                                applications, and theoretical advancements in
-                                these fields.
-                            </p>
-                        </div>
+        <div class="container mx-auto px-4 sm:px-6 py-12 sm:py-20">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="w-full lg:w-2/3" data-aos="fade-right">
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border border-gray-100">
+                        <!-- <h2 class="text-2xl sm:text-3xl font-bold text-gray-900", style="text-align: center;">
+                            Call for Papers
+                        </h2> -->
+                        <p style="text-align: justify" class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                            MetaSphere 2026 serves as a premier two-day international forum facilitating the convergence
+                            of cutting-edge innovation, scholarly research, and industrial expertise. This summit
+                            assembles a diverse global cohort of researchers, policymakers, and technology executives to
+                            disseminate breakthroughs and analyze the transformative advancements defining the digital
+                            frontier. By focusing on the intersection of cloud infrastructure, virtualization, and the
+                            Metaverse ecosystem, the conference addresses the systemic shifts currently redefining
+                            global communication, commerce, healthcare, and immersive experiences.
+                        </p>
+                        <p style="text-align: justify" class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                            The proceedings emphasize critical developments in
+                            scalable cloud architectures, intelligent virtual
+                            environments, digital twins, and cybersecurity within
+                            virtual domains. Through a structured program of plenary
+                            addresses by global authorities, peer-reviewed technical
+                            sessions, and industrial exhibitions, MetaSphere 2026
+                            fosters high-level interdisciplinary dialogue. This
+                            collaborative environment is specifically engineered to
+                            bridge the gap between academic theory and real-world
+                            application, establishing a robust framework for the
+                            future of connected virtual ecosystems.
+                        </p>
+                    </div>
 
-                        <div class="mt-8 sm:mt-12" id="conference-tracks">
-                            <h3
-                                class="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8"
-                            >
-                                Conference Topics
-                            </h3>
-                            <div class="space-y-4 sm:space-y-6">
-                                <!-- track1 -->
-                                <div
-                                    class="flip-card bg-white shadow-black/40 shadow-lg p-4 rounded-2xl"
-                                    data-aos="fade-right"
-                                    data-aos-duration="1000"
-                                >
-                                    <div class="flip-card-inner">
-                                        <div class="flip-card-front">
-                                            <div class="text-6xl mb-4"></div>
-                                            <h3
-                                                class="text-lg font-bold text-gray-900 mb-2"
-                                            >
-                                                Cloud Computing & Virtualization
-                                            </h3>
-                                            <p
+                    <div class="mt-8 sm:mt-12" id="conference-tracks">
+                        <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">
+                            Conference Topics
+                        </h3>
+                        <div class="space-y-4 sm:space-y-6">
+                            <!-- track1 -->
+                            <div class="flip-card bg-white shadow-black/40 shadow-lg p-4 rounded-2xl"
+                                data-aos="fade-right" data-aos-duration="1000">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <div class="text-6xl mb-4"></div>
+                                        <h3 class="text-lg font-bold text-gray-900 mb-2">
+                                            Cloud Computing & Virtualization
+                                        </h3>
+                                        <!-- <p
                                                 style="text-align: justify"
                                                 class="text-gray-600"
                                             >
@@ -405,61 +259,47 @@
                                                 ecosystems, virtualization
                                                 technologies, and sustainable
                                                 infrastructures.
-                                            </p>
-                                        </div>
-                                        <div class="flip-card-back">
-                                            <h4
+                                            </p> -->
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <!-- <h4
                                                 class="text-lg font-bold text-gray-900 mb-4"
                                             >
                                                 Subtracks
-                                            </h4>
-                                            <ul
-                                                class="list-disc list-inside space-y-2 text-gray-700 text-sm"
-                                            >
-                                                <li style="text-align: justify">
-                                                    <b
-                                                        >Next-Gen Cloud
-                                                        Architectures</b
-                                                    >
-                                                </li>
-                                                <li style="text-align: justify">
-                                                    <b>Edge & Fog Computing</b>
-                                                </li>
-                                                <li style="text-align: justify">
-                                                    <b
-                                                        >Cloud Security &
-                                                        Compliance</b
-                                                    >
-                                                </li>
-                                                <li style="text-align: justify">
-                                                    <b
-                                                        >Virtualization
-                                                        Advances</b
-                                                    >
-                                                </li>
-                                                <li style="text-align: justify">
-                                                    <b>Green Cloud</b>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                            </h4> -->
+                                        <ul class="list-disc list-inside space-y-2 text-gray-700 text-sm">
+                                            <li style="text-align: justify">
+                                                <b>Next-Gen Cloud
+                                                    Architectures</b>
+                                            </li>
+                                            <li style="text-align: justify">
+                                                <b>Edge & Fog Computing</b>
+                                            </li>
+                                            <li style="text-align: justify">
+                                                <b>Cloud Security &
+                                                    Compliance</b>
+                                            </li>
+                                            <li style="text-align: justify">
+                                                <b>Virtualization
+                                                    Advances</b>
+                                            </li>
+                                            <li style="text-align: justify">
+                                                <b>Green Cloud</b>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
-                                <!-- track 2 -->
-                                <div
-                                    class="flip-card bg-white shadow-black/40 shadow-lg p-4 rounded-2xl"
-                                    data-aos="fade-right"
-                                    data-aos-delay="100"
-                                    data-aos-duration="1000"
-                                >
-                                    <div class="flip-card-inner">
-                                        <div class="flip-card-front">
-                                            <div class="text-6xl mb-4"></div>
-                                            <h3
-                                                class="text-lg font-bold text-gray-900 mb-2"
-                                            >
-                                                Metaverse & Quantum Metaverse
-                                            </h3>
-                                            <p
+                            </div>
+                            <!-- track 2 -->
+                            <div class="flip-card bg-white shadow-black/40 shadow-lg p-4 rounded-2xl"
+                                data-aos="fade-right" data-aos-delay="100" data-aos-duration="1000">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <div class="text-6xl mb-4"></div>
+                                        <h3 class="text-lg font-bold text-gray-900 mb-2">
+                                            Metaverse & Quantum Metaverse
+                                        </h3>
+                                        <!-- <p
                                                 style="text-align: justify"
                                                 class="text-gray-600"
                                             >
@@ -467,83 +307,61 @@
                                                 infrastructures, platforms, and
                                                 experiences shaping the future
                                                 of immersive digital worlds.
-                                            </p>
-                                        </div>
-                                        <div class="flip-card-back">
-                                            <h4
+                                            </p> -->
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <!-- <h4
                                                 class="text-lg font-bold text-gray-900 mb-4"
                                             >
                                                 Subtracks
-                                            </h4>
-                                            <ul
-                                                style="text-align: justify"
-                                                class="list-disc list-inside space-y-2 text-gray-700 text-sm"
-                                            >
-                                                <li style="text-align: justify">
-                                                    <b
-                                                        >Virtual & Augmented
-                                                        Reality (VR/AR/XR)</b
-                                                    >
-                                                </li>
-                                                <li style="text-align: justify">
-                                                    <b
-                                                        >Blockchain & Web3 in
-                                                        the Metaverse</b
-                                                    >
-                                                </li>
-                                                <li style="text-align: justify">
-                                                    <b
-                                                        >Human–Computer
-                                                        Interaction in the
-                                                        Metaverse</b
-                                                    >
-                                                </li>
-                                                <li style="text-align: justify">
-                                                    <b
-                                                        >Interoperability & Open
-                                                        Standards</b
-                                                    >
-                                                </li>
-                                                <li style="text-align: justify">
-                                                    <b
-                                                        >Quantum Computing for
-                                                        the Metaverse</b
-                                                    >
-                                                </li>
-                                                <li style="text-align: justify">
-                                                    <b
-                                                        >Cross-Disciplinary
-                                                        Applications of the
-                                                        Quantum Metaverse</b
-                                                    >
-                                                </li>
-                                                <li style="text-align: justify">
-                                                    <b
-                                                        >Quantum AI & Machine
-                                                        Learning</b
-                                                    >
-                                                </li>
-                                            </ul>
-                                        </div>
+                                            </h4> -->
+                                        <ul style="text-align: justify"
+                                            class="list-disc list-inside space-y-2 text-gray-700 text-sm">
+                                            <li style="text-align: justify">
+                                                <b>Virtual & Augmented
+                                                    Reality (VR/AR/XR)</b>
+                                            </li>
+                                            <li style="text-align: justify">
+                                                <b>Blockchain & Web3 in
+                                                    the Metaverse</b>
+                                            </li>
+                                            <li style="text-align: justify">
+                                                <b>Human–Computer
+                                                    Interaction in the
+                                                    Metaverse</b>
+                                            </li>
+                                            <li style="text-align: justify">
+                                                <b>Interoperability & Open
+                                                    Standards</b>
+                                            </li>
+                                            <li style="text-align: justify">
+                                                <b>Quantum Computing for
+                                                    the Metaverse</b>
+                                            </li>
+                                            <li style="text-align: justify">
+                                                <b>Cross-Disciplinary
+                                                    Applications of the
+                                                    Quantum Metaverse</b>
+                                            </li>
+                                            <li style="text-align: justify">
+                                                <b>Quantum AI & Machine
+                                                    Learning</b>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
+                            </div>
 
-                                <!-- Track 3 -->
-                                <div
-                                    class="flip-card bg-white shadow-black/40 shadow-lg p-4 rounded-2xl"
-                                    data-aos="fade-right"
-                                    data-aos-delay="200"
-                                    data-aos-duration="1000"
-                                >
-                                    <div class="flip-card-inner">
-                                        <div class="flip-card-front">
-                                            <div class="text-6xl mb-4"></div>
-                                            <h3
-                                                class="text-lg font-bold text-gray-900 mb-2"
-                                            >
-                                                AI, Data, & Future Connectivity
-                                            </h3>
-                                            <p
+                            <!-- Track 3 -->
+                            <div class="flip-card bg-white shadow-black/40 shadow-lg p-4 rounded-2xl"
+                                data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <div class="text-6xl mb-4"></div>
+                                        <h3 class="text-lg font-bold text-gray-900 mb-2">
+                                            AI, Data, & Future Connectivity
+                                        </h3>
+                                        <!-- <p
                                                 style="text-align: justify"
                                                 class="text-gray-600"
                                             >
@@ -551,407 +369,256 @@
                                                 data, and next-gen connectivity
                                                 in enabling intelligent cloud
                                                 and metaverse ecosystems.
-                                            </p>
-                                        </div>
-                                        <div class="flip-card-back">
-                                            <h4
+                                            </p> -->
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <!-- <h4
                                                 class="text-lg font-bold text-gray-900 mb-4"
                                             >
                                                 Subtracks
-                                            </h4>
-                                            <ul
-                                                style="text-align: justify"
-                                                class="list-disc list-inside space-y-2 text-gray-700 text-sm"
-                                            >
-                                                <li style="text-align: justify">
-                                                    <b
-                                                        >AI-Driven Cloud &
-                                                        Metaverse</b
-                                                    >
-                                                </li>
-                                                <li style="text-align: justify">
-                                                    <b
-                                                        >6G and Beyond for the
-                                                        Metaverse</b
-                                                    >
-                                                </li>
-                                                <li style="text-align: justify">
-                                                    <b
-                                                        >Big Data & Real-Time
-                                                        Analytics</b
-                                                    >
-                                                </li>
-                                                <li style="text-align: justify">
-                                                    <b
-                                                        >Security, Privacy &
-                                                        Digital Trust</b
-                                                    >
-                                                </li>
-                                                <li style="text-align: justify">
-                                                    <b
-                                                        >Cross-Disciplinary
-                                                        Applications</b
-                                                    >
-                                                </li>
-                                                <li style="text-align: justify">
-                                                    <b
-                                                        >IoT Integration &
-                                                        Digital Twins</b
-                                                    >
-                                                </li>
-                                            </ul>
-                                        </div>
+                                            </h4> -->
+                                        <ul style="text-align: justify"
+                                            class="list-disc list-inside space-y-2 text-gray-700 text-sm">
+                                            <li style="text-align: justify">
+                                                <b>AI-Driven Cloud &
+                                                    Metaverse</b>
+                                            </li>
+                                            <li style="text-align: justify">
+                                                <b>6G and Beyond for the
+                                                    Metaverse</b>
+                                            </li>
+                                            <li style="text-align: justify">
+                                                <b>Big Data & Real-Time
+                                                    Analytics</b>
+                                            </li>
+                                            <li style="text-align: justify">
+                                                <b>Security, Privacy &
+                                                    Digital Trust</b>
+                                            </li>
+                                            <li style="text-align: justify">
+                                                <b>Cross-Disciplinary
+                                                    Applications</b>
+                                            </li>
+                                            <li style="text-align: justify">
+                                                <b>IoT Integration &
+                                                    Digital Twins</b>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <aside
-                        class="w-full lg:w-[350px] shrink-0 space-y-6"
-                        data-aos="fade-left"
-                        data-aos-duration="2000"
-                    >
-                        <div
-                            class="bg-white border border-gray-100 p-6 rounded-2xl shadow-lg"
-                        >
-                            <h3
-                                class="text-xl font-bold text-gray-900 border-b pb-3 mb-4"
-                            >
-                                Important Deadlines
-                            </h3>
-                            <ul
-                                style="text-align: justify"
-                                class="space-y-4 text-base text-gray-600"
-                            >
-                                <li
-                                    style="text-align: justify"
-                                    class="grid grid-cols-2 gap-2 items-start"
-                                >
-                                    <span class="leading-tight"
-                                        >Full paper submission :</span
-                                    >
-                                    <strong class="text-gray-800 text-right"
-                                        >5th May, 2026</strong
-                                    >
-                                </li>
-                                <li
-                                    style="text-align: justify"
-                                    class="grid grid-cols-2 gap-2 items-start"
-                                >
-                                    <span class="leading-tight"
-                                        >Acceptance notification :</span
-                                    >
-                                    <strong class="text-gray-800 text-right"
-                                        >30th June, 2026</strong
-                                    >
-                                </li>
-                                <li
-                                    style="text-align: justify"
-                                    class="grid grid-cols-2 gap-2 items-start"
-                                >
-                                    <span class="leading-tight"
-                                        >Early bird registration :</span
-                                    >
-                                    <strong class="text-gray-800 text-right"
-                                        >7th July, 2026</strong
-                                    >
-                                </li>
-                                <li
-                                    style="text-align: justify"
-                                    class="grid grid-cols-2 gap-2 items-start"
-                                >
-                                    <span class="leading-tight"
-                                        >Camera ready paper submission:</span
-                                    >
-                                    <strong class="text-gray-800 text-right"
-                                        >31st July, 2026</strong
-                                    >
-                                </li>
-                                <li
-                                    style="text-align: justify"
-                                    class="grid grid-cols-2 gap-2 items-start"
-                                >
-                                    <span class="leading-tight"
-                                        >Registration :</span
-                                    >
-                                    <strong class="text-gray-800 text-right"
-                                        >20th July, 2026</strong
-                                    >
-                                </li>
-                                <li
-                                    style="text-align: justify"
-                                    class="grid grid-cols-2 gap-2 items-start pt-2 border-t border-gray-50"
-                                >
-                                    <span class="leading-tight font-medium"
-                                        >Conference date:</span
-                                    >
-                                    <strong class="text-orange-600 text-right"
-                                        >21st & 22nd Aug, 2026</strong
-                                    >
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="sticky top-24 sm:top-28">
-                            <div
-                                class="bg-white border border-gray-200 p-4 rounded-xl shadow-md"
-                            >
-                                <div
-                                    class="flex items-center justify-between gap-4"
-                                >
-                                    <h3
-                                        class="text-xs uppercase tracking-tighter text-orange-500 font-bold whitespace-nowrap"
-                                    >
-                                        Starts In:
-                                    </h3>
-
-                                    <div
-                                        id="countdown-container"
-                                        class="flex items-center gap-2"
-                                    >
-                                        <div class="flex items-center gap-1">
-                                            <span
-                                                id="days"
-                                                class="text-xl font-bold text-gray-900"
-                                                >00</span
-                                            >
-                                            <span
-                                                class="text-[10px] font-semibold text-gray-500 uppercase"
-                                                >D</span
-                                            >
-                                        </div>
-                                        <span class="text-gray-300 font-light"
-                                            >:</span
-                                        >
-                                        <div class="flex items-center gap-1">
-                                            <span
-                                                id="hours"
-                                                class="text-xl font-bold text-gray-900"
-                                                >00</span
-                                            >
-                                            <span
-                                                class="text-[10px] font-semibold text-gray-500 uppercase"
-                                                >H</span
-                                            >
-                                        </div>
-                                        <span class="text-gray-300 font-light"
-                                            >:</span
-                                        >
-                                        <div class="flex items-center gap-1">
-                                            <span
-                                                id="minutes"
-                                                class="text-xl font-bold text-gray-900"
-                                                >00</span
-                                            >
-                                            <span
-                                                class="text-[10px] font-semibold text-gray-500 uppercase"
-                                                >M</span
-                                            >
-                                        </div>
-                                        <span class="text-gray-300 font-light"
-                                            >:</span
-                                        >
-                                        <div class="flex items-center gap-1">
-                                            <span
-                                                id="seconds"
-                                                class="text-xl font-bold text-gray-900"
-                                                >00</span
-                                            >
-                                            <span
-                                                class="text-[10px] font-semibold text-gray-500 uppercase"
-                                                >S</span
-                                            >
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="sticky top-24 sm:top-28">
-                            <a
-                                href="#"
-                                class="block w-full text-center btn-register font-bold py-3 sm:py-4 px-4 sm:px-5 rounded-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-sm sm:text-base"
-                            >
-                                Submit Your Paper Now
-                            </a>
-                        </div>
-                    </aside>
                 </div>
-            </div>
-        </main>
 
-        <footer class="bg-gray-800 text-gray-300">
-            <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-                <div
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-                >
-                    <div class="md:col-span-2 lg:col-span-2">
-                        <div
-                            class="flex items-center space-x-3 mb-4 border-b-2 border-b-white"
-                        >
-                            <span class="text-2xl font-bold text-white"
-                                >MetaSphere 2026</span
-                            >
-                        </div>
-                        <p
-                            style="text-align: justify"
-                            class="text-sm text-gray-400 max-w-lg"
-                        >
-                            MetaSphere 2026 is the premier global conference
-                            bridging the future of Cloud, Virtualization, and
-                            the Metaverse. We are dedicated to fostering
-                            innovation, connecting experts, and exploring the
-                            next digital frontier, all from the cultural heart
-                            of Kolkata.
-                        </p>
-                    </div>
-
-                    <div>
-                        <h4 class="font-semibold text-white mb-4">
-                            Quick Links
-                        </h4>
-                        <ul class="space-y-2 text-sm">
-                            <li>
-                                <a
-                                    href="index.html"
-                                    class="hover:text-orange-400 transition-colors"
-                                    >Home</a
-                                >
+                <aside class="w-full lg:w-[350px] shrink-0 space-y-6" data-aos="fade-left" data-aos-duration="2000">
+                    <div class="bg-white border border-gray-100 p-6 rounded-2xl shadow-lg">
+                        <h3 class="text-xl font-bold text-gray-900 border-b pb-3 mb-4">
+                            Important Deadlines
+                        </h3>
+                        <ul style="text-align: justify" class="space-y-4 text-base text-gray-600">
+                            <li style="text-align: justify" class="grid grid-cols-2 gap-2 items-start">
+                                <span class="leading-tight">Full paper submission :</span>
+                                <strong class="text-gray-800 text-right">5th May, 2026</strong>
                             </li>
-                            <li>
-                                <a
-                                    href="CallPapers.html"
-                                    class="hover:text-orange-400 transition-colors"
-                                    >Call For Papers</a
-                                >
+                            <li style="text-align: justify" class="grid grid-cols-2 gap-2 items-start">
+                                <span class="leading-tight">Acceptance notification :</span>
+                                <strong class="text-gray-800 text-right">30th June, 2026</strong>
                             </li>
-                            <li>
-                                <a
-                                    href="/scientific-committee.html"
-                                    class="hover:text-orange-400 transition-colors"
-                                    >Scientific Committee</a
-                                >
+                            <li style="text-align: justify" class="grid grid-cols-2 gap-2 items-start">
+                                <span class="leading-tight">Early bird registration :</span>
+                                <strong class="text-gray-800 text-right">7th July, 2026</strong>
                             </li>
-                            <li>
-                                <a
-                                    href="/AdvisoryCommittee.html"
-                                    class="hover:text-orange-400 transition-colors"
-                                    >Advisory Committee</a
-                                >
+                            <li style="text-align: justify" class="grid grid-cols-2 gap-2 items-start">
+                                <span class="leading-tight">Camera ready paper submission:</span>
+                                <strong class="text-gray-800 text-right">31st July, 2026</strong>
                             </li>
-                            <li>
-                                <a
-                                    href="/TechCommittee.html"
-                                    class="hover:text-orange-400 transition-colors"
-                                    >Technical Program Committee</a
-                                >
+                            <li style="text-align: justify" class="grid grid-cols-2 gap-2 items-start">
+                                <span class="leading-tight">Registration :</span>
+                                <strong class="text-gray-800 text-right">20th July, 2026</strong>
                             </li>
-                            <li>
-                                <a
-                                    href="/Keynote_Speaker.html"
-                                    class="hover:text-orange-400 transition-colors"
-                                    >Keynote Speakers</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                    href="/registration.html"
-                                    class="hover:text-orange-400 transition-colors"
-                                    >Registration</a
-                                >
+                            <li style="text-align: justify"
+                                class="grid grid-cols-2 gap-2 items-start pt-2 border-t border-gray-50">
+                                <span class="leading-tight font-medium">Conference date:</span>
+                                <strong class="text-orange-600 text-right">21st & 22nd Aug, 2026</strong>
                             </li>
                         </ul>
                     </div>
 
-                    <div>
-                        <h4 class="font-semibold text-white mb-4">
-                            Contact & Venue
-                        </h4>
-                        <div class="text-sm space-y-2">
-                            <p class="font-bold">IEM Ashram Building</p>
-                            <p class="text-gray-400">
-                                GN-34/2, Sector V, Bidhannagar, Kolkata, West
-                                Bengal 700091
-                            </p>
-                            <a
-                                href="mailto:metaSphere2026@iem.edu.in"
-                                class="block hover:text-orange-400 transition-colors pt-2"
-                                >metaSphere2026@iem.edu.in</a
-                            >
-                            <a
-                                href="tel:+919874465365"
-                                class="block hover:text-orange-400 transition-colors"
-                                >+91 987 446 5375</a
-                            >
-                        </div>
-                        <div class="mt-4 rounded-lg overflow-hidden">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.123456789!2d88.4296927!3d22.5701392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275b23d77ee27%3A0xcd498ec0d7bf6f54!2sInstitute%20of%20Engineering%20and%20Management%20(Ashram%20Building)!5e0!3m2!1sen!2sin!4v1690000000000"
-                                width="100%"
-                                height="150"
-                                style="border: 0"
-                                allowfullscreen=""
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"
-                            >
-                            </iframe>
+                    <div class="sticky top-24 sm:top-28">
+                        <div class="bg-white border border-gray-200 p-4 rounded-xl shadow-md">
+                            <div class="flex items-center justify-between gap-4">
+                                <h3
+                                    class="text-xs uppercase tracking-tighter text-orange-500 font-bold whitespace-nowrap">
+                                    Starts In:
+                                </h3>
+
+                                <div id="countdown-container" class="flex items-center gap-2">
+                                    <div class="flex items-center gap-1">
+                                        <span id="days" class="text-xl font-bold text-gray-900">00</span>
+                                        <span class="text-[10px] font-semibold text-gray-500 uppercase">D</span>
+                                    </div>
+                                    <span class="text-gray-300 font-light">:</span>
+                                    <div class="flex items-center gap-1">
+                                        <span id="hours" class="text-xl font-bold text-gray-900">00</span>
+                                        <span class="text-[10px] font-semibold text-gray-500 uppercase">H</span>
+                                    </div>
+                                    <span class="text-gray-300 font-light">:</span>
+                                    <div class="flex items-center gap-1">
+                                        <span id="minutes" class="text-xl font-bold text-gray-900">00</span>
+                                        <span class="text-[10px] font-semibold text-gray-500 uppercase">M</span>
+                                    </div>
+                                    <span class="text-gray-300 font-light">:</span>
+                                    <div class="flex items-center gap-1">
+                                        <span id="seconds" class="text-xl font-bold text-gray-900">00</span>
+                                        <span class="text-[10px] font-semibold text-gray-500 uppercase">S</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="mt-8 pt-8 border-t border-gray-700 text-center">
-                    <p class="text-sm text-gray-400">
-                        &copy; 2026 MetaSphere Conference Committee. All Rights
-                        Reserved.
+                    <div class="sticky top-24 sm:top-28">
+                        <a href="#"
+                            class="block w-full text-center btn-register font-bold py-3 sm:py-4 px-4 sm:px-5 rounded-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-sm sm:text-base">
+                            Submit Your Paper Now
+                        </a>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300">
+        <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="md:col-span-2 lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4 border-b-2 border-b-white">
+                        <span class="text-2xl font-bold text-white">MetaSphere 2026</span>
+                    </div>
+                    <p style="text-align: justify" class="text-sm text-gray-400 max-w-lg">
+                        MetaSphere 2026 is the premier global conference
+                        bridging the future of Cloud, Virtualization, and
+                        the Metaverse. We are dedicated to fostering
+                        innovation, connecting experts, and exploring the
+                        next digital frontier, all from the cultural heart
+                        of Kolkata.
                     </p>
                 </div>
+
+                <div>
+                    <h4 class="font-semibold text-white mb-4">
+                        Quick Links
+                    </h4>
+                    <ul class="space-y-2 text-sm">
+                        <li>
+                            <a href="index.html" class="hover:text-orange-400 transition-colors">Home</a>
+                        </li>
+                        <li>
+                            <a href="CallPapers.html" class="hover:text-orange-400 transition-colors">Call For
+                                Papers</a>
+                        </li>
+                        <li>
+                            <a href="/scientific-committee.html"
+                                class="hover:text-orange-400 transition-colors">Scientific Committee</a>
+                        </li>
+                        <li>
+                            <a href="/AdvisoryCommittee.html" class="hover:text-orange-400 transition-colors">Advisory
+                                Committee</a>
+                        </li>
+                        <li>
+                            <a href="/TechCommittee.html" class="hover:text-orange-400 transition-colors">Technical
+                                Program Committee</a>
+                        </li>
+                        <li>
+                            <a href="/Keynote_Speaker.html" class="hover:text-orange-400 transition-colors">Keynote
+                                Speakers</a>
+                        </li>
+                        <li>
+                            <a href="/registration.html"
+                                class="hover:text-orange-400 transition-colors">Registration</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-white mb-4">
+                        Contact & Venue
+                    </h4>
+                    <div class="text-sm space-y-2">
+                        <p class="font-bold">IEM Ashram Building</p>
+                        <p class="text-gray-400">
+                            GN-34/2, Sector V, Bidhannagar, Kolkata, West
+                            Bengal 700091
+                        </p>
+                        <a href="mailto:metaSphere2026@iem.edu.in"
+                            class="block hover:text-orange-400 transition-colors pt-2">metaSphere2026@iem.edu.in</a>
+                        <a href="tel:+919874465365" class="block hover:text-orange-400 transition-colors">+91 987 446
+                            5375</a>
+                    </div>
+                    <div class="mt-4 rounded-lg overflow-hidden">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.123456789!2d88.4296927!3d22.5701392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275b23d77ee27%3A0xcd498ec0d7bf6f54!2sInstitute%20of%20Engineering%20and%20Management%20(Ashram%20Building)!5e0!3m2!1sen!2sin!4v1690000000000"
+                            width="100%" height="150" style="border: 0" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
             </div>
-        </footer>
-        <script src="script.js"></script>
-        <script>
-            AOS.init({
-                duration: 800,
-                once: true,
-            });
 
-            lucide.createIcons();
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center">
+                <p class="text-sm text-gray-400">
+                    &copy; 2026 MetaSphere Conference Committee. All Rights
+                    Reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+        });
 
-            // --- SCRIPT FOR FUNCTIONALITY ---
+        lucide.createIcons();
 
-            function toggleDropdown(id) {
-                const dropdown = document.getElementById(id);
-                const isHidden = dropdown.classList.contains("hidden");
+        // --- SCRIPT FOR FUNCTIONALITY ---
+
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const isHidden = dropdown.classList.contains("hidden");
+            document
+                .querySelectorAll("nav .absolute")
+                .forEach((el) => el.classList.add("hidden"));
+            if (isHidden) {
+                dropdown.classList.remove("hidden");
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById("mobileMenu");
+            menu.classList.toggle("hidden");
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener("click", function (event) {
+            const nav = document.querySelector("header nav");
+            const isDropdownButton =
+                event.target.closest("button") &&
+                (
+                    event.target
+                        .closest("button")
+                        .getAttribute("onclick") || ""
+                ).includes("toggleDropdown");
+
+            if (nav && !nav.contains(event.target) && !isDropdownButton) {
                 document
                     .querySelectorAll("nav .absolute")
                     .forEach((el) => el.classList.add("hidden"));
-                if (isHidden) {
-                    dropdown.classList.remove("hidden");
-                }
             }
+        });
+    </script>
+</body>
 
-            function toggleMobileMenu() {
-                const menu = document.getElementById("mobileMenu");
-                menu.classList.toggle("hidden");
-            }
-
-            // Close dropdowns when clicking outside
-            document.addEventListener("click", function (event) {
-                const nav = document.querySelector("header nav");
-                const isDropdownButton =
-                    event.target.closest("button") &&
-                    (
-                        event.target
-                            .closest("button")
-                            .getAttribute("onclick") || ""
-                    ).includes("toggleDropdown");
-
-                if (nav && !nav.contains(event.target) && !isDropdownButton) {
-                    document
-                        .querySelectorAll("nav .absolute")
-                        .forEach((el) => el.classList.add("hidden"));
-                }
-            });
-        </script>
-    </body>
 </html>
