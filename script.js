@@ -156,7 +156,21 @@ function setupSlideshow(containerId, selector, interval) {
         elements[currentIndex].classList.add("opacity-100");
     }, interval);
 }
-
+function toggleModal() {
+    const modal = document.getElementById("trackModal");
+    modal.classList.toggle("hidden");
+    if (!modal.classList.contains("hidden")) {
+        document.body.style.overflow = "hidden";
+    } else {
+        document.body.style.overflow = "auto";
+    }
+}
+window.onclick = function (event) {
+    const modal = document.getElementById("trackModal");
+    if (event.target == modal) {
+        toggleModal();
+    }
+};
 setupCarousel("heritage-carousel");
 setupSlideshow("background-slideshow", "img", 5000);
 setupSlideshow("video-slideshow", "video", 8000);
