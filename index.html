@@ -443,6 +443,112 @@
                 width: 250px;
             }
         }
+
+        .progress-fill {
+            height: 100%;
+            background: #f97316;
+            border-radius: 3px;
+            width: 0%;
+            animation: load 6s ease-out forwards;
+        }
+
+        @keyframes pulse-orange {
+            0% {
+                transform: scale(0.95);
+            }
+
+            70% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(0.95);
+            }
+        }
+
+        @keyframes load {
+            0% {
+                width: 0%;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        /* Additional Overflow Prevention */
+        section {
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        .max-w-7xl,
+        .max-w-6xl,
+        .max-w-5xl,
+        .max-w-3xl {
+            max-width: 100%;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .max-w-3xl {
+                max-width: 48rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .max-w-5xl {
+                max-width: 64rem;
+            }
+
+            .max-w-6xl {
+                max-width: 72rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .max-w-7xl {
+                max-width: 80rem;
+            }
+        }
+
+        /* Loader Mobile Responsive */
+        @media (max-width: 640px) {
+            .loader-title h1 {
+                font-size: 32px;
+            }
+
+            .loader-subtitle {
+                font-size: 14px;
+            }
+
+            .progress-bar {
+                width: 250px;
+            }
+        }
+
+        /* .custom-scrollbar::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .custom-scrollbar::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 10px;
+            }
+
+            .custom-scrollbar::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 10px;
+            }
+
+            .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            } */
+        #trackModal .overflow-y-scroll {
+            overflow-y: scroll !important;
+            -webkit-overflow-scrolling: touch;
+        }
     </style>
 </head>
 
@@ -460,6 +566,7 @@
                 <div class="progress-fill"></div>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Nav -->
@@ -657,8 +764,9 @@
                     </svg>
                     <span>Register Now</span>
                 </a>
-                <a href="/CallPapers.html#conference-tracks"
-                    class="flex items-center space-x-2 bg-white px-6 py-3 rounded-lg font-semibold text-gray-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 border border-gray-200">
+                <button
+                    class="flex items-center space-x-2 bg-white px-6 py-3 rounded-lg font-semibold text-gray-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 border border-gray-200"
+                    onclick="toggleModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
@@ -667,8 +775,147 @@
                         <line x1="3" x2="21" y1="10" y2="10" />
                     </svg>
                     <span>View Tracks</span>
-                </a>
+                </button>
             </div>
+            <!-- tracks popup -->
+            <div id="trackModal"
+                class="fixed hidden inset-0 z-[100] flex items-start justify-center p-4 pt-28 backdrop-blur-sm">
+                <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl flex flex-col"
+                    style="height: 600px; max-height: 80vh">
+                    <!-- Header - Fixed -->
+                    <div class="p-6 border-b bg-white flex justify-between items-center">
+                        <h2 class="text-2xl font-bold text-gray-800">
+                            Conference Tracks
+                        </h2>
+                        <button onclick="toggleModal()"
+                            class="text-gray-500 hover:text-black text-3xl p-2 leading-none">
+                            &times;
+                        </button>
+                    </div>
+
+                    <!-- Scrollable Content - THIS IS THE KEY PART -->
+                    <div class="overflow-y-scroll p-6 bg-gray-50" style="flex: 1; min-height: 0; padding-bottom: 2rem">
+                        <div class="space-y-6 pb-6">
+                            <div class="bg-white shadow-sm p-6 rounded-2xl border border-gray-200">
+                                <h3 class="text-lg font-bold text-blue-600 mb-4">
+                                    Cloud Computing & Virtualization
+                                </h3>
+                                <ul class="space-y-3 text-gray-700 text-sm">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-blue-500">•</span>
+                                        <b>Next-Gen Cloud Architectures</b>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-blue-500">•</span>
+                                        <b>Edge & Fog Computing</b>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-blue-500">•</span>
+                                        <b>Cloud Security & Compliance</b>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-blue-500">•</span>
+                                        <b>Virtualization Advances</b>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-blue-500">•</span>
+                                        <b>Green Cloud</b>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white shadow-sm p-6 rounded-2xl border border-gray-200">
+                                <h3 class="text-lg font-bold text-purple-600 mb-4">
+                                    Metaverse & Quantum Metaverse
+                                </h3>
+                                <ul class="space-y-3 text-gray-700 text-sm">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-purple-500">•</span>
+                                        <b>Virtual & Augmented Reality
+                                            (VR/AR/XR)</b>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-purple-500">•</span>
+                                        <b>Blockchain & Web3 in the
+                                            Metaverse</b>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-purple-500">•</span>
+                                        <b>Human–Computer Interaction in
+                                            the Metaverse</b>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-purple-500">•</span>
+                                        <b>Interoperability & Open
+                                            Standards</b>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-purple-500">•</span>
+                                        <b>Quantum Computing for the
+                                            Metaverse</b>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-purple-500">•</span>
+                                        <b>Cross-Disciplinary Applications
+                                            of the Quantum Metaverse</b>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-purple-500">•</span>
+                                        <b>Quantum AI & Machine Learning</b>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white shadow-sm p-6 rounded-2xl border border-gray-200">
+                                <h3 class="text-lg font-bold text-green-600 mb-4">
+                                    AI, Data, & Future Connectivity
+                                </h3>
+                                <ul class="space-y-3 text-gray-700 text-sm">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-green-500">•</span>
+                                        <b>AI-Driven Cloud & Metaverse</b>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-green-500">•</span>
+                                        <b>6G and Beyond for the
+                                            Metaverse</b>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-green-500">•</span>
+                                        <b>Big Data & Real-Time
+                                            Analytics</b>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-green-500">•</span>
+                                        <b>Security, Privacy & Digital
+                                            Trust</b>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-green-500">•</span>
+                                        <b>Cross-Disciplinary
+                                            Applications</b>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-green-500">•</span>
+                                        <b>IoT Integration & Digital Twins</b>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="h-20"></div>
+                        </div>
+                    </div>
+
+                    <!-- Footer - Fixed -->
+                    <div class="p-4 border-t bg-white text-center">
+                        <button onclick="toggleModal()"
+                            class="px-8 py-2 bg-gray-900 text-white rounded-full font-semibold hover:bg-black transition-colors">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </section>
 
