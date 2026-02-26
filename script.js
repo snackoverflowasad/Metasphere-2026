@@ -172,4 +172,4 @@ window.onclick = function (event) {
 setupCarousel("heritage-carousel");
 setupSlideshow("background-slideshow", "img", 5000);
 setupSlideshow("video-slideshow", "video", 8000);
-// $ npx @tailwindcss/cli -i ./Output.css -o ./Style.css --watch
+// $ `npx @tailwindcss/cli -i ./Output.css -o ./Style.css --watch
