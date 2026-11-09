@@ -1,6 +1,6 @@
-# MetaSphere 2026
+# MetaSphere 2027
 
-Official web repository for **MetaSphere 2026: The International Conference on Cloud Computing, Virtualization, and the Metaverse**.
+Official web repository for **MetaSphere 2027: The International Conference on Cloud Computing, Virtualization, and the Metaverse**.
 
 This repository hosts the official frontend codebase for the conference website, engineered for high performance, responsive design across devices, and search engine optimization (SEO) in compliance with Google Search Central guidelines.
 
@@ -8,7 +8,7 @@ This repository hosts the official frontend codebase for the conference website,
 
 ## About the Conference
 
-MetaSphere 2026 is a premier global forum that brings together academic researchers, industry experts, and engineers to exchange ideas, methodologies, and advancements in cloud infrastructure, virtualization paradigms, and the evolving Metaverse ecosystem.
+MetaSphere 2027 is a premier global forum that brings together academic researchers, industry experts, and engineers to exchange ideas, methodologies, and advancements in cloud infrastructure, virtualization paradigms, and the evolving Metaverse ecosystem.
 
 ### Key Details
 
@@ -16,6 +16,7 @@ MetaSphere 2026 is a premier global forum that brings together academic research
 |---|---|
 | **Organizer** | Department of Computer Application (BCA) & IEM Centre of Excellence |
 | **Host Institution** | Institute of Engineering & Management (IEM), Kolkata, India |
+| **Date** | 17–18 August 2027 (Tentative) |
 | **Venue** | IEM Ashram Building, Sector V, Bidhannagar, Kolkata – 700091 (Hybrid Format) |
 | **Official Website** | [metasphere2026.iem.edu.in](https://metasphere2026.iem.edu.in) |
 
