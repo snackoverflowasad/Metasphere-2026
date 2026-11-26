@@ -47,6 +47,12 @@ export async function upsertDeadlineAction(
       if (!beforeRow) {
         return { ok: false, error: "Deadline record not found." };
       }
+      if (beforeRow.edition_id !== data.editionId) {
+        return {
+          ok: false,
+          error: "Deadline does not belong to the selected edition.",
+        };
+      }
 
       const permissionError = checkStatusPermission(
         actor,

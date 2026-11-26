@@ -6,7 +6,7 @@ import {
 
 export const deadlineInputSchema = z.object({
   id: z.string().trim().uuid().optional(),
-  editionId: z.string().trim().min(1, "Edition ID is required"),
+  editionId: z.string().trim().uuid("Valid edition UUID is required"),
   editionYear: editionYearSchema,
   title: z.string().trim().min(2, "Deadline title is required").max(160),
   dueAt: z

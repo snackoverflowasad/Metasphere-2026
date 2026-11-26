@@ -7,7 +7,7 @@ import {
 
 export const conferenceLinkSchema = z.object({
   id: z.string().trim().uuid().optional(),
-  editionId: z.string().trim().min(1, "Edition ID is required"),
+  editionId: z.string().trim().uuid("Valid edition UUID is required"),
   editionYear: editionYearSchema,
   key: z
     .string()
@@ -28,7 +28,7 @@ export type ConferenceLinkInput = z.infer<typeof conferenceLinkSchema>;
 export const resourceInputSchema = z
   .object({
     id: z.string().trim().uuid().optional(),
-    editionId: z.string().trim().min(1, "Edition ID is required"),
+    editionId: z.string().trim().uuid("Valid edition UUID is required"),
     editionYear: editionYearSchema,
     label: z.string().trim().min(2, "Resource label is required").max(200),
     category: z.string().trim().min(2, "Category is required").max(80),

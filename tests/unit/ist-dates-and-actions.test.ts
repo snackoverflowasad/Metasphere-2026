@@ -1,15 +1,29 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { NextRequest } from "next/server";
 
-const { mockRevalidateTag, mockRequireAdminSession, mockCreateServerSupabase } =
-  vi.hoisted(() => ({
-    mockRevalidateTag: vi.fn(),
-    mockRequireAdminSession: vi.fn(),
-    mockCreateServerSupabase: vi.fn(),
-  }));
+const {
+  mockRevalidateTag,
+  mockRequireAdminSession,
+  mockCreateServerSupabase,
+  mockDraftModeEnable,
+  mockDraftModeDisable,
+} = vi.hoisted(() => ({
+  mockRevalidateTag: vi.fn(),
+  mockRequireAdminSession: vi.fn(),
+  mockCreateServerSupabase: vi.fn(),
+  mockDraftModeEnable: vi.fn(),
+  mockDraftModeDisable: vi.fn(),
+}));
 
 vi.mock("server-only", () => ({}));
 vi.mock("next/cache", () => ({
   revalidateTag: mockRevalidateTag,
+}));
+vi.mock("next/headers", () => ({
+  draftMode: vi.fn(async () => ({
+    enable: mockDraftModeEnable,
+    disable: mockDraftModeDisable,
+  })),
 }));
 vi.mock("@/lib/auth/session", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@/lib/auth/session")>();
@@ -25,7 +39,9 @@ vi.mock("@/lib/supabase/server", () => ({
 import {
   formatIstDate,
   formatIstDateTime,
+  fromIstDateTimeLocalValue,
   getCountdownParts,
+  toIstDateTimeLocalValue,
 } from "@/lib/dates/ist";
 import { editionCacheTag, revalidateEdition } from "@/lib/cache/tags";
 import {
@@ -33,11 +49,21 @@ import {
   updateEditionSettingsAction,
 } from "@/features/conference/actions";
 import { updateEditionSettingsSchema } from "@/features/conference/schemas";
-import { upsertDeadlineAction } from "@/features/deadlines/actions";
+import {
+  deleteDeadlineAction,
+  upsertDeadlineAction,
+} from "@/features/deadlines/actions";
 import { deadlineInputSchema } from "@/features/deadlines/schemas";
-import { upsertConferenceLinkAction } from "@/features/resources/actions";
-import { conferenceLinkSchema } from "@/features/resources/schemas";
+import {
+  upsertConferenceLinkAction,
+  upsertResourceAction,
+} from "@/features/resources/actions";
+import {
+  conferenceLinkSchema,
+  resourceInputSchema,
+} from "@/features/resources/schemas";
 import { AdminAuthError } from "@/lib/auth/session";
+import { GET as previewGet } from "@/app/api/preview/route";
 
 const ORIGINAL_ENV = { ...process.env };
 
@@ -131,6 +157,359 @@ describe("edition cache tag helpers", () => {
     expect(mockRevalidateTag).toHaveBeenCalledWith("edition:2027", {
       expire: 0,
     });
+  });
+
+  it("round-trips toIstDateTimeLocalValue and fromIstDateTimeLocalValue in Asia/Kolkata", () => {
+    // 2027-08-17T03:30:00Z === 2027-08-17T09:00:00+05:30
+    const localInput = toIstDateTimeLocalValue("2027-08-17T03:30:00Z");
+    expect(localInput).toBe("2027-08-17T09:00");
+
+    const isoIst = fromIstDateTimeLocalValue(localInput);
+    expect(isoIst).toBe("2027-08-17T09:00:00+05:30");
+    expect(Date.parse(isoIst)).toBe(Date.parse("2027-08-17T03:30:00Z"));
+  });
+
+  it("enforces UUID editionId and validates resourceInputSchema", () => {
+    expect(
+      deadlineInputSchema.safeParse({
+        editionId: "fallback-edition-2027",
+        editionYear: 2027,
+        title: "Full paper submission",
+        dueAt: "2027-05-31T23:59:59+05:30",
+        displayDate: "31st May, 2027",
+        originalDate: null,
+        isExtended: false,
+        isConferenceDate: false,
+        sortOrder: 1,
+        isVisible: true,
+        status: "draft",
+      }).success
+    ).toBe(false);
+
+    expect(
+      resourceInputSchema.safeParse({
+        editionId: "11111111-1111-4111-8111-111111111111",
+        editionYear: 2027,
+        label: "LaTeX Template",
+        category: "template",
+        url: "https://www.overleaf.com/latex/templates/springer",
+        storagePath: null,
+        sortOrder: 1,
+        status: "draft",
+      }).success
+    ).toBe(true);
+
+    expect(
+      resourceInputSchema.safeParse({
+        editionId: "11111111-1111-4111-8111-111111111111",
+        editionYear: 2027,
+        label: "Bad Resource",
+        category: "template",
+        url: "javascript:alert(1)",
+        storagePath: null,
+        sortOrder: 1,
+        status: "draft",
+      }).success
+    ).toBe(false);
+
+    expect(
+      resourceInputSchema.safeParse({
+        editionId: "11111111-1111-4111-8111-111111111111",
+        editionYear: 2027,
+        label: "Missing Target",
+        category: "template",
+        url: "",
+        storagePath: "",
+        sortOrder: 1,
+        status: "draft",
+      }).success
+    ).toBe(false);
+  });
+
+  it("enforces edition ownership on deadline updates and supports deleteDeadlineAction + upsertResourceAction", async () => {
+    process.env.NEXT_PUBLIC_SUPABASE_URL = "https://example.supabase.co";
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_test";
+
+    mockRequireAdminSession.mockResolvedValue({
+      userId: "user-editor-1",
+      email: "editor@iem.edu.in",
+      displayName: "Editor",
+      role: "editor",
+      canApproveFinancial: false,
+      aal: "aal2",
+    });
+
+    const insertAudit = vi.fn().mockResolvedValue({ error: null });
+    const insertVersion = vi.fn().mockResolvedValue({ error: null });
+    const deleteEq = vi.fn().mockResolvedValue({ error: null });
+
+    const mismatchRow = {
+      id: "33333333-3333-4333-8333-333333333333",
+      edition_id: "99999999-9999-4999-8999-999999999999",
+      status: "draft",
+    };
+
+    mockCreateServerSupabase.mockResolvedValueOnce({
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            maybeSingle: vi
+              .fn()
+              .mockResolvedValue({ data: mismatchRow, error: null }),
+          }),
+        }),
+      }),
+    });
+
+    const mismatchRes = await upsertDeadlineAction({
+      id: "33333333-3333-4333-8333-333333333333",
+      editionId: "11111111-1111-4111-8111-111111111111",
+      editionYear: 2027,
+      title: "Cross-edition test",
+      dueAt: "2027-05-31T23:59:59+05:30",
+      displayDate: "31st May, 2027",
+      originalDate: null,
+      isExtended: false,
+      isConferenceDate: false,
+      sortOrder: 1,
+      isVisible: true,
+      status: "draft",
+    });
+    expect(mismatchRes).toEqual({
+      ok: false,
+      error: "Deadline does not belong to the selected edition.",
+    });
+
+    // Editor cannot delete a published deadline
+    mockCreateServerSupabase.mockResolvedValueOnce({
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            maybeSingle: vi.fn().mockResolvedValue({
+              data: {
+                id: "33333333-3333-4333-8333-333333333333",
+                status: "published",
+              },
+              error: null,
+            }),
+          }),
+        }),
+      }),
+    });
+
+    const forbiddenDelete = await deleteDeadlineAction(
+      "33333333-3333-4333-8333-333333333333",
+      2027
+    );
+    expect(forbiddenDelete.ok).toBe(false);
+
+    // Editor CAN delete a draft deadline
+    const draftDeadline = {
+      id: "33333333-3333-4333-8333-333333333333",
+      status: "draft",
+      title: "Draft deadline",
+    };
+    mockCreateServerSupabase.mockResolvedValueOnce({
+      from: vi.fn((table: string) => {
+        if (table === "deadlines") {
+          return {
+            select: vi.fn().mockReturnValue({
+              eq: vi.fn().mockReturnValue({
+                maybeSingle: vi
+                  .fn()
+                  .mockResolvedValue({ data: draftDeadline, error: null }),
+              }),
+            }),
+            delete: vi.fn().mockReturnValue({ eq: deleteEq }),
+          };
+        }
+        if (table === "audit_logs") {
+          return { insert: insertAudit };
+        }
+        throw new Error(`Unexpected table ${table}`);
+      }),
+    });
+
+    const deleted = await deleteDeadlineAction(
+      "33333333-3333-4333-8333-333333333333",
+      2027
+    );
+    expect(deleted).toEqual({
+      ok: true,
+      id: "33333333-3333-4333-8333-333333333333",
+    });
+    expect(deleteEq).toHaveBeenCalledWith(
+      "id",
+      "33333333-3333-4333-8333-333333333333"
+    );
+    expect(insertAudit).toHaveBeenCalledWith(
+      expect.objectContaining({
+        action: "delete",
+        table_name: "deadlines",
+        record_id: "33333333-3333-4333-8333-333333333333",
+      })
+    );
+    expect(mockRevalidateTag).toHaveBeenCalledWith("edition:2027", {
+      expire: 0,
+    });
+
+    // upsertResourceAction creates a resource and writes version + audit log
+    const createdResource = {
+      id: "44444444-4444-4444-8444-444444444444",
+      edition_id: "11111111-1111-4111-8111-111111111111",
+      label: "Word Template",
+      category: "template",
+      url: "https://drive.google.com/file/d/example",
+      storage_path: null,
+      sort_order: 1,
+      status: "draft",
+    };
+
+    mockCreateServerSupabase.mockResolvedValueOnce({
+      from: vi.fn((table: string) => {
+        if (table === "resources") {
+          return {
+            insert: vi.fn().mockReturnValue({
+              select: vi.fn().mockReturnValue({
+                single: vi
+                  .fn()
+                  .mockResolvedValue({ data: createdResource, error: null }),
+              }),
+            }),
+          };
+        }
+        if (table === "content_versions") {
+          return {
+            select: vi.fn().mockReturnValue({
+              eq: vi.fn().mockReturnValue({
+                eq: vi.fn().mockReturnValue({
+                  order: vi.fn().mockReturnValue({
+                    limit: vi.fn().mockReturnValue({
+                      maybeSingle: vi
+                        .fn()
+                        .mockResolvedValue({ data: null, error: null }),
+                    }),
+                  }),
+                }),
+              }),
+            }),
+            insert: insertVersion,
+          };
+        }
+        if (table === "audit_logs") {
+          return { insert: insertAudit };
+        }
+        throw new Error(`Unexpected table ${table}`);
+      }),
+    });
+
+    const resourceRes = await upsertResourceAction({
+      editionId: "11111111-1111-4111-8111-111111111111",
+      editionYear: 2027,
+      label: "Word Template",
+      category: "template",
+      url: "https://drive.google.com/file/d/example",
+      storagePath: null,
+      sortOrder: 1,
+      status: "draft",
+    });
+    expect(resourceRes).toEqual({
+      ok: true,
+      id: "44444444-4444-4444-8444-444444444444",
+    });
+    expect(insertVersion).toHaveBeenCalledWith(
+      expect.objectContaining({
+        table_name: "resources",
+        record_id: "44444444-4444-4444-8444-444444444444",
+        version_number: 1,
+      })
+    );
+  });
+});
+
+describe("/api/preview route handler", () => {
+  beforeEach(() => {
+    mockRequireAdminSession.mockReset();
+    mockDraftModeEnable.mockReset();
+    mockDraftModeDisable.mockReset();
+  });
+
+  it("returns 503 when unconfigured, redirects aal1 to /admin/mfa, and unauthenticated to /admin/login", async () => {
+    mockRequireAdminSession.mockRejectedValueOnce(
+      new AdminAuthError("NOT_CONFIGURED", "Supabase is not configured yet.")
+    );
+    const res503 = await previewGet(
+      new NextRequest("http://localhost:3000/api/preview?edition=2027")
+    );
+    expect(res503.status).toBe(503);
+
+    mockRequireAdminSession.mockRejectedValueOnce(
+      new AdminAuthError("MFA_REQUIRED", "MFA required.")
+    );
+    const resMfa = await previewGet(
+      new NextRequest("http://localhost:3000/api/preview?edition=2027")
+    );
+    expect(resMfa.status).toBe(307);
+    expect(resMfa.headers.get("location")).toBe("http://localhost:3000/admin/mfa");
+
+    mockRequireAdminSession.mockRejectedValueOnce(
+      new AdminAuthError("UNAUTHENTICATED", "Auth required.")
+    );
+    const resLogin = await previewGet(
+      new NextRequest("http://localhost:3000/api/preview?edition=2027")
+    );
+    expect(resLogin.status).toBe(307);
+    expect(resLogin.headers.get("location")).toBe(
+      "http://localhost:3000/admin/login"
+    );
+  });
+
+  it("enables/disables draftMode for aal2 admins and blocks protocol-relative & backslash open redirects", async () => {
+    mockRequireAdminSession.mockResolvedValue({
+      userId: "user-admin-1",
+      email: "chair@iem.edu.in",
+      displayName: "Chair",
+      role: "content_admin",
+      canApproveFinancial: false,
+      aal: "aal2",
+    });
+
+    const safeRes = await previewGet(
+      new NextRequest(
+        "http://localhost:3000/api/preview?edition=2027&redirect=/call-for-papers?edition=2027"
+      )
+    );
+    expect(mockDraftModeEnable).toHaveBeenCalledTimes(1);
+    expect(safeRes.status).toBe(307);
+    expect(safeRes.headers.get("location")).toBe(
+      "http://localhost:3000/call-for-papers?edition=2027"
+    );
+
+    const protocolRelativeRes = await previewGet(
+      new NextRequest(
+        "http://localhost:3000/api/preview?edition=2027&redirect=//evil.example.com"
+      )
+    );
+    expect(protocolRelativeRes.headers.get("location")).toBe(
+      "http://localhost:3000/?edition=2027"
+    );
+
+    const backslashRes = await previewGet(
+      new NextRequest(
+        "http://localhost:3000/api/preview?edition=2027&redirect=/\\evil.example.com"
+      )
+    );
+    expect(backslashRes.headers.get("location")).toBe(
+      "http://localhost:3000/?edition=2027"
+    );
+
+    const disableRes = await previewGet(
+      new NextRequest("http://localhost:3000/api/preview?edition=2027&disable=1")
+    );
+    expect(mockDraftModeDisable).toHaveBeenCalledTimes(1);
+    expect(disableRes.headers.get("location")).toBe(
+      "http://localhost:3000/?edition=2027"
+    );
   });
 });
 
@@ -443,5 +822,358 @@ describe("CMS Server Actions fail-closed auth, RBAC, versioning, and audit loggi
     expect(mockRevalidateTag).toHaveBeenCalledWith("edition:2027", {
       expire: 0,
     });
+  });
+
+  it("round-trips toIstDateTimeLocalValue and fromIstDateTimeLocalValue in Asia/Kolkata", () => {
+    // 2027-08-17T03:30:00Z === 2027-08-17T09:00:00+05:30
+    const localInput = toIstDateTimeLocalValue("2027-08-17T03:30:00Z");
+    expect(localInput).toBe("2027-08-17T09:00");
+
+    const isoIst = fromIstDateTimeLocalValue(localInput);
+    expect(isoIst).toBe("2027-08-17T09:00:00+05:30");
+    expect(Date.parse(isoIst)).toBe(Date.parse("2027-08-17T03:30:00Z"));
+  });
+
+  it("enforces UUID editionId and validates resourceInputSchema", () => {
+    expect(
+      deadlineInputSchema.safeParse({
+        editionId: "fallback-edition-2027",
+        editionYear: 2027,
+        title: "Full paper submission",
+        dueAt: "2027-05-31T23:59:59+05:30",
+        displayDate: "31st May, 2027",
+        originalDate: null,
+        isExtended: false,
+        isConferenceDate: false,
+        sortOrder: 1,
+        isVisible: true,
+        status: "draft",
+      }).success
+    ).toBe(false);
+
+    expect(
+      resourceInputSchema.safeParse({
+        editionId: "11111111-1111-4111-8111-111111111111",
+        editionYear: 2027,
+        label: "LaTeX Template",
+        category: "template",
+        url: "https://www.overleaf.com/latex/templates/springer",
+        storagePath: null,
+        sortOrder: 1,
+        status: "draft",
+      }).success
+    ).toBe(true);
+
+    expect(
+      resourceInputSchema.safeParse({
+        editionId: "11111111-1111-4111-8111-111111111111",
+        editionYear: 2027,
+        label: "Bad Resource",
+        category: "template",
+        url: "javascript:alert(1)",
+        storagePath: null,
+        sortOrder: 1,
+        status: "draft",
+      }).success
+    ).toBe(false);
+
+    expect(
+      resourceInputSchema.safeParse({
+        editionId: "11111111-1111-4111-8111-111111111111",
+        editionYear: 2027,
+        label: "Missing Target",
+        category: "template",
+        url: "",
+        storagePath: "",
+        sortOrder: 1,
+        status: "draft",
+      }).success
+    ).toBe(false);
+  });
+
+  it("enforces edition ownership on deadline updates and supports deleteDeadlineAction + upsertResourceAction", async () => {
+    process.env.NEXT_PUBLIC_SUPABASE_URL = "https://example.supabase.co";
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_test";
+
+    mockRequireAdminSession.mockResolvedValue({
+      userId: "user-editor-1",
+      email: "editor@iem.edu.in",
+      displayName: "Editor",
+      role: "editor",
+      canApproveFinancial: false,
+      aal: "aal2",
+    });
+
+    const insertAudit = vi.fn().mockResolvedValue({ error: null });
+    const insertVersion = vi.fn().mockResolvedValue({ error: null });
+    const deleteEq = vi.fn().mockResolvedValue({ error: null });
+
+    const mismatchRow = {
+      id: "33333333-3333-4333-8333-333333333333",
+      edition_id: "99999999-9999-4999-8999-999999999999",
+      status: "draft",
+    };
+
+    mockCreateServerSupabase.mockResolvedValueOnce({
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            maybeSingle: vi
+              .fn()
+              .mockResolvedValue({ data: mismatchRow, error: null }),
+          }),
+        }),
+      }),
+    });
+
+    const mismatchRes = await upsertDeadlineAction({
+      id: "33333333-3333-4333-8333-333333333333",
+      editionId: "11111111-1111-4111-8111-111111111111",
+      editionYear: 2027,
+      title: "Cross-edition test",
+      dueAt: "2027-05-31T23:59:59+05:30",
+      displayDate: "31st May, 2027",
+      originalDate: null,
+      isExtended: false,
+      isConferenceDate: false,
+      sortOrder: 1,
+      isVisible: true,
+      status: "draft",
+    });
+    expect(mismatchRes).toEqual({
+      ok: false,
+      error: "Deadline does not belong to the selected edition.",
+    });
+
+    // Editor cannot delete a published deadline
+    mockCreateServerSupabase.mockResolvedValueOnce({
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            maybeSingle: vi.fn().mockResolvedValue({
+              data: {
+                id: "33333333-3333-4333-8333-333333333333",
+                status: "published",
+              },
+              error: null,
+            }),
+          }),
+        }),
+      }),
+    });
+
+    const forbiddenDelete = await deleteDeadlineAction(
+      "33333333-3333-4333-8333-333333333333",
+      2027
+    );
+    expect(forbiddenDelete.ok).toBe(false);
+
+    // Editor CAN delete a draft deadline
+    const draftDeadline = {
+      id: "33333333-3333-4333-8333-333333333333",
+      status: "draft",
+      title: "Draft deadline",
+    };
+    mockCreateServerSupabase.mockResolvedValueOnce({
+      from: vi.fn((table: string) => {
+        if (table === "deadlines") {
+          return {
+            select: vi.fn().mockReturnValue({
+              eq: vi.fn().mockReturnValue({
+                maybeSingle: vi
+                  .fn()
+                  .mockResolvedValue({ data: draftDeadline, error: null }),
+              }),
+            }),
+            delete: vi.fn().mockReturnValue({ eq: deleteEq }),
+          };
+        }
+        if (table === "audit_logs") {
+          return { insert: insertAudit };
+        }
+        throw new Error(`Unexpected table ${table}`);
+      }),
+    });
+
+    const deleted = await deleteDeadlineAction(
+      "33333333-3333-4333-8333-333333333333",
+      2027
+    );
+    expect(deleted).toEqual({
+      ok: true,
+      id: "33333333-3333-4333-8333-333333333333",
+    });
+    expect(deleteEq).toHaveBeenCalledWith(
+      "id",
+      "33333333-3333-4333-8333-333333333333"
+    );
+    expect(insertAudit).toHaveBeenCalledWith(
+      expect.objectContaining({
+        action: "delete",
+        table_name: "deadlines",
+        record_id: "33333333-3333-4333-8333-333333333333",
+      })
+    );
+    expect(mockRevalidateTag).toHaveBeenCalledWith("edition:2027", {
+      expire: 0,
+    });
+
+    // upsertResourceAction creates a resource and writes version + audit log
+    const createdResource = {
+      id: "44444444-4444-4444-8444-444444444444",
+      edition_id: "11111111-1111-4111-8111-111111111111",
+      label: "Word Template",
+      category: "template",
+      url: "https://drive.google.com/file/d/example",
+      storage_path: null,
+      sort_order: 1,
+      status: "draft",
+    };
+
+    mockCreateServerSupabase.mockResolvedValueOnce({
+      from: vi.fn((table: string) => {
+        if (table === "resources") {
+          return {
+            insert: vi.fn().mockReturnValue({
+              select: vi.fn().mockReturnValue({
+                single: vi
+                  .fn()
+                  .mockResolvedValue({ data: createdResource, error: null }),
+              }),
+            }),
+          };
+        }
+        if (table === "content_versions") {
+          return {
+            select: vi.fn().mockReturnValue({
+              eq: vi.fn().mockReturnValue({
+                eq: vi.fn().mockReturnValue({
+                  order: vi.fn().mockReturnValue({
+                    limit: vi.fn().mockReturnValue({
+                      maybeSingle: vi
+                        .fn()
+                        .mockResolvedValue({ data: null, error: null }),
+                    }),
+                  }),
+                }),
+              }),
+            }),
+            insert: insertVersion,
+          };
+        }
+        if (table === "audit_logs") {
+          return { insert: insertAudit };
+        }
+        throw new Error(`Unexpected table ${table}`);
+      }),
+    });
+
+    const resourceRes = await upsertResourceAction({
+      editionId: "11111111-1111-4111-8111-111111111111",
+      editionYear: 2027,
+      label: "Word Template",
+      category: "template",
+      url: "https://drive.google.com/file/d/example",
+      storagePath: null,
+      sortOrder: 1,
+      status: "draft",
+    });
+    expect(resourceRes).toEqual({
+      ok: true,
+      id: "44444444-4444-4444-8444-444444444444",
+    });
+    expect(insertVersion).toHaveBeenCalledWith(
+      expect.objectContaining({
+        table_name: "resources",
+        record_id: "44444444-4444-4444-8444-444444444444",
+        version_number: 1,
+      })
+    );
+  });
+});
+
+describe("/api/preview route handler", () => {
+  beforeEach(() => {
+    mockRequireAdminSession.mockReset();
+    mockDraftModeEnable.mockReset();
+    mockDraftModeDisable.mockReset();
+  });
+
+  it("returns 503 when unconfigured, redirects aal1 to /admin/mfa, and unauthenticated to /admin/login", async () => {
+    mockRequireAdminSession.mockRejectedValueOnce(
+      new AdminAuthError("NOT_CONFIGURED", "Supabase is not configured yet.")
+    );
+    const res503 = await previewGet(
+      new NextRequest("http://localhost:3000/api/preview?edition=2027")
+    );
+    expect(res503.status).toBe(503);
+
+    mockRequireAdminSession.mockRejectedValueOnce(
+      new AdminAuthError("MFA_REQUIRED", "MFA required.")
+    );
+    const resMfa = await previewGet(
+      new NextRequest("http://localhost:3000/api/preview?edition=2027")
+    );
+    expect(resMfa.status).toBe(307);
+    expect(resMfa.headers.get("location")).toBe("http://localhost:3000/admin/mfa");
+
+    mockRequireAdminSession.mockRejectedValueOnce(
+      new AdminAuthError("UNAUTHENTICATED", "Auth required.")
+    );
+    const resLogin = await previewGet(
+      new NextRequest("http://localhost:3000/api/preview?edition=2027")
+    );
+    expect(resLogin.status).toBe(307);
+    expect(resLogin.headers.get("location")).toBe(
+      "http://localhost:3000/admin/login"
+    );
+  });
+
+  it("enables/disables draftMode for aal2 admins and blocks protocol-relative & backslash open redirects", async () => {
+    mockRequireAdminSession.mockResolvedValue({
+      userId: "user-admin-1",
+      email: "chair@iem.edu.in",
+      displayName: "Chair",
+      role: "content_admin",
+      canApproveFinancial: false,
+      aal: "aal2",
+    });
+
+    const safeRes = await previewGet(
+      new NextRequest(
+        "http://localhost:3000/api/preview?edition=2027&redirect=/call-for-papers?edition=2027"
+      )
+    );
+    expect(mockDraftModeEnable).toHaveBeenCalledTimes(1);
+    expect(safeRes.status).toBe(307);
+    expect(safeRes.headers.get("location")).toBe(
+      "http://localhost:3000/call-for-papers?edition=2027"
+    );
+
+    const protocolRelativeRes = await previewGet(
+      new NextRequest(
+        "http://localhost:3000/api/preview?edition=2027&redirect=//evil.example.com"
+      )
+    );
+    expect(protocolRelativeRes.headers.get("location")).toBe(
+      "http://localhost:3000/?edition=2027"
+    );
+
+    const backslashRes = await previewGet(
+      new NextRequest(
+        "http://localhost:3000/api/preview?edition=2027&redirect=/\\evil.example.com"
+      )
+    );
+    expect(backslashRes.headers.get("location")).toBe(
+      "http://localhost:3000/?edition=2027"
+    );
+
+    const disableRes = await previewGet(
+      new NextRequest("http://localhost:3000/api/preview?edition=2027&disable=1")
+    );
+    expect(mockDraftModeDisable).toHaveBeenCalledTimes(1);
+    expect(disableRes.headers.get("location")).toBe(
+      "http://localhost:3000/?edition=2027"
+    );
   });
 });

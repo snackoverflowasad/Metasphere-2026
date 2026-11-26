@@ -9,7 +9,7 @@ import {
   MapPin,
   Settings,
 } from "lucide-react";
-import { requireAdminSession } from "@/lib/auth/session";
+import { requireAdminPageSession } from "@/lib/auth/session";
 import {
   loadAdminEditionData,
   resolveEditionYearParam,
@@ -41,7 +41,7 @@ export default async function AdminOverviewPage({
   const year = resolveEditionYearParam(params.edition);
 
   const [actor, data] = await Promise.all([
-    requireAdminSession(),
+    requireAdminPageSession(),
     loadAdminEditionData(year),
   ]);
 

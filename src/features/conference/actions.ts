@@ -13,6 +13,7 @@ import {
 import { createServerSupabase } from "@/lib/supabase/server";
 import {
   type EditionSettingsInput,
+  editionIdSchema,
   publishContentSchema,
   updateEditionSettingsSchema,
 } from "./schemas";
@@ -28,10 +29,16 @@ export async function updateEditionSettingsAction(
   try {
     const actor = await requireAdminSession();
 
-    const trimmedEditionId = editionId.trim();
-    if (!trimmedEditionId) {
-      return { ok: false, error: "Edition ID is required." };
+    const parsedEditionId = editionIdSchema.safeParse(editionId);
+    if (!parsedEditionId.success) {
+      return {
+        ok: false,
+        error:
+          parsedEditionId.error.issues[0]?.message ??
+          "Valid edition UUID is required.",
+      };
     }
+    const trimmedEditionId = parsedEditionId.data;
 
     const parsed = updateEditionSettingsSchema.safeParse(input);
     if (!parsed.success) {
@@ -68,6 +75,7 @@ export async function updateEditionSettingsAction(
       return { ok: false, error: permissionError };
     }
 
+    let deactivatedIds: string[] = [];
     if (data.isActive && !beforeEdition.is_active) {
       if (actor.role === "editor") {
         return {
@@ -75,14 +83,45 @@ export async function updateEditionSettingsAction(
           error: "Only content_admin or super_admin may switch the active edition.",
         };
       }
-      const { error: deactivateError } = await supabase
+
+      const { data: previousActives, error: activeLookupError } = await supabase
         .from("conference_editions")
-        .update({ is_active: false })
+        .select("*")
         .neq("id", trimmedEditionId)
         .eq("is_active", true);
 
-      if (deactivateError) {
-        return { ok: false, error: deactivateError.message };
+      if (activeLookupError) {
+        return { ok: false, error: activeLookupError.message };
+      }
+
+      if (previousActives && previousActives.length > 0) {
+        deactivatedIds = previousActives.map((row) => row.id);
+        const { data: deactivatedRows, error: deactivateError } = await supabase
+          .from("conference_editions")
+          .update({ is_active: false })
+          .in("id", deactivatedIds)
+          .select("*");
+
+        if (deactivateError) {
+          return { ok: false, error: deactivateError.message };
+        }
+
+        for (const prev of previousActives) {
+          const updatedPrev =
+            deactivatedRows?.find((row) => row.id === prev.id) ?? {
+              ...prev,
+              is_active: false,
+            };
+          await recordVersionAndAudit({
+            supabase,
+            actor,
+            action: "update",
+            tableName: "conference_editions",
+            recordId: prev.id,
+            beforeData: prev as unknown as Json,
+            afterData: updatedPrev as unknown as Json,
+          });
+        }
       }
     }
 
@@ -116,6 +155,12 @@ export async function updateEditionSettingsAction(
       .single();
 
     if (updateError || !afterEdition) {
+      if (deactivatedIds.length > 0) {
+        await supabase
+          .from("conference_editions")
+          .update({ is_active: true })
+          .eq("id", deactivatedIds[0]);
+      }
       return {
         ok: false,
         error: updateError?.message ?? "Failed to update conference edition.",
@@ -154,6 +199,7 @@ export async function updateEditionSettingsAction(
       .single();
 
     if (settingsError || !afterSettings) {
+      revalidateEdition(afterEdition.year);
       return {
         ok: false,
         error: settingsError?.message ?? "Failed to update site settings.",
@@ -170,7 +216,7 @@ export async function updateEditionSettingsAction(
       afterData: afterSettings as unknown as Json,
     });
 
-    revalidateEdition(data.editionYear);
+    revalidateEdition(afterEdition.year);
     return { ok: true, id: trimmedEditionId };
   } catch (error) {
     return mapActionError(error);

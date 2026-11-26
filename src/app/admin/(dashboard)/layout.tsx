@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import { getAdminContext } from "@/lib/auth/session";
-import { loadAdminEditionData } from "@/lib/cms/admin-data";
+import { requireAdminPageSession } from "@/lib/auth/session";
+import { loadAvailableEditions } from "@/lib/cms/admin-data";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { AdminEditionSwitcher } from "@/components/admin/AdminEditionSwitcher";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
@@ -28,12 +28,10 @@ export default async function AdminDashboardLayout({
     redirect("/admin/login");
   }
 
-  const adminContext = await getAdminContext();
-  if (!adminContext) {
-    redirect("/admin/login");
-  }
-
-  const initialData = await loadAdminEditionData(2027);
+  const adminContext = await requireAdminPageSession();
+  const { editions, source } = await loadAvailableEditions();
+  const defaultSelectedYear =
+    editions.find((edition) => edition.isActive)?.year ?? editions[0]?.year ?? 2027;
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col lg:flex-row">
@@ -60,7 +58,7 @@ export default async function AdminDashboardLayout({
               <Badge variant="secondary" className="text-[11px] font-medium">
                 IST (UTC+5:30)
               </Badge>
-              {initialData.source === "fallback" && (
+              {source === "fallback" && (
                 <Badge variant="draft" className="text-[11px]">
                   Seed Snapshot Fallback
                 </Badge>
@@ -69,8 +67,8 @@ export default async function AdminDashboardLayout({
 
             <Suspense fallback={<div className="h-8 w-48" />}>
               <AdminEditionSwitcher
-                editions={initialData.availableEditions}
-                selectedYear={initialData.selectedYear}
+                editions={editions}
+                selectedYear={defaultSelectedYear}
               />
             </Suspense>
           </div>

@@ -3,12 +3,14 @@ import { NextResponse, type NextRequest } from "next/server";
 import { AdminAuthError, requireAdminSession } from "@/lib/auth/session";
 import { editionYearSchema } from "@/lib/validation/common";
 
+const SAFE_RELATIVE_REDIRECT_RE = /^\/(?!\/|\\)/;
+
 function resolveSafeRedirectPath(rawPath: string | null, year: number): string {
   if (!rawPath) {
     return `/?edition=${year}`;
   }
   const trimmed = rawPath.trim();
-  if (!trimmed.startsWith("/") || trimmed.startsWith("//")) {
+  if (!SAFE_RELATIVE_REDIRECT_RE.test(trimmed)) {
     return `/?edition=${year}`;
   }
   return trimmed;

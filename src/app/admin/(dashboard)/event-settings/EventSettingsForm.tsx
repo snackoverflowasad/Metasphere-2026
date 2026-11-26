@@ -189,6 +189,19 @@ export function EventSettingsForm({
         />
       </div>
 
+      {isFallbackRecord && (
+        <div
+          role="status"
+          className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900"
+        >
+          Showing read-only seed fallback data. Seed{" "}
+          <code className="font-mono text-xs bg-amber-100 px-1 py-0.5 rounded">
+            supabase/seed.sql
+          </code>{" "}
+          in Supabase before saving or publishing edition settings.
+        </div>
+      )}
+
       {statusBanner && (
         <div
           role={statusBanner.type === "error" ? "alert" : "status"}
@@ -466,7 +479,11 @@ export function EventSettingsForm({
         </Card>
 
         <div className="flex items-center justify-end gap-3">
-          <Button type="submit" variant="primary" disabled={isSubmitting}>
+          <Button
+            type="submit"
+            variant="primary"
+            disabled={isSubmitting || isFallbackRecord}
+          >
             <Save className="h-4 w-4" />
             {isSubmitting ? "Saving changes..." : "Save Event Settings"}
           </Button>

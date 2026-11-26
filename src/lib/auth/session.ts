@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { AdminRole, Database } from "@/types/database";
 import { canPublishFinancialRecord } from "@/lib/permissions/rbac";
@@ -142,4 +143,24 @@ export async function requireAdminSession(
   }
 
   return context;
+}
+
+/**
+ * Page-level Server Component session guard that redirects `MFA_REQUIRED`
+ * to `/admin/mfa` and all other `AdminAuthError` failures to `/admin/login`.
+ */
+export async function requireAdminPageSession(
+  options?: RequireAdminSessionOptions
+): Promise<AdminContext> {
+  try {
+    return await requireAdminSession(options);
+  } catch (error) {
+    if (error instanceof AdminAuthError) {
+      if (error.code === "MFA_REQUIRED") {
+        redirect("/admin/mfa");
+      }
+      redirect("/admin/login");
+    }
+    throw error;
+  }
 }

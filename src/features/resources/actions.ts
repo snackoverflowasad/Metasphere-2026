@@ -52,6 +52,12 @@ export async function upsertConferenceLinkAction(
       if (!beforeRow) {
         return { ok: false, error: "Conference link not found." };
       }
+      if (beforeRow.edition_id !== data.editionId) {
+        return {
+          ok: false,
+          error: "Conference link does not belong to the selected edition.",
+        };
+      }
 
       const permissionError = checkStatusPermission(
         actor,
@@ -184,6 +190,12 @@ export async function upsertResourceAction(
       }
       if (!beforeRow) {
         return { ok: false, error: "Resource not found." };
+      }
+      if (beforeRow.edition_id !== data.editionId) {
+        return {
+          ok: false,
+          error: "Resource does not belong to the selected edition.",
+        };
       }
 
       const permissionError = checkStatusPermission(

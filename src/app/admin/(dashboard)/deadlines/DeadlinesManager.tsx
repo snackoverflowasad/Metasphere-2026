@@ -184,6 +184,19 @@ export function DeadlinesManager({
         </p>
       </div>
 
+      {isFallbackRecord && (
+        <div
+          role="status"
+          className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900"
+        >
+          Showing read-only seed fallback data. Seed{" "}
+          <code className="font-mono text-xs bg-amber-100 px-1 py-0.5 rounded">
+            supabase/seed.sql
+          </code>{" "}
+          in Supabase before creating, editing, or publishing deadlines.
+        </div>
+      )}
+
       {feedback && (
         <div
           role={feedback.type === "error" ? "alert" : "status"}
@@ -332,7 +345,11 @@ export function DeadlinesManager({
                   Cancel Edit
                 </Button>
               )}
-              <Button type="submit" variant="primary" disabled={isSubmitting}>
+              <Button
+                type="submit"
+                variant="primary"
+                disabled={isSubmitting || isFallbackRecord}
+              >
                 {isSubmitting
                   ? "Saving..."
                   : editingId

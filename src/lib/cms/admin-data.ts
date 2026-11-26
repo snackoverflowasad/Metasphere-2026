@@ -25,16 +25,18 @@ export interface AdminEditionSummaryCounts {
   registrationFees: number;
 }
 
+export interface AdminEditionOption {
+  id: string;
+  year: number;
+  subtitle: string;
+  status: PublicationStatus;
+  isActive: boolean;
+}
+
 export interface AdminEditionData {
   source: "database" | "fallback";
   selectedYear: number;
-  availableEditions: Array<{
-    id: string;
-    year: number;
-    subtitle: string;
-    status: PublicationStatus;
-    isActive: boolean;
-  }>;
+  availableEditions: AdminEditionOption[];
   edition: EditionSummary;
   siteSettings: SiteSettingsSnapshot;
   deadlines: DeadlineSnapshot[];
@@ -58,6 +60,61 @@ export function resolveEditionYearParam(raw?: string | string[] | null): number 
     return parsed;
   }
   return 2027;
+}
+
+const FALLBACK_EDITIONS: AdminEditionOption[] = [
+  {
+    id: "fallback-edition-2027",
+    year: 2027,
+    subtitle: "MetaSphere 2027",
+    status: "published",
+    isActive: true,
+  },
+  {
+    id: "fallback-edition-2026",
+    year: 2026,
+    subtitle: "MetaSphere 2026",
+    status: "archived",
+    isActive: false,
+  },
+];
+
+/**
+ * Lightweight query for the admin layout's edition switcher without loading
+ * full edition counts or audit logs.
+ */
+export async function loadAvailableEditions(): Promise<{
+  editions: AdminEditionOption[];
+  source: "database" | "fallback";
+}> {
+  if (!isSupabaseConfigured()) {
+    return { editions: FALLBACK_EDITIONS, source: "fallback" };
+  }
+
+  try {
+    const supabase = await createServerSupabase();
+    const { data, error } = await supabase
+      .from("conference_editions")
+      .select("id, year, subtitle, status, is_active")
+      .order("year", { ascending: false });
+
+    if (error || !data || data.length === 0) {
+      return { editions: FALLBACK_EDITIONS, source: "fallback" };
+    }
+
+    return {
+      source: "database",
+      editions: data.map((e) => ({
+        id: e.id,
+        year: e.year,
+        subtitle: e.subtitle ?? `MetaSphere ${e.year}`,
+        status: e.status,
+        isActive: e.is_active,
+      })),
+    };
+  } catch {
+    return { editions: FALLBACK_EDITIONS, source: "fallback" };
+  }
 }
 
 /**
