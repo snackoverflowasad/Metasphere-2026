@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
@@ -33,6 +34,12 @@ export function PublicHeader({
   >(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setOpenDropdown(null);
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     function handleOutsideClick(event: MouseEvent) {
@@ -44,9 +51,18 @@ export function PublicHeader({
       }
     }
 
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setOpenDropdown(null);
+        setMobileMenuOpen(false);
+      }
+    }
+
     document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("keydown", handleKeyDown);
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
@@ -71,6 +87,7 @@ export function PublicHeader({
           Viewing archived {editionLabel || `MetaSphere ${editionYear}`} edition.{" "}
           <Link
             href="/"
+            onClick={closeAllMenus}
             className="underline font-semibold text-orange-300 hover:text-orange-200 ml-1"
           >
             Go to current edition
@@ -107,6 +124,7 @@ export function PublicHeader({
           <nav className="flex items-center space-x-5 text-sm font-medium">
             <Link
               href={href("/")}
+              onClick={closeAllMenus}
               className="text-white hover:text-orange-400 transition"
             >
               Home
@@ -145,18 +163,21 @@ export function PublicHeader({
 
             <Link
               href={href("/technical-programs")}
+              onClick={closeAllMenus}
               className="text-white hover:text-orange-400 transition"
             >
               Technical Programs
             </Link>
             <Link
               href={href("/registration")}
+              onClick={closeAllMenus}
               className="text-white hover:text-orange-400 transition"
             >
               Registration
             </Link>
             <Link
               href={href("/speakers")}
+              onClick={closeAllMenus}
               className="text-white hover:text-orange-400 transition"
             >
               Keynote Speakers
@@ -209,12 +230,14 @@ export function PublicHeader({
 
             <Link
               href={href("/sponsors")}
+              onClick={closeAllMenus}
               className="text-white hover:text-orange-400 transition"
             >
               Technical Sponsors
             </Link>
             <Link
               href={href("/contact")}
+              onClick={closeAllMenus}
               className="text-white hover:text-orange-400 transition"
             >
               Contact
@@ -224,6 +247,7 @@ export function PublicHeader({
           {/* Register Button */}
           <Link
             href={href("/registration")}
+            onClick={closeAllMenus}
             className="ml-6 px-4 py-1.5 rounded-md text-sm font-semibold shadow-md transition bg-orange-500 text-white hover:bg-orange-600"
           >
             Register Now
