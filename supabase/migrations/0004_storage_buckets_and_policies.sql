@@ -38,34 +38,92 @@ SET
   allowed_mime_types = EXCLUDED.allowed_mime_types;
 
 -- ============================================================================
--- 2. Restrictive Storage Guardrails (AAL2 + Safe MIME + Block SVG/HTML)
+-- 2. Restrictive Storage Guardrails (Per-Command AAL2 + Safe MIME + Block SVG/HTML)
 -- ============================================================================
 
 DROP POLICY IF EXISTS "conference_storage_require_aal2_writes" ON storage.objects;
-CREATE POLICY "conference_storage_require_aal2_writes"
+
+DROP POLICY IF EXISTS "conference_storage_require_aal2_select" ON storage.objects;
+CREATE POLICY "conference_storage_require_aal2_select"
   ON storage.objects
   AS RESTRICTIVE
-  FOR ALL
+  FOR SELECT
   TO authenticated
   USING (
     bucket_id NOT IN ('conference-public', 'conference-private')
     OR bucket_id = 'conference-public'
-    OR (select auth.jwt()->>'aal') = 'aal2'
+    OR (
+      (select auth.jwt()->>'aal') = 'aal2'
+      AND public.current_admin_role() IN ('super_admin', 'content_admin', 'editor')
+    )
+  );
+
+DROP POLICY IF EXISTS "conference_storage_require_aal2_insert" ON storage.objects;
+CREATE POLICY "conference_storage_require_aal2_insert"
+  ON storage.objects
+  AS RESTRICTIVE
+  FOR INSERT
+  TO authenticated
+  WITH CHECK (
+    bucket_id NOT IN ('conference-public', 'conference-private')
+    OR (
+      (select auth.jwt()->>'aal') = 'aal2'
+      AND public.current_admin_role() IN ('super_admin', 'content_admin', 'editor')
+      AND (
+        metadata IS NULL
+        OR metadata->>'mimetype' IS NULL
+        OR coalesce(metadata->>'mimetype', '') IN (
+          'image/png',
+          'image/jpeg',
+          'image/webp',
+          'application/pdf'
+        )
+      )
+      AND coalesce(metadata->>'mimetype', '') NOT IN ('image/svg+xml', 'text/html')
+      AND btrim(name) !~* '\.(svg|html?|xhtml)$'
+      AND (
+        metadata IS NULL
+        OR metadata->>'size' IS NULL
+        OR coalesce((metadata->>'size')::bigint, 0) <= 10485760
+      )
+    )
+  );
+
+DROP POLICY IF EXISTS "conference_storage_require_aal2_update" ON storage.objects;
+CREATE POLICY "conference_storage_require_aal2_update"
+  ON storage.objects
+  AS RESTRICTIVE
+  FOR UPDATE
+  TO authenticated
+  USING (
+    bucket_id NOT IN ('conference-public', 'conference-private')
+    OR (
+      (select auth.jwt()->>'aal') = 'aal2'
+      AND public.current_admin_role() IN ('super_admin', 'content_admin', 'editor')
+    )
   )
   WITH CHECK (
     bucket_id NOT IN ('conference-public', 'conference-private')
     OR (
       (select auth.jwt()->>'aal') = 'aal2'
       AND public.current_admin_role() IN ('super_admin', 'content_admin', 'editor')
-      AND coalesce(metadata->>'mimetype', '') IN (
-        'image/png',
-        'image/jpeg',
-        'image/webp',
-        'application/pdf'
+      AND (
+        metadata IS NULL
+        OR metadata->>'mimetype' IS NULL
+        OR coalesce(metadata->>'mimetype', '') IN (
+          'image/png',
+          'image/jpeg',
+          'image/webp',
+          'application/pdf'
+        )
       )
       AND coalesce(metadata->>'mimetype', '') NOT IN ('image/svg+xml', 'text/html')
-      AND name !~* '\.(svg|html?|xhtml)$'
-      AND coalesce((metadata->>'size')::bigint, 0) <= 10485760
+      AND btrim(name) !~* '\.(svg|html?|xhtml)$'
+      AND (
+        metadata IS NULL
+        OR metadata->>'size' IS NULL
+        OR coalesce((metadata->>'size')::bigint, 0) <= 10485760
+      )
     )
   );
 
@@ -107,7 +165,7 @@ CREATE POLICY "conference_private_admin_read"
     AND public.current_admin_role() IN ('super_admin', 'content_admin', 'editor')
   );
 
--- Authenticated aal2 admin upload (INSERT) with strict MIME allowlist & 10 MB cap
+-- Authenticated aal2 admin upload (INSERT) with TUS/signed-upload metadata tolerance & 10 MB cap
 DROP POLICY IF EXISTS "conference_storage_admin_insert" ON storage.objects;
 CREATE POLICY "conference_storage_admin_insert"
   ON storage.objects
@@ -117,15 +175,23 @@ CREATE POLICY "conference_storage_admin_insert"
     bucket_id IN ('conference-public', 'conference-private')
     AND (select auth.jwt()->>'aal') = 'aal2'
     AND public.current_admin_role() IN ('super_admin', 'content_admin', 'editor')
-    AND coalesce(metadata->>'mimetype', '') IN (
-      'image/png',
-      'image/jpeg',
-      'image/webp',
-      'application/pdf'
+    AND (
+      metadata IS NULL
+      OR metadata->>'mimetype' IS NULL
+      OR coalesce(metadata->>'mimetype', '') IN (
+        'image/png',
+        'image/jpeg',
+        'image/webp',
+        'application/pdf'
+      )
     )
     AND coalesce(metadata->>'mimetype', '') NOT IN ('image/svg+xml', 'text/html')
-    AND name !~* '\.(svg|html?|xhtml)$'
-    AND coalesce((metadata->>'size')::bigint, 0) <= 10485760
+    AND btrim(name) !~* '\.(svg|html?|xhtml)$'
+    AND (
+      metadata IS NULL
+      OR metadata->>'size' IS NULL
+      OR coalesce((metadata->>'size')::bigint, 0) <= 10485760
+    )
   );
 
 -- Authenticated aal2 admin overwrite/update (UPDATE)
@@ -143,15 +209,23 @@ CREATE POLICY "conference_storage_admin_update"
     bucket_id IN ('conference-public', 'conference-private')
     AND (select auth.jwt()->>'aal') = 'aal2'
     AND public.current_admin_role() IN ('super_admin', 'content_admin', 'editor')
-    AND coalesce(metadata->>'mimetype', '') IN (
-      'image/png',
-      'image/jpeg',
-      'image/webp',
-      'application/pdf'
+    AND (
+      metadata IS NULL
+      OR metadata->>'mimetype' IS NULL
+      OR coalesce(metadata->>'mimetype', '') IN (
+        'image/png',
+        'image/jpeg',
+        'image/webp',
+        'application/pdf'
+      )
     )
     AND coalesce(metadata->>'mimetype', '') NOT IN ('image/svg+xml', 'text/html')
-    AND name !~* '\.(svg|html?|xhtml)$'
-    AND coalesce((metadata->>'size')::bigint, 0) <= 10485760
+    AND btrim(name) !~* '\.(svg|html?|xhtml)$'
+    AND (
+      metadata IS NULL
+      OR metadata->>'size' IS NULL
+      OR coalesce((metadata->>'size')::bigint, 0) <= 10485760
+    )
   );
 
 -- Authenticated aal2 admin delete (DELETE)

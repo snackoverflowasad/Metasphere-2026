@@ -1337,7 +1337,10 @@ CREATE POLICY "audit_logs_admin_insert"
   ON public.audit_logs
   FOR INSERT
   TO authenticated
-  WITH CHECK (public.current_admin_role() IN ('super_admin', 'content_admin', 'editor'));
+  WITH CHECK (
+    public.current_admin_role() IN ('super_admin', 'content_admin', 'editor')
+    AND (actor_id IS NULL OR actor_id = (select auth.uid()))
+  );
 
 -- 6.3 content_versions (immutable CMS snapshot history: SELECT and INSERT by aal2 admins)
 DROP POLICY IF EXISTS "content_versions_require_aal2_all" ON public.content_versions;
@@ -1361,4 +1364,7 @@ CREATE POLICY "content_versions_admin_insert"
   ON public.content_versions
   FOR INSERT
   TO authenticated
-  WITH CHECK (public.current_admin_role() IN ('super_admin', 'content_admin', 'editor'));
+  WITH CHECK (
+    public.current_admin_role() IN ('super_admin', 'content_admin', 'editor')
+    AND (created_by IS NULL OR created_by = (select auth.uid()))
+  );

@@ -181,15 +181,19 @@ describe("0003 RLS policies & mandatory AAL2 MFA enforcement", () => {
     );
   });
 
-  it("keeps audit_logs strictly append-only with SELECT and INSERT policies and zero UPDATE or DELETE policies", () => {
+  it("keeps audit_logs strictly append-only with SELECT and INSERT policies, actor attribution check, and zero UPDATE or DELETE policies", () => {
     const sql = readSql0003();
     const auditPolicies = extractTablePolicies(sql, "audit_logs");
 
     expect(auditPolicies).toMatch(/FOR\s+SELECT/i);
     expect(auditPolicies).toMatch(/FOR\s+INSERT/i);
+    expect(auditPolicies).toMatch(/actor_id\s+IS\s+NULL\s+OR\s+actor_id\s*=\s*\(\s*select\s+auth\.uid\(\)\s*\)/i);
     expect(auditPolicies).not.toMatch(/FOR\s+UPDATE/i);
     expect(auditPolicies).not.toMatch(/FOR\s+DELETE/i);
     expect(auditPolicies).not.toMatch(/FOR\s+ALL[\s\S]*?PERMISSIVE/i);
+
+    const versionPolicies = extractTablePolicies(sql, "content_versions");
+    expect(versionPolicies).toMatch(/created_by\s+IS\s+NULL\s+OR\s+created_by\s*=\s*\(\s*select\s+auth\.uid\(\)\s*\)/i);
   });
 });
 
@@ -206,11 +210,15 @@ describe("0004 storage buckets & safe MIME policies", () => {
     expect(sql).toContain("'application/pdf'");
   });
 
-  it("enforces storage.objects RLS blocking image/svg+xml and text/html and requiring aal2 admin writes", () => {
+  it("enforces per-command restrictive storage.objects RLS blocking image/svg+xml and text/html while tolerating metadata IS NULL on INSERT", () => {
     const sql = readSql0004();
 
     expect(sql).toMatch(/ON\s+storage\.objects\b/i);
-    expect(sql).toMatch(/AS\s+RESTRICTIVE/i);
+    expect(sql).toMatch(/AS\s+RESTRICTIVE\s+FOR\s+SELECT/i);
+    expect(sql).toMatch(/AS\s+RESTRICTIVE\s+FOR\s+INSERT/i);
+    expect(sql).toMatch(/AS\s+RESTRICTIVE\s+FOR\s+UPDATE/i);
+    expect(sql).toMatch(/AS\s+RESTRICTIVE\s+FOR\s+DELETE/i);
+    expect(sql).not.toMatch(/AS\s+RESTRICTIVE\s+FOR\s+ALL/i);
     expect(sql).toMatch(
       /\(\s*select\s+auth\.jwt\(\)\s*->>\s*'aal'\s*\)\s*=\s*'aal2'/i
     );
@@ -218,6 +226,8 @@ describe("0004 storage buckets & safe MIME policies", () => {
     expect(sql).toContain("'image/svg+xml'");
     expect(sql).toContain("'text/html'");
     expect(sql).toMatch(/NOT\s+IN\s*\(\s*'image\/svg\+xml'\s*,\s*'text\/html'\s*\)/i);
+    expect(sql).toMatch(/metadata\s+IS\s+NULL\s+OR\s+metadata->>'mimetype'\s+IS\s+NULL/i);
+    expect(sql).toMatch(/btrim\(name\)\s*!~\*\s*'\\\.\(svg\|html\?\|xhtml\)\$'/i);
   });
 });
 
