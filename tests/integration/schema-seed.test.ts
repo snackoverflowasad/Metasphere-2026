@@ -185,4 +185,32 @@ describe("PostgreSQL multi-edition schema, seed & fallback snapshot", () => {
 
     expect(() => getFallbackEditionSnapshot(2099)).toThrow();
   });
+
+  it("classifies Bhusawal Indian affiliations (Dr. Priti Subramanium, Dr. Gajanan Uttam Patil) as India/national rather than international", () => {
+    const seed = fs.readFileSync(path.join(ROOT_DIR, "supabase/seed.sql"), "utf8");
+    expect(seed).toContain(
+      "'Dr. Priti Subramanium', NULL, 'Shri Sant Gadge Baba College of Engineering and Technology, Bhusawal, India', 'India'"
+    );
+    expect(seed).toContain(
+      "'Dr. Gajanan Uttam Patil', NULL, 'HSM’S SSGBCOE&T, Bhusawal, India', 'India'"
+    );
+    expect(seed).toContain(
+      "'10000000-0000-4000-8000-000000000087', 'TPC Member', 'Technical Program Committee', 'national'"
+    );
+    expect(seed).toContain(
+      "'10000000-0000-4000-8000-0000000000aa', 'TPC Member', 'Technical Program Committee', 'national'"
+    );
+
+    for (const year of [2026, 2027]) {
+      const snapshot = getFallbackEditionSnapshot(year);
+      expect(snapshot.speakers.every((s) => s.country === "India" || s.country === "International")).toBe(true);
+      const tpc = snapshot.committees.find((c) => c.category === "technical");
+      expect(tpc).toBeDefined();
+
+      const priti = tpc!.members.find((m) => m.fullName === "Dr. Priti Subramanium");
+      const gajanan = tpc!.members.find((m) => m.fullName === "Dr. Gajanan Uttam Patil");
+      expect(priti?.nationalityGroup).toBe("national");
+      expect(gajanan?.nationalityGroup).toBe("national");
+    }
+  });
 });

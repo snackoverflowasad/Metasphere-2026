@@ -103,12 +103,13 @@ const INTERNATIONAL_HINTS = [
   "vietnam",
 ];
 
+const INTERNATIONAL_PATTERN = new RegExp(
+  `\\b(${INTERNATIONAL_HINTS.join("|")})\\b`,
+  "i"
+);
+
 function inferNationalityGroup(affiliation: string): "national" | "international" {
-  const lower = affiliation.toLowerCase();
-  if (INTERNATIONAL_HINTS.some((hint) => lower.includes(hint))) {
-    return "international";
-  }
-  return "national";
+  return INTERNATIONAL_PATTERN.test(affiliation) ? "international" : "national";
 }
 
 function slugify(value: string): string {
@@ -236,22 +237,28 @@ function buildTracks(year: 2026 | 2027): TrackSnapshot[] {
 
 function buildSpeakers(year: 2026 | 2027): SpeakerSnapshot[] {
   const status = year === 2026 ? "archived" : "published";
-  return inventory.edition2026Content.keynoteSpeakers.map((s, index) => ({
-    id: `fallback-${year}-speaker-${index + 1}`,
-    personId: `fallback-person-${slugify(s.name)}`,
-    fullName: s.name,
-    designation: s.affiliations[0] ?? "",
-    institution: s.affiliations.join(" | "),
-    affiliations: [...s.affiliations],
-    country: null,
-    photoUrl: s.imageUrl,
-    imageAlt: s.imageAlt,
-    speakerType: "keynote",
-    talkTitle: null,
-    talkAbstract: null,
-    sortOrder: index + 1,
-    status,
-  }));
+  return inventory.edition2026Content.keynoteSpeakers.map((s, index) => {
+    const institution = s.affiliations.join(" | ");
+    return {
+      id: `fallback-${year}-speaker-${index + 1}`,
+      personId: `fallback-person-${slugify(s.name)}`,
+      fullName: s.name,
+      designation: s.affiliations[0] ?? "",
+      institution,
+      affiliations: [...s.affiliations],
+      country:
+        inferNationalityGroup(institution) === "international"
+          ? "International"
+          : "India",
+      photoUrl: s.imageUrl,
+      imageAlt: s.imageAlt,
+      speakerType: "keynote",
+      talkTitle: null,
+      talkAbstract: null,
+      sortOrder: index + 1,
+      status,
+    };
+  });
 }
 
 function buildCommittees(year: 2026 | 2027): CommitteeSnapshot[] {
