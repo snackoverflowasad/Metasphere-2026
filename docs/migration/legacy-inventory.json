@@ -1,0 +1,1486 @@
+{
+  "schemaVersion": 1,
+  "extractedAt": "2026-11-26",
+  "legacyRedirects": [
+    {
+      "source": "index.html",
+      "destination": "/"
+    },
+    {
+      "source": "CallPapers.html",
+      "destination": "/call-for-papers"
+    },
+    {
+      "source": "PaperSubmit.html",
+      "destination": "/paper-submission"
+    },
+    {
+      "source": "registration.html",
+      "destination": "/registration"
+    },
+    {
+      "source": "Keynote_Speaker.html",
+      "destination": "/speakers"
+    },
+    {
+      "source": "technical-programs.html",
+      "destination": "/technical-programs"
+    },
+    {
+      "source": "TechSponsor.html",
+      "destination": "/sponsors"
+    },
+    {
+      "source": "Contact.html",
+      "destination": "/contact"
+    },
+    {
+      "source": "AdvisoryCommittee.html",
+      "destination": "/committees/advisory"
+    },
+    {
+      "source": "scientific-committee.html",
+      "destination": "/committees/scientific"
+    },
+    {
+      "source": "TechCommittee.html",
+      "destination": "/committees/technical"
+    },
+    {
+      "source": "AAIA.html",
+      "destination": "/committees/aaia"
+    },
+    {
+      "source": "404.html",
+      "destination": "/404"
+    }
+  ],
+  "cloudinaryUrls": [
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782833928/iem2_b92xeg.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782833993/IMG_5134_swdqrc.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782834954/MetaSphere2026/AI.webp",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782834955/MetaSphere2026/Cloud.avif",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782834955/MetaSphere2026/Data-Visualization-thumbnail.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782834956/MetaSphere2026/Quantum.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782834958/MetaSphere2026/Sponsors/techSponsor1.png",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782834958/MetaSphere2026/Sponsors/techSponsor2.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782834958/MetaSphere2026/Sponsors/techSponsor3.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782834958/MetaSphere2026/Sponsors/techSponsor4.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782834961/MetaSphere2026/Sponsors/techSponsor5.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782835036/MetaSphere2026/Events/DSC01429.JPG.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782835037/MetaSphere2026/Events/recent1.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782835038/MetaSphere2026/Events/recent2.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782835038/MetaSphere2026/Events/recent3.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782835040/MetaSphere2026/Events/IMG-20250306-WA0079.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782835042/MetaSphere2026/Events/IMG-20250306-WA0090.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782835043/MetaSphere2026/Events/IMG-20250306-WA0102.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782835126/MetaSphere2026/Events/IMG_5171.JPG.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782835130/MetaSphere2026/Events/IMG_5520.JPG.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782835134/MetaSphere2026/Events/IMG_5616.JPG.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1782835136/MetaSphere2026/Events/IMG_5359.JPG.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1786007780/WhatsApp_Image_2026-08-06_at_12.24.40_PM_sky6yj.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1786007781/WhatsApp_Image_2026-08-06_at_12.23.14_PM_jv7kva.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1786008912/WhatsApp_Image_2026-08-06_at_3.04.06_PM_sh5slp.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1786009021/WhatsApp_Image_2026-08-06_at_3.05.31_PM_ll0osg.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1786009022/WhatsApp_Image_2026-08-06_at_3.05.18_PM_wwwmvd.jpg",
+    "https://res.cloudinary.com/dh87hfwml/image/upload/v1786009542/WhatsApp_Image_2026-08-06_at_3.15.15_PM_astzyr.jpg",
+    "https://res.cloudinary.com/dh87hfwml/video/upload/f_auto,q_auto/v1782834872/MetaSphere2026/988047-hd_1280_720_60fps.mp4",
+    "https://res.cloudinary.com/dh87hfwml/video/upload/f_auto,q_auto/v1782834913/MetaSphere2026/4200196-hd_1920_1080_30fps.mp4",
+    "https://res.cloudinary.com/dh87hfwml/video/upload/v1782833939/submit_l2amm7.mp4",
+    "https://res.cloudinary.com/dh87hfwml/video/upload/v1782834890/MetaSphere2026/Paper.mp4",
+    "https://res.cloudinary.com/dh87hfwml/video/upload/v1782834899/MetaSphere2026/7685212-hd_1920_1080_24fps.mp4",
+    "https://res.cloudinary.com/dh87hfwml/video/upload/v1782834921/MetaSphere2026/MB.mp4",
+    "https://res.cloudinary.com/dh87hfwml/video/upload/v1782834928/MetaSphere2026/20784261-hd_1280_720_30fps.mp4",
+    "https://res.cloudinary.com/dh87hfwml/video/upload/v1782834933/MetaSphere2026/4198845-hd_1920_1080_25fps.mp4"
+  ],
+  "localAssets": [
+    "Assets/002.jpg",
+    "Assets/003.jpg",
+    "Assets/003.svg",
+    "Assets/01.jpg",
+    "Assets/01.svg",
+    "Assets/A-general-template-file-for-the-LaTeX-package-SVJour3-for-Springer-journals.zip",
+    "Assets/Logo.png",
+    "Assets/Logo.svg",
+    "Assets/METASPHERE WEBSITE BANNER .svg",
+    "Assets/Metasphere-conference-template-.pptx",
+    "Assets/Permission-Request-Form.doc",
+    "Assets/Publishing-Agreement-Form(Copy Right Form).docx",
+    "Assets/WordTemplate.zip",
+    "Assets/book.png",
+    "Assets/keynote-speakers/speaker-1.png",
+    "Assets/keynote-speakers/speaker-2.jpg",
+    "Assets/keynote-speakers/speaker-3.jpg",
+    "Assets/keynote-speakers/speaker-4.jpg",
+    "Assets/keynote-speakers/speaker-5.jpg",
+    "Assets/keynote-speakers/speaker-6.jpg",
+    "Assets/metasphere_editable_google_doc_qr.png",
+    "Assets/qr-code.png"
+  ],
+  "externalLinks": {
+    "cmtPortal": "https://cmt3.research.microsoft.com/MetaSphere2026",
+    "registrationForm": "https://forms.cloud.microsoft/pages/responsepage.aspx?id=U53vQTHLQEulXQiTM0pAWYCBJZcFs_ROjNheVtdaa3BUOTRJTDhZSlIwQjdWSEUyVkoxUjNNSFRIQy4u&route=shorturl",
+    "latexOverleafTemplate": "https://www.overleaf.com/latex/templates/springer-lecture-notes-in-computer-science/kzwwpvhwnvfj",
+    "googleDrive": [
+      {
+        "label": "Template in Microsoft Word (US Letter)",
+        "url": "https://drive.google.com/file/d/1PHj4l6oGQ2w_SzbrEeHli8wVSLSmXK7u/view?usp=sharing"
+      },
+      {
+        "label": "Call for Papers / Conference Brochure",
+        "url": "https://drive.google.com/file/d/1OGuXv0XyLg2CyRgBF8JuMg-7KRWUoBfc/view?usp=drive_link"
+      }
+    ],
+    "googleMapsEmbeds": [
+      {
+        "context": "Sitewide Footer (IEM Ashram Building)",
+        "url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.123456789!2d88.4296927!3d22.5701392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275b23d77ee27%3A0xcd498ec0d7bf6f54!2sInstitute%20of%20Engineering%20and%20Management%20(Ashram%20Building)!5e0!3m2!1sen!2sin!4v1690000000000"
+      },
+      {
+        "context": "Contact Page Main Map (Institute of Engineering & Management)",
+        "url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.212033100494!2d88.42969267584799!3d22.5712170329792!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275b23d77ee27%3A0xcd498ec0d7bf6f54!2sInstitute%20of%20Engineering%20%26%20Management%20(IEM)!5e0!3m2!1sen!2sin!4v1690000000000"
+      }
+    ],
+    "organizerWebsite": "https://iem.edu.in",
+    "legacyCanonicalOrigin": "https://metasphere-2026.web.app"
+  },
+  "themeTokens": {
+    "background": "#fffbf5",
+    "foreground": "#1a202c",
+    "primary": "#f97316",
+    "primaryHover": "#ea580c",
+    "accentMagenta": "#d946ef"
+  },
+  "edition2026Content": {
+    "conference": {
+      "title": "MetaSphere 2026: Global Conference on Cloud Computing, Virtualization & Metaverse",
+      "shortTitle": "MetaSphere 2026",
+      "tagline": "Prudent thinking to pragmatic future",
+      "loaderSubtitle": "Where Tradition Meets Tomorrow",
+      "datesDisplay": "21st & 22nd August, 2026",
+      "startDateIso": "2026-08-21T09:00:00+05:30",
+      "endDateIso": "2026-08-22T18:00:00+05:30",
+      "venueName": "Institute of Engineering & Management (IEM), Ashram Building",
+      "venueCity": "Kolkata, India",
+      "organizers": [
+        "The Department of Computer Application (BCA)",
+        "IEM Centre of Excellence for Cloud Computing & IoT"
+      ],
+      "collaborators": [
+        "Internet of Things and Applications Lab (iTHACA), Department of Electrical and Computer Engineering, University of Western Macedonia Campus, Kozani, Greece",
+        "MetaMind Innovations (First spin-off of the University of Western Macedonia), Greece"
+      ],
+      "technicalCoSponsorsSummary": "This Conference is Technically Co-sponsored by the Asia-Pacific Artificial Intelligence Association (AAIA), Kolkata Branch & Acuminous Research Foundation (Acuminor)",
+      "cmtAcknowledgment": "The Microsoft CMT service was used for managing the peer-reviewing process for this conference. This service was provided for free by Microsoft and they bore all expenses, including costs for Azure cloud services as well as for software development and support.",
+      "publicationNote": "All accepted and presented papers will be published in Springer LNNS book series (Scopus Indexed)",
+      "publicationBookCoverAsset": "Assets/book.png",
+      "programScheduleQrAsset": "Assets/metasphere_editable_google_doc_qr.png"
+    },
+    "deadlines": [
+      {
+        "label": "Full paper submission (extended)",
+        "originalDate": "30th June, 2026",
+        "date": "15th July, 2026",
+        "isExtended": true
+      },
+      {
+        "label": "Acceptance notification",
+        "date": "5th August, 2026"
+      },
+      {
+        "label": "Early bird registration",
+        "date": "10th August, 2026"
+      },
+      {
+        "label": "Registration close",
+        "date": "13th August, 2026"
+      },
+      {
+        "label": "Camera ready paper submission",
+        "date": "21st September, 2026"
+      },
+      {
+        "label": "Conference date",
+        "date": "21st & 22nd August, 2026",
+        "isConferenceDate": true
+      }
+    ],
+    "tracks": [
+      {
+        "number": 1,
+        "title": "Cloud Computing & Virtualization",
+        "subtracks": [
+          "Next-Gen Cloud Architectures",
+          "Edge & Fog Computing",
+          "Cloud Security & Compliance",
+          "Virtualization Advances",
+          "Green Cloud"
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Metaverse & Quantum Metaverse",
+        "subtracks": [
+          "Virtual & Augmented Reality (VR/AR/XR)",
+          "Blockchain & Web3 in the Metaverse",
+          "Human–Computer Interaction in the Metaverse",
+          "Interoperability & Open Standards",
+          "Quantum Computing for the Metaverse",
+          "Cross-Disciplinary Applications of the Quantum Metaverse",
+          "Quantum AI & Machine Learning"
+        ]
+      },
+      {
+        "number": 3,
+        "title": "AI, Data, & Future Connectivity",
+        "subtracks": [
+          "AI-Driven Cloud & Metaverse",
+          "6G and Beyond for the Metaverse",
+          "Big Data & Real-Time Analytics",
+          "Security, Privacy & Digital Trust",
+          "Cross-Disciplinary Applications",
+          "IoT Integration & Digital Twins"
+        ]
+      }
+    ],
+    "keynoteSpeakers": [
+      {
+        "name": "Prof. (Dr.) Siddhartha Bhattacharyya",
+        "affiliations": [
+          "VSB Technical University, Ostrava, Czech Republic",
+          "Algebra Bernays University College, Zagreb, Croatia"
+        ],
+        "imageUrl": "Assets/keynote-speakers/speaker-1.png",
+        "imageAlt": "Prof. Dr. Siddhartha Bhattacharyya"
+      },
+      {
+        "name": "Prof. (Dr.) Debashis De",
+        "affiliations": [
+          "Professor, Dept. of CSE, Maulana Abul Kalam Azad University of Technology"
+        ],
+        "imageUrl": "Assets/keynote-speakers/speaker-2.jpg",
+        "imageAlt": "Prof. Dr. Siddhartha Bhattacharyya"
+      },
+      {
+        "name": "Prof. (Dr.) Panagiotis Sarigiannidis",
+        "affiliations": [
+          "Professor, Dept. of ECE, University of Western Macedonia, Kozani, Greece"
+        ],
+        "imageUrl": "Assets/keynote-speakers/speaker-4.jpg",
+        "imageAlt": "Prof. (Dr.) Panagiotis Sarigiannidis"
+      },
+      {
+        "name": "Prof. (Dr.) Rajkumar Buyya",
+        "affiliations": [
+          "Redmond Barry Distinguished Professor and Director, CLOUDS Laboratory, University of Melbourne, Australia."
+        ],
+        "imageUrl": "Assets/keynote-speakers/speaker-5.jpg",
+        "imageAlt": "Prof. (Dr.) Rajkumar Buyya"
+      },
+      {
+        "name": "Dr. Dipanjyoti Paul",
+        "affiliations": [
+          "Visiting Scientist, Ohio State University, USA | Department of IT, IIEST Shibpur, India"
+        ],
+        "imageUrl": "Assets/keynote-speakers/speaker-3.jpg",
+        "imageAlt": "Prof. Dr. Siddhartha Bhattacharyya"
+      },
+      {
+        "name": "Dr. Debdoot Sheet",
+        "affiliations": [
+          "Co-founder and Chief Scientist, Mahanim India Pvt. Ltd. - Associate Professor, Dept. of EE, IIT Kharagpur"
+        ],
+        "imageUrl": "Assets/keynote-speakers/speaker-6.jpg",
+        "imageAlt": "Dr. Debdoot Sheet"
+      }
+    ],
+    "committees": {
+      "leadershipGroups": [
+        {
+          "role": "Chief Patron",
+          "members": [
+            {
+              "name": "Prof. Banani Chakrabarti",
+              "affiliation": "President of IEM Group, India"
+            }
+          ]
+        },
+        {
+          "role": "Patron",
+          "members": [
+            {
+              "name": "Prof. (Dr.) Satyajit Chakrabarti",
+              "affiliation": "Director, IEM-UEM Group"
+            }
+          ]
+        },
+        {
+          "role": "Honorary Chair",
+          "members": [
+            {
+              "name": "Prof. (Dr.) Rajkumar Buyya",
+              "affiliation": "FIEEE, Fellow, Academia Europaea,University of Melbourne, Australia."
+            },
+            {
+              "name": "Prof. (Dr.) Sheng-Lung Peng",
+              "affiliation": "Professor, National Taipei University of Business, Taiwan"
+            }
+          ]
+        }
+      ],
+      "chairGroups": [
+        {
+          "role": "General Chairs",
+          "members": [
+            {
+              "name": "Prof. Dr. Siddhartha Bhattacharyya",
+              "affiliation": "VSB Technical University, Ostrava, Czech Republic and Algebra Bernays University College, Zagreb, Croatia"
+            },
+            {
+              "name": "Prof. (Dr.) Jyoti Sekhar Banerjee",
+              "affiliation": "Techno Bengal Institute of Technology, Kolkata, India"
+            },
+            {
+              "name": "Prof. (Dr.) Panagiotis Sarigiannidis",
+              "affiliation": "University of Western Macedonia, Kozani, Greece"
+            }
+          ]
+        },
+        {
+          "role": "Organizing Chairs",
+          "members": [
+            {
+              "name": "Dr. Rupam Bhattacharyya",
+              "affiliation": "IEM Kolkata, India"
+            },
+            {
+              "name": "Prof. Nayantara Mitra",
+              "affiliation": "IEM Kolkata, India"
+            },
+            {
+              "name": "Dr. Rabin Majumder",
+              "affiliation": "IEM Kolkata, India"
+            },
+            {
+              "name": "Dr. Amartya Mukherjee",
+              "affiliation": "IEM Kolkata, India"
+            }
+          ]
+        },
+        {
+          "role": "TPC Chair",
+          "members": [
+            {
+              "name": "Prof. Dr. Siddhartha Bhattacharyya",
+              "affiliation": "VSB Technical University, Ostrava, Czech Republic and Algebra University College, Zagreb, Croatia"
+            }
+          ]
+        },
+        {
+          "role": "Convener Chair",
+          "members": [
+            {
+              "name": "Dr. Deepsubhra Guha Roy",
+              "affiliation": "IEM Kolkata, India"
+            },
+            {
+              "name": "Dr. Priti Deb",
+              "affiliation": "IEM Kolkata, India"
+            }
+          ]
+        },
+        {
+          "role": "Program Chairs",
+          "members": [
+            {
+              "name": "Prof. (Dr.) M Shamim Kaiser",
+              "affiliation": "Institute of Information Technology of Jahangirnagar University, Dhaka, Bangladesh"
+            },
+            {
+              "name": "Prof. (Dr.) Mohamed Lahby",
+              "affiliation": "University Hassan II, Higher Normal School of Casablanca, Casablanca, Morocco"
+            },
+            {
+              "name": "Prof. (Dr.) Ahmed J. Obaid",
+              "affiliation": "University of Kufa, Iraq"
+            }
+          ]
+        },
+        {
+          "role": "Industry Chairs",
+          "members": [
+            {
+              "name": "Dr. Tanushyam Chattopadhyay",
+              "affiliation": "Techno functional head, Computer Vision, JV of Adani AI Labs and International Holding Company"
+            },
+            {
+              "name": "Mr. Snehasis Banerjee",
+              "affiliation": "TCS Research & Innovation, Kolkata, India"
+            }
+          ]
+        },
+        {
+          "role": "Industry Academic Partnership Chair",
+          "members": [
+            {
+              "name": "Mr. Souvik Das",
+              "affiliation": "Academic Alliance Head of India East, TCS, India"
+            }
+          ]
+        },
+        {
+          "role": "Publication Chairs",
+          "members": [
+            {
+              "name": "Kaustav Sarkar",
+              "affiliation": "IEM Kolkata, India"
+            },
+            {
+              "name": "Dr. Priti Deb",
+              "affiliation": "IEM Kolkata, India"
+            },
+            {
+              "name": "Dr. Ayan Kumar Panja",
+              "affiliation": "IEM Kolkata, India"
+            }
+          ]
+        },
+        {
+          "role": "Publicity Chairs",
+          "members": [
+            {
+              "name": "Prof. Pradipta Roy",
+              "affiliation": "IEM Kolkata, India"
+            },
+            {
+              "name": "Bipasha Guha Roy",
+              "affiliation": "IEM Kolkata, India"
+            }
+          ]
+        },
+        {
+          "role": "Finance Chairs",
+          "members": [
+            {
+              "name": "Prof. Nayantara Mitra",
+              "affiliation": "IEM Kolkata, India"
+            },
+            {
+              "name": "Dr. Priti Deb",
+              "affiliation": "IEM Kolkata, India"
+            },
+            {
+              "name": "Dr. Deepsubhra Guha Roy",
+              "affiliation": "IEM Kolkata, India"
+            }
+          ]
+        },
+        {
+          "role": "Hospitality and Transport Chairs",
+          "members": [
+            {
+              "name": "Prof. Biswesar Thakur",
+              "affiliation": "IEM Kolkata, India"
+            },
+            {
+              "name": "Kaustav Nandy",
+              "affiliation": "IEM Kolkata, India"
+            },
+            {
+              "name": "Sucheta Chandra",
+              "affiliation": "IEM Kolkata, India"
+            }
+          ]
+        },
+        {
+          "role": "Web Chairs",
+          "members": [
+            {
+              "name": "Dr. Priyanka Das",
+              "affiliation": "IEM Kolkata, India"
+            },
+            {
+              "name": "Kaustav Sarkar",
+              "affiliation": "IEM Kolkata, India"
+            },
+            {
+              "name": "Dr. Sreya Ghosh",
+              "affiliation": "IEM Kolkata, India"
+            },
+            {
+              "name": "Sudipta Bhattacharya",
+              "affiliation": "IEM Kolkata, India"
+            }
+          ]
+        }
+      ],
+      "organizingCommittee": [
+        {
+          "name": "Ankan Bhowmik",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Ankita Mondal",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Antara Roy",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Bipasha Guha Roy",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Bisweswar Thakur",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Dr. Dipankar Das",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Dr. Goldina Ghosh",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Heerok Banerjee",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Dr. Jayanta Paul",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Kaustav Nandy",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Kaustav Sarkar",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Mamoni Bandhyopadhyay",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Manjima Saha",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Mohit Das",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Prof. Nayantara Mitra",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Pabak Indu",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Piyali Bhanja",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Dr. Pradipta Roy",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Dr. Pritam Chakraborty",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Dr. Priti Deb",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Dr. Priyanka Das",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Raimoni Hansda",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Dr. Rajendrani Mukherjee",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Dr. Rupam Bhattacharya",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Sanjukta Mukherjee",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Shramana Dutta",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Sikriti Saha",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Sreelekha Biswas",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Dr. Sreya Ghosh",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Sucheta Chandra",
+          "affiliation": "IEM Kolkata, India"
+        },
+        {
+          "name": "Swikriti Saha",
+          "affiliation": "IEM Kolkata, India"
+        }
+      ],
+      "advisoryCommittee": [
+        {
+          "name": "Dr. Prasanth Aruchamy",
+          "affiliation": "Vel Tech University, Chennai, India"
+        },
+        {
+          "name": "Shashi Kant Gupta",
+          "affiliation": "Lincoln University College, Petaling Jaya, Selangor, Malaysia"
+        },
+        {
+          "name": "Gaurav Gupta",
+          "affiliation": "Shoolini University"
+        },
+        {
+          "name": "Dr. Tushar Hrishikesh Jaware",
+          "affiliation": "R. C. Patel Institute of Technology, Shirpur"
+        },
+        {
+          "name": "Dr. C. Kishor Kumar Reddy",
+          "affiliation": "Stanley College of Engineering and Technology for Women, India"
+        },
+        {
+          "name": "Dr. Varun Chand H",
+          "affiliation": "College of Engineering, Perumon, Kerala, India"
+        },
+        {
+          "name": "Er. Kritika",
+          "affiliation": "Independent"
+        },
+        {
+          "name": "Deeksha Dwivedi",
+          "affiliation": "Leslie’s USA"
+        },
+        {
+          "name": "Mainak Adhikari",
+          "affiliation": "School of Data Science, Indian Institute of Science Education and Research, Thiruvananthapuram"
+        },
+        {
+          "name": "Chintan M. Bhatt",
+          "affiliation": "University of Wollongong: India"
+        },
+        {
+          "name": "Dr. Arijit Roy",
+          "affiliation": "Indian Institute of Technology, Patna, India"
+        },
+        {
+          "name": "Mirvari Gazanfarli",
+          "affiliation": "Department of Business Management, Azerbaijan State University of Economics (UNEC), Baku, Azerbaijan"
+        },
+        {
+          "name": "Ramya Mandava",
+          "affiliation": "Georgia Institute of Technology, Georgia, USA"
+        },
+        {
+          "name": "Dr. Jyotsna Kumar Mandal",
+          "affiliation": "Kalyani University, West Bengal, India"
+        },
+        {
+          "name": "Sanjaya Kumar Panda",
+          "affiliation": "NIT Warangal, India"
+        },
+        {
+          "name": "Shailja Gupta",
+          "affiliation": "ADP"
+        },
+        {
+          "name": "Meetu Malhotra",
+          "affiliation": "Harrisburg University of Science and Technology, PA, USA"
+        },
+        {
+          "name": "Dr. Debashis De",
+          "affiliation": "MAKAUT, West Bengal, India"
+        },
+        {
+          "name": "Dr. Mohamed Lahby",
+          "affiliation": "University Hassan II, Higher Normal School of Casablanca, Morocco"
+        },
+        {
+          "name": "Prof. Sankar K. Pal",
+          "affiliation": "Indian Statistical Institute, Kolkata, India"
+        },
+        {
+          "name": "Prof. Nikhil Ranjan Pal",
+          "affiliation": "Indian Statistical Institute, Kolkata, India"
+        },
+        {
+          "name": "Prof. Ujjwal Maulik",
+          "affiliation": "Jadavpur University, India"
+        },
+        {
+          "name": "Prof. Anupam Basu",
+          "affiliation": "Indian Institute of Technology, Kharagpur, India"
+        },
+        {
+          "name": "Prof. Amit Konar",
+          "affiliation": "Jadavpur University, India"
+        },
+        {
+          "name": "Prof. Bidyut Baran Chaudhuri",
+          "affiliation": "Indian Statistical Institute, Kolkata, India"
+        },
+        {
+          "name": "Prof. Sushmita Mitra",
+          "affiliation": "Indian Statistical Institute, Kolkata, India"
+        },
+        {
+          "name": "Prof. Bijaya Ketan Panigrahi",
+          "affiliation": "Indian Institute of Technology, Delhi, India"
+        },
+        {
+          "name": "Prof. Ponnuthurai Nagaratnam",
+          "affiliation": "Nanyang Technological University, Singapore"
+        },
+        {
+          "name": "Prof. Elizabeth C. Behrman",
+          "affiliation": "Wichita State University, USA"
+        },
+        {
+          "name": "Prof. Rajkumar Buyya",
+          "affiliation": "The University of Melbourne, Australia"
+        },
+        {
+          "name": "Prof. Saman K. Halgamuge",
+          "affiliation": "The University of Melbourne, Australia"
+        },
+        {
+          "name": "Prof. Aboul Ella Hassanien",
+          "affiliation": "Cairo University, Egypt"
+        },
+        {
+          "name": "Prof. Mario Koeppen",
+          "affiliation": "Kyushu Institute of Technology, Japan"
+        },
+        {
+          "name": "Prof. Rudolf Kruse",
+          "affiliation": "Otto-von-Guericke University, Magdeburg, Germany"
+        },
+        {
+          "name": "Prof. Janusz Kacpryzk",
+          "affiliation": "Polish Academy of Sciences, Poland"
+        },
+        {
+          "name": "Prof. Bhabani P. Sinha",
+          "affiliation": "Indian Statistical Institute, Kolkata, India"
+        },
+        {
+          "name": "Prof. Malay Kumar Kundu",
+          "affiliation": "Indian Statistical Institute, Kolkata, India"
+        }
+      ],
+      "technicalProgramCommittee": [
+        {
+          "name": "Arpan Adhikary",
+          "affiliation": "Haldia Institute of Technology, India"
+        },
+        {
+          "name": "Renu Devi",
+          "affiliation": "ICFAI University, India"
+        },
+        {
+          "name": "Ashok P",
+          "affiliation": "Symbiosis Institute of Digital and Telecom Management (SIDTM), Symbiosis International (Deemed University), Lavale, Pune, Maharashtra, India"
+        },
+        {
+          "name": "Kanchan Govind Rathi",
+          "affiliation": "MIT ACS College, Alandi, India"
+        },
+        {
+          "name": "Akoramurthy B",
+          "affiliation": "National Institute of Technology Puducherry, India"
+        },
+        {
+          "name": "Dr. Priti Deb",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Manas Kumar Yogi",
+          "affiliation": "Pragati Engineering College (Autonomous), India"
+        },
+        {
+          "name": "Lycel Lagnason Pacheco",
+          "affiliation": "Central Philippines State University, India"
+        },
+        {
+          "name": "Siparna Rabi Das",
+          "affiliation": "BPPIMT Kolkata, India"
+        },
+        {
+          "name": "Nayantara Mitra",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Kaushiki Roy",
+          "affiliation": "IIIT Raichur, India"
+        },
+        {
+          "name": "Dr. Archana J. N",
+          "affiliation": "Vimal Jyothi Engineering College (Autonomous), India"
+        },
+        {
+          "name": "Patrali Pradhan",
+          "affiliation": "Haldia Institute of Technology, India"
+        },
+        {
+          "name": "Dr. Priyanka Das",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Arnab Das",
+          "affiliation": "Swami Vivekananda University, India"
+        },
+        {
+          "name": "Anandaraj M",
+          "affiliation": "PSNA College of Engineering and Technology, India"
+        },
+        {
+          "name": "Dr. Soamdeep Singha",
+          "affiliation": "Vidyasagar University, India"
+        },
+        {
+          "name": "Mr. Ranjit Subba",
+          "affiliation": "Department of Computer Science, Hijli College, Kharagpur, Paschim Medinipur, West Bengal, India"
+        },
+        {
+          "name": "Bhagyashree Hambarde",
+          "affiliation": "St. Vincent Pallotti College of Engineering and Technology, Nagpur, India"
+        },
+        {
+          "name": "Priyajit Sen",
+          "affiliation": "Indian Statistical Institute, Kolkata, India"
+        },
+        {
+          "name": "Dr. Kyamelia Roy",
+          "affiliation": "Siliguri Government Polytechnic, India"
+        },
+        {
+          "name": "Kaustav Nandy",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Nitu Saha",
+          "affiliation": "University of Engineering and Management, Kolkata, India"
+        },
+        {
+          "name": "Dr. I. Karthiga Kathiravan",
+          "affiliation": "BS Abdur Rahman Crescent Institute of Science and Technology, India"
+        },
+        {
+          "name": "Kaustav Sarkar",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Dr. Syed Abdul S",
+          "affiliation": "BSACIST-UGC, India"
+        },
+        {
+          "name": "Dr. Remya Chandran",
+          "affiliation": "Vimal Jyothi Engineering College (Autonomous), India"
+        },
+        {
+          "name": "Tahamina Yesmin",
+          "affiliation": "Adamas University, India"
+        },
+        {
+          "name": "Faisal Firdous",
+          "affiliation": "JUIT, Solan, India"
+        },
+        {
+          "name": "Sikhriti Saha",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Koyel Chakraborty",
+          "affiliation": "Supreme Knowledge Foundation Group of Institutions, India"
+        },
+        {
+          "name": "Bipradash Pandit",
+          "affiliation": "Meghnad Saha Institute of Technology, India"
+        },
+        {
+          "name": "Dr. Aritra Bandyopadhyay",
+          "affiliation": "Supreme Knowledge Foundation Group of Institutions, India"
+        },
+        {
+          "name": "Proshanta Sarkar",
+          "affiliation": "B. P. Poddar Institute of Management & Technology, India"
+        },
+        {
+          "name": "Maloy Kumar Dey",
+          "affiliation": "NIT Nagaland, India"
+        },
+        {
+          "name": "Rohit Kumar Nonia",
+          "affiliation": "NIT Jamshedpur, India"
+        },
+        {
+          "name": "Dr. Rajendrani Mukherjee",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Dr. Moumita Das",
+          "affiliation": "Haldia Institute of Technology, India"
+        },
+        {
+          "name": "Soham Goswami",
+          "affiliation": "MCKV Institute of Engineering, Howrah, India"
+        },
+        {
+          "name": "Sasmita Subhadarsinee Choudhury",
+          "affiliation": "MCKV Institute of Engineering, India"
+        },
+        {
+          "name": "Dr. Sivaprakash S",
+          "affiliation": "Vellore Institute of Technology, Vellore, India"
+        },
+        {
+          "name": "Anjul Bhardwaj",
+          "affiliation": "Divine Institute of Management & Studies, Ziradei, Bihar, India"
+        },
+        {
+          "name": "Dr. Rahul Soni",
+          "affiliation": "Navrachana University, India"
+        },
+        {
+          "name": "Piyali Bhanja",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Moumita Chatterjee",
+          "affiliation": "Department of Computer Science and Engineering, Aliah University, India"
+        },
+        {
+          "name": "Surojit Bhattacharyya",
+          "affiliation": "MCKV Institute of Engineering, India"
+        },
+        {
+          "name": "Sevda Rzayeva",
+          "affiliation": "Azerbaijan State Oil and Industry University, Azerbaijan"
+        },
+        {
+          "name": "Arunima Banerjee",
+          "affiliation": "Calcutta Institute of Technology, India"
+        },
+        {
+          "name": "Dr. Priti Subramanium",
+          "affiliation": "Shri Sant Gadge Baba College of Engineering and Technology, Bhusawal, India"
+        },
+        {
+          "name": "Dr. Mohd Danish",
+          "affiliation": "Greater Noida Institute of Technology, India"
+        },
+        {
+          "name": "Niranchana Shri Viswanathan",
+          "affiliation": "Sapthagiri NPS University, India"
+        },
+        {
+          "name": "Dr. Ashwin R. Dobariya",
+          "affiliation": "Marwadi University, Rajkot, India"
+        },
+        {
+          "name": "Dr. Lowlesh Nandkishor Yadav",
+          "affiliation": "Head of Department, Computer Engineering, Suryodaya College of Engineering and Technology, Nagpur, Maharashtra, India"
+        },
+        {
+          "name": "Dr. Aakanksha Mahajan",
+          "affiliation": "PIET, Samalkha, India"
+        },
+        {
+          "name": "Dr. Goldina Ghosh",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Deborsi Basu",
+          "affiliation": "CONNECT Research Centre, Trinity College Dublin, The University of Dublin, Ireland"
+        },
+        {
+          "name": "Hemprasad Yashwant Patil",
+          "affiliation": "MCTE, Ministry of Defense, Government of India"
+        },
+        {
+          "name": "Dr. Pardeep Kumar",
+          "affiliation": "Chandigarh University, India"
+        },
+        {
+          "name": "Trupti Vinayak Parkar",
+          "affiliation": "Microsoft"
+        },
+        {
+          "name": "Ayan Mondal",
+          "affiliation": "IIT Indore, India"
+        },
+        {
+          "name": "Heerok Banerjee",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Dr. Vijayarajan V",
+          "affiliation": "Vellore Institute of Technology, India"
+        },
+        {
+          "name": "Dr. Perepi Raja Rajeswari",
+          "affiliation": "School of Computer Science, Vellore Institute of Technology, Vellore, Tamil Nadu, India"
+        },
+        {
+          "name": "Sampath Kumar H. K.",
+          "affiliation": "Bodyclone Innovations Pvt. Ltd., NMIT, India"
+        },
+        {
+          "name": "Sunirmal Khatua",
+          "affiliation": "University of Calcutta, India"
+        },
+        {
+          "name": "Sreelekha Biswas",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Mahesh Kumar Singh",
+          "affiliation": "SRM Institute of Science and Technology, Delhi NCR Campus, Modinagar, Ghaziabad, Uttar Pradesh, India"
+        },
+        {
+          "name": "Pabak Indu",
+          "affiliation": "Institute of Engineering and Management, India"
+        },
+        {
+          "name": "Khaja Mannanuddin",
+          "affiliation": "School of Computer Science & AI, SR University, India"
+        },
+        {
+          "name": "Dr. Anuradha Bhardwaj",
+          "affiliation": "Amity University, India"
+        },
+        {
+          "name": "Sucheta Chandra",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Ayanabha Ghosh",
+          "affiliation": "Indian Institute of Technology, Jodhpur, India"
+        },
+        {
+          "name": "Ankita Mondal",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Dr. Gourav Jain",
+          "affiliation": "IIIT Sonepat, India"
+        },
+        {
+          "name": "Debayan Ganguly",
+          "affiliation": "Directorate of Technical Education, West Bengal, India"
+        },
+        {
+          "name": "Anwesha Mukherjee",
+          "affiliation": "Mahishadal Raj College, India"
+        },
+        {
+          "name": "Pritusna Banik",
+          "affiliation": "Narula Institute of Technology, India"
+        },
+        {
+          "name": "Manjima Saha",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Sanjukta Majumder",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Debasish Swapnesh Kumar Nayak",
+          "affiliation": "Centurion University of Technology and Management, Kolkata, India"
+        },
+        {
+          "name": "Rohit Kumar",
+          "affiliation": "ABV-IIITM Gwalior, India"
+        },
+        {
+          "name": "Naga Venkata Rajareddy Goluguri",
+          "affiliation": "University of Saskatchewan, Canada"
+        },
+        {
+          "name": "Dr. Ayush Kumar Agrawal",
+          "affiliation": "Dr. C. V. Raman University, Delhi, India"
+        },
+        {
+          "name": "Dr. Sandeep Dwarkanath Pande",
+          "affiliation": "MIT Academy of Engineering, Alandi, India"
+        },
+        {
+          "name": "Aashish Ramdasji Dandekar",
+          "affiliation": "RTMNU, India"
+        },
+        {
+          "name": "Rabindranath Bera",
+          "affiliation": "Indian Institute of Information Technology, India"
+        },
+        {
+          "name": "Monu Bhagat",
+          "affiliation": "Birla Institute of Technology, Mesra, Ranchi, India"
+        },
+        {
+          "name": "Sahana Das",
+          "affiliation": "Adamas University, India"
+        },
+        {
+          "name": "Dr. Dipankar Das",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Tanmoy Kundu",
+          "affiliation": "AIT, India"
+        },
+        {
+          "name": "Prof. Swapnesh Taterh",
+          "affiliation": "Maharashtra Academy of Engineering Education and Research, MIT ACSC, Pune, India"
+        },
+        {
+          "name": "Dr. Gajanan Uttam Patil",
+          "affiliation": "HSM’S SSGBCOE&T, Bhusawal, India"
+        },
+        {
+          "name": "Senjuti Khanra",
+          "affiliation": "Techno Main, Kolkata, India"
+        },
+        {
+          "name": "Ankan Bhowmick",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Dr. Pritam Chakraborty",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Dr. Jayanta Paul",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Abriti Paul",
+          "affiliation": "Institute of Engineering and Management, Kolkata (Salt Lake Campus), India"
+        },
+        {
+          "name": "Pradipta Roy",
+          "affiliation": "B. C. Roy Institute of Technology, India"
+        },
+        {
+          "name": "Dr. Anindita Roychowdhuri",
+          "affiliation": "Sarojini Naidu College for Women, India"
+        },
+        {
+          "name": "Saikat Mondal",
+          "affiliation": "Amity University, Ranchi, India"
+        },
+        {
+          "name": "Dr. Jadav Kumar Das",
+          "affiliation": "MAKAUT, West Bengal, India"
+        },
+        {
+          "name": "Dr. Subha Ghosh",
+          "affiliation": "Amity University, Kolkata, India"
+        },
+        {
+          "name": "Dr. Biplab Das",
+          "affiliation": "St. Xavier’s University, Kolkata, India"
+        },
+        {
+          "name": "Dr. Samarjit Roy",
+          "affiliation": "School of Computing and Information Technology, Eastern International University, Vietnam"
+        },
+        {
+          "name": "Dr. Anand Motwani",
+          "affiliation": "VIT Bhopal University, India"
+        },
+        {
+          "name": "Subhajit Adhikari",
+          "affiliation": "Department of Computer Application, Techno India University, West Bengal, India"
+        },
+        {
+          "name": "Dr. Pabitra Pal",
+          "affiliation": "MAKAUT, West Bengal, India"
+        },
+        {
+          "name": "Dr. Debarati Dey Roy",
+          "affiliation": "B. P. Poddar Institute of Management and Technology, Applied Artificial Intelligence Research Centre, UNEC, Baku, Azerbaijan"
+        },
+        {
+          "name": "Anindita Kundu",
+          "affiliation": "VIT Vellore, India"
+        },
+        {
+          "name": "Dr. Ramesh Saha",
+          "affiliation": "Indian Institute of Information Technology (IIIT) Sonepat, India"
+        },
+        {
+          "name": "Abhijit Das",
+          "affiliation": "BITS Pilani, India"
+        },
+        {
+          "name": "Rajib Bag",
+          "affiliation": "Bankura University, India"
+        },
+        {
+          "name": "Dr. Sudakshina Mandal",
+          "affiliation": "Narula Institute of Technology, India"
+        },
+        {
+          "name": "Baiju B. V.",
+          "affiliation": "Vellore Institute of Technology, India"
+        }
+      ],
+      "aaiaCommittee": [
+        {
+          "name": "Prof. Sankar K. Pal",
+          "affiliation": "Indian Statistical Institute, Kolkata, India"
+        },
+        {
+          "name": "Prof. Nikhil Ranjan Pal",
+          "affiliation": "Indian Statistical Institute, Kolkata, India"
+        },
+        {
+          "name": "Prof. Ujjwal Maulik",
+          "affiliation": "Jadavpur University, India"
+        },
+        {
+          "name": "Prof. Anupam Basu",
+          "affiliation": "Indian Institute of Technology Kharagpur, India"
+        },
+        {
+          "name": "Prof. Amit Konar",
+          "affiliation": "Jadavpur University, India"
+        },
+        {
+          "name": "Prof. Bidyut Baran Chaudhuri",
+          "affiliation": "Indian Statistical Institute, Kolkata, India"
+        },
+        {
+          "name": "Prof. Sushmita Mitra",
+          "affiliation": "Indian Statistical Institute, Kolkata, India"
+        },
+        {
+          "name": "Prof. Bijaya Ketan Panigrahi",
+          "affiliation": "Indian Institute of Technology Delhi, India"
+        },
+        {
+          "name": "Prof. Ponnuthurai Nagaratnam",
+          "affiliation": "Nanyang Technological University, Singapore"
+        },
+        {
+          "name": "Prof. Elizabeth C. Behrman",
+          "affiliation": "Wichita State University, USA"
+        },
+        {
+          "name": "Prof. Rajkumar Buyya",
+          "affiliation": "The University of Melbourne, Australia"
+        },
+        {
+          "name": "Prof. Saman K. Halgamuge",
+          "affiliation": "The University of Melbourne, Australia"
+        },
+        {
+          "name": "Prof. Aboul Ella Hassanien",
+          "affiliation": "Cairo University, Egypt"
+        },
+        {
+          "name": "Prof. Mario Koeppen",
+          "affiliation": "Kyushu Institute of Technology, Japan"
+        },
+        {
+          "name": "Prof. Rudolf Kruse",
+          "affiliation": "Otto-von-Guericke University Magdeburg, Germany"
+        },
+        {
+          "name": "Prof. Janusz Kacpryzk",
+          "affiliation": "Polish Academy of Sciences, Poland"
+        },
+        {
+          "name": "Prof. Bhabani P. Sinha",
+          "affiliation": "Indian Statistical Institute, Kolkata, India"
+        },
+        {
+          "name": "Prof. Malay Kumar Kundu",
+          "affiliation": "Indian Statistical Institute, Kolkata, India"
+        },
+        {
+          "name": "Prof. Vincenzo Piuri",
+          "affiliation": "University of Milan, Italy"
+        },
+        {
+          "name": "Prof. Bhargab B. Bhattacharya",
+          "affiliation": "Indian Statistical Institute, India"
+        },
+        {
+          "name": "Prof. Wei-Chang Yeh",
+          "affiliation": "National Tsing Hua University (NTHU), Taiwan"
+        },
+        {
+          "name": "Prof. Punam Kumar Saha",
+          "affiliation": "University of Iowa, USA"
+        },
+        {
+          "name": "Pawan Lingras",
+          "affiliation": "Saint Mary’s University, Halifax, Nova Scotia, Canada"
+        },
+        {
+          "name": "Prof. Sukumar Nandy",
+          "affiliation": "Indian Institute of Technology Guwahati, India"
+        },
+        {
+          "name": "Prof. L. M. Patnaik",
+          "affiliation": "Indian Institute of Science, Bangalore, India"
+        },
+        {
+          "name": "Prof. K. V. S. Hari",
+          "affiliation": "IISc Bangalore, India"
+        }
+      ]
+    },
+    "sponsors": [
+      {
+        "name": "Indian Society for Technical Education, WB Section",
+        "logoUrl": "https://res.cloudinary.com/dh87hfwml/image/upload/v1782834961/MetaSphere2026/Sponsors/techSponsor5.jpg"
+      },
+      {
+        "name": "Asia-Pacific Artificial Intelligence Association (AΑΙΑ), Kolkata Branch",
+        "logoUrl": "https://res.cloudinary.com/dh87hfwml/image/upload/v1782834958/MetaSphere2026/Sponsors/techSponsor1.png"
+      },
+      {
+        "name": "IEM Centre of Excellence for Cloud Computing & IoT",
+        "logoUrl": "https://res.cloudinary.com/dh87hfwml/image/upload/v1782834958/MetaSphere2026/Sponsors/techSponsor2.jpg"
+      },
+      {
+        "name": "Computer Society of India, Kolkata Section",
+        "logoUrl": "https://res.cloudinary.com/dh87hfwml/image/upload/v1782834958/MetaSphere2026/Sponsors/techSponsor3.jpg"
+      },
+      {
+        "name": "The Institution of Electronics and Telecommunication Engineers, Kolkata chapter",
+        "logoUrl": "https://res.cloudinary.com/dh87hfwml/image/upload/v1782834958/MetaSphere2026/Sponsors/techSponsor4.jpg"
+      }
+    ],
+    "registrationFees": {
+      "taxNote": "All fees are inclusive of taxes.",
+      "categories": [
+        {
+          "category": "Student/ Research Scholar",
+          "indianAuthor": "4000 INR/-",
+          "indianAmountInr": 4000,
+          "foreignAuthor": "100 USD",
+          "foreignAmountUsd": 100
+        },
+        {
+          "category": "Academician",
+          "indianAuthor": "5000 INR/-",
+          "indianAmountInr": 5000,
+          "foreignAuthor": "100 USD",
+          "foreignAmountUsd": 100
+        },
+        {
+          "category": "Industry Professionals",
+          "indianAuthor": "7500 INR/-",
+          "indianAmountInr": 7500,
+          "foreignAuthor": "100 USD",
+          "foreignAmountUsd": 100
+        },
+        {
+          "category": "Only Attending/Accompanying",
+          "indianAuthor": "2500 INR/-",
+          "indianAmountInr": 2500,
+          "foreignAuthor": "50 USD",
+          "foreignAmountUsd": 50
+        },
+        {
+          "category": "Extra Page (Maximum upto 2 pages)",
+          "indianAuthor": "1000 INR/-",
+          "indianAmountInr": 1000,
+          "foreignAuthor": "20 USD",
+          "foreignAmountUsd": 20
+        }
+      ],
+      "paymentMethodsNote": "Payment can be made via Bank Transfer (NEFT/RTGS/Net) or UPI. Credit card payments are not accepted.",
+      "upiIdFromMetaKeywords": "iemt@iob",
+      "bankTransfer": {
+        "bankName": "Indian Overseas Bank",
+        "partyName": "Institute of Engineering & Management Trust",
+        "accountNo": "164201000000488",
+        "accountType": "Savings",
+        "ifscCode": "IOBA0001642",
+        "branch": "Sector- V",
+        "swiftCode": "IOBAINBB193",
+        "micr": "700020049"
+      },
+      "policies": [
+        "Final submissions require regular registration, with at least one author per paper registering at the regular rate.",
+        "If more than one author from a paper attends to present, the requisite registration amount must be paid by each attending author. This includes the registration kit and food coupons for two days.",
+        "If an author has more than one accepted paper, each paper must be registered separately."
+      ],
+      "confirmationEmailInstruction": "After payment, you must send an email with a screenshot of the transaction to metaSphere2026@iem.edu.in. Your email must include your Paper ID and Paper Title. When making the transfer, please also mention the Paper ID in the transaction remarks.",
+      "cancellationPolicy": "There will be no cancellation after Registration."
+    },
+    "paperSubmission": {
+      "portalUrl": "https://cmt3.research.microsoft.com/MetaSphere2026",
+      "reviewType": "Double-Blind review",
+      "templates": [
+        {
+          "label": "Template in Microsoft Word (US Letter)",
+          "url": "https://drive.google.com/file/d/1PHj4l6oGQ2w_SzbrEeHli8wVSLSmXK7u/view?usp=sharing"
+        },
+        {
+          "label": "LaTeX format",
+          "url": "https://www.overleaf.com/latex/templates/springer-lecture-notes-in-computer-science/kzwwpvhwnvfj"
+        }
+      ],
+      "brochureAndCallForPapersUrl": "https://drive.google.com/file/d/1OGuXv0XyLg2CyRgBF8JuMg-7KRWUoBfc/view?usp=drive_link",
+      "agreementForms": [
+        {
+          "label": "Permission Guideline Form",
+          "assetPath": "Assets/Permission-Request-Form.doc"
+        },
+        {
+          "label": "Publishing Agreement Form",
+          "assetPath": "Assets/Publishing-Agreement-Form(Copy Right Form).docx"
+        }
+      ],
+      "pptTemplateAssetPath": "Assets/Metasphere-conference-template-.pptx",
+      "presentationMode": "HYBRID MODEL where authors shall present their papers either in physical mode at the conference venue and also through ONLINE as per their preference and convenience.",
+      "paperCategories": [
+        "Regular Paper – 10 pages maximum (2 additional pages allowed but at an extra charge)",
+        "There is no provision for submitting short papers and poster papers."
+      ]
+    },
+    "contact": {
+      "venueName": "IEM Ashram Building",
+      "address": "GN-34/2, Sector V, Bidhannagar, Kolkata, West Bengal 700091",
+      "emails": [
+        "metaSphere2026@iem.edu.in"
+      ],
+      "legacyAlternateEmailInHtml": [
+        "metasphere2026.@iem.edu.in",
+        "win6@iem.edu.in"
+      ],
+      "phones": [
+        "+91 898 177 4023",
+        "+91 8981774023"
+      ]
+    }
+  }
+}
