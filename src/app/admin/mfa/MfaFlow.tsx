@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -54,6 +54,10 @@ export function MfaFlow({ supabaseConfigured }: MfaFlowProps) {
   );
   const [verifyError, setVerifyError] = useState<string | null>(null);
   const [showSecret, setShowSecret] = useState(false);
+  const inFlightInitRef = useRef<Promise<
+    MfaStage | { kind: "redirect"; to: string }
+  > | null>(null);
+  const isMountedRef = useRef(true);
 
   const {
     register,
@@ -64,48 +68,38 @@ export function MfaFlow({ supabaseConfigured }: MfaFlowProps) {
     defaultValues: { code: "" },
   });
 
-  const initializeMfa = useCallback(async () => {
-    if (!supabaseConfigured) {
-      setStage({ kind: "unconfigured" });
-      return;
-    }
-
-    setStage({ kind: "loading" });
-    setVerifyError(null);
-
+  const resolveMfaOutcome = useCallback(async (): Promise<
+    MfaStage | { kind: "redirect"; to: string }
+  > => {
     try {
       const supabase = createBrowserSupabase();
       const { data: userData, error: userError } =
         await supabase.auth.getUser();
 
       if (userError || !userData.user) {
-        router.replace("/admin/login");
-        return;
+        return { kind: "redirect", to: "/admin/login" };
       }
 
       const { data: aalData } =
         await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
 
       if (aalData?.currentLevel === "aal2") {
-        router.replace("/admin/overview");
-        return;
+        return { kind: "redirect", to: "/admin/overview" };
       }
 
       const { data: factorsData, error: factorsError } =
         await supabase.auth.mfa.listFactors();
 
       if (factorsError) {
-        setStage({
+        return {
           kind: "error",
           message: factorsError.message || "Unable to load MFA factors.",
-        });
-        return;
+        };
       }
 
       const verifiedTotp = factorsData.totp[0];
       if (verifiedTotp) {
-        setStage({ kind: "verify", factorId: verifiedTotp.id });
-        return;
+        return { kind: "verify", factorId: verifiedTotp.id };
       }
 
       // Remove stale unverified TOTP enrollments before issuing a fresh QR code
@@ -125,34 +119,72 @@ export function MfaFlow({ supabaseConfigured }: MfaFlowProps) {
         });
 
       if (enrollError || !enrollData) {
-        setStage({
+        return {
           kind: "error",
           message:
             enrollError?.message ||
             "Unable to start TOTP authenticator enrollment.",
-        });
-        return;
+        };
       }
 
-      setStage({
+      return {
         kind: "enroll",
         factorId: enrollData.id,
         qrCodeUrl: toQrDataUrl(enrollData.totp.qr_code),
         secret: enrollData.totp.secret,
-      });
+      };
     } catch (err) {
-      setStage({
+      return {
         kind: "error",
         message:
           err instanceof Error
             ? err.message
             : "Unexpected error initializing MFA.",
-      });
+      };
     }
-  }, [router, supabaseConfigured]);
+  }, []);
+
+  const initializeMfa = useCallback(
+    async (isCancelled?: () => boolean) => {
+      if (!supabaseConfigured) {
+        setStage({ kind: "unconfigured" });
+        return;
+      }
+
+      setStage({ kind: "loading" });
+      setVerifyError(null);
+
+      // Deduplicate concurrent calls (e.g. React StrictMode double-mount) so only
+      // one listFactors/unenroll/enroll sequence runs on the server.
+      if (!inFlightInitRef.current) {
+        inFlightInitRef.current = resolveMfaOutcome().finally(() => {
+          inFlightInitRef.current = null;
+        });
+      }
+
+      const outcome = await inFlightInitRef.current;
+      if (!isMountedRef.current || isCancelled?.()) {
+        return;
+      }
+
+      if (outcome.kind === "redirect") {
+        router.replace(outcome.to);
+        return;
+      }
+
+      setStage(outcome);
+    },
+    [resolveMfaOutcome, router, supabaseConfigured]
+  );
 
   useEffect(() => {
-    void initializeMfa();
+    isMountedRef.current = true;
+    let cancelled = false;
+    void initializeMfa(() => cancelled);
+    return () => {
+      cancelled = true;
+      isMountedRef.current = false;
+    };
   }, [initializeMfa]);
 
   const onVerify = async (values: TotpFormValues) => {

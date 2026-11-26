@@ -55,8 +55,16 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
     },
   });
 
-  const { data, error } = await supabase.auth.getClaims();
-  const claims = !error ? data?.claims : null;
+  let claims: { sub?: string; aal?: string } | null = null;
+  try {
+    const { data, error } = await supabase.auth.getClaims();
+    if (!error && data?.claims) {
+      claims = data.claims;
+    }
+  } catch {
+    // Gracefully degrade to unauthenticated if Supabase URL is unreachable or misconfigured
+    claims = null;
+  }
 
   if (!claims?.sub) {
     if (pathname === "/admin/login") {

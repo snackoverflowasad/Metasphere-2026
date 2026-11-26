@@ -51,45 +51,8 @@ interface AdminRoleRow {
 export async function getAdminContext(
   clientOverride?: SupabaseClient<Database>
 ): Promise<AdminContext | null> {
-  if (!isSupabaseConfigured()) {
-    return null;
-  }
-
   try {
-    const supabase = clientOverride ?? (await createServerSupabase());
-    const { data: claimsData, error: claimsError } =
-      await supabase.auth.getClaims();
-
-    const claims = claimsData?.claims;
-    if (claimsError || !claims?.sub) {
-      return null;
-    }
-
-    if (claims.aal !== "aal2") {
-      return null;
-    }
-
-    const { data: roleRow, error: roleError } = await supabase
-      .from("admin_roles")
-      .select(
-        "user_id, email, display_name, role, can_approve_financial, is_active"
-      )
-      .eq("user_id", claims.sub)
-      .eq("is_active", true)
-      .maybeSingle<AdminRoleRow>();
-
-    if (roleError || !roleRow || !roleRow.is_active) {
-      return null;
-    }
-
-    return {
-      userId: claims.sub,
-      email: claims.email ?? roleRow.email ?? "",
-      displayName: roleRow.display_name,
-      role: roleRow.role,
-      canApproveFinancial: Boolean(roleRow.can_approve_financial),
-      aal: "aal2",
-    };
+    return await requireAdminSession(undefined, clientOverride);
   } catch {
     return null;
   }

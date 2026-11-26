@@ -2,17 +2,29 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { NextRequest } from "next/server";
 
 const mockGetClaims = vi.fn();
+let capturedSetAll:
+  | ((
+      cookies: Array<{
+        name: string;
+        value: string;
+        options?: Record<string, unknown>;
+      }>
+    ) => void)
+  | null = null;
 
 vi.mock("server-only", () => ({}));
 vi.mock("@supabase/ssr", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@supabase/ssr")>();
   return {
     ...actual,
-    createServerClient: vi.fn(() => ({
-      auth: {
-        getClaims: mockGetClaims,
-      },
-    })),
+    createServerClient: vi.fn((_url, _key, options) => {
+      capturedSetAll = options?.cookies?.setAll ?? null;
+      return {
+        auth: {
+          getClaims: mockGetClaims,
+        },
+      };
+    }),
   };
 });
 
@@ -32,7 +44,7 @@ import {
   isSupabaseConfigured,
 } from "../../src/lib/supabase/config";
 import { createAdminSupabase } from "../../src/lib/supabase/admin";
-import { requireAdminSession } from "../../src/lib/auth/session";
+import { getAdminContext, requireAdminSession } from "../../src/lib/auth/session";
 import { proxy } from "../../src/proxy";
 
 const ORIGINAL_ENV = { ...process.env };
@@ -451,5 +463,71 @@ describe("createAdminSupabase and configured proxy MFA gate", () => {
       new NextRequest("http://localhost:3000/admin/overview")
     );
     expect(aal2Res.status).toBe(200);
+  });
+
+  it("proxy forwards refreshed setAll cookies onto redirects and redirects aal2 auth pages to /admin/overview", async () => {
+    mockGetClaims.mockImplementationOnce(async () => {
+      capturedSetAll?.([
+        {
+          name: "sb-access-token",
+          value: "rotated-jwt",
+          options: { path: "/", httpOnly: true },
+        },
+      ]);
+      return {
+        data: { claims: { sub: "user-1", aal: "aal1" } },
+        error: null,
+      };
+    });
+
+    const aal1Redirect = await proxy(
+      new NextRequest("http://localhost:3000/admin/overview")
+    );
+    expect(aal1Redirect.status).toBe(307);
+    expect(aal1Redirect.headers.get("location")).toBe(
+      "http://localhost:3000/admin/mfa"
+    );
+    expect(aal1Redirect.cookies.get("sb-access-token")?.value).toBe(
+      "rotated-jwt"
+    );
+
+    for (const path of ["/admin", "/admin/login", "/admin/mfa"]) {
+      mockGetClaims.mockResolvedValueOnce({
+        data: { claims: { sub: "user-1", aal: "aal2" } },
+        error: null,
+      });
+      const res = await proxy(new NextRequest(`http://localhost:3000${path}`));
+      expect(res.status).toBe(307);
+      expect(res.headers.get("location")).toBe(
+        "http://localhost:3000/admin/overview"
+      );
+    }
+  });
+
+  it("proxy falls back cleanly to unauthenticated when getClaims throws, and getAdminContext delegates safely", async () => {
+    mockGetClaims.mockRejectedValueOnce(new Error("fetch failed"));
+    const loginRes = await proxy(
+      new NextRequest("http://localhost:3000/admin/login")
+    );
+    expect(loginRes.status).toBe(200);
+
+    mockGetClaims.mockRejectedValueOnce(new Error("fetch failed"));
+    const overviewRes = await proxy(
+      new NextRequest("http://localhost:3000/admin/overview")
+    );
+    expect(overviewRes.status).toBe(307);
+    expect(overviewRes.headers.get("location")).toBe(
+      "http://localhost:3000/admin/login"
+    );
+
+    const aal1Client = {
+      auth: {
+        getClaims: vi.fn().mockResolvedValue({
+          data: { claims: { sub: "user-1", aal: "aal1" } },
+          error: null,
+        }),
+      },
+    };
+    await expect(getAdminContext(aal1Client as never)).resolves.toBeNull();
   });
 });
