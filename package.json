@@ -4,11 +4,21 @@
   "description": "<a href=\"https://github.com/Asad-bot07/Project-IEM/graphs/contributors\">\r   <img src=\"https://contrib.rocks/image?repo=Asad-bot07/Project-IEM\" />\r </a>\r <!-- Hey from Asad bot  -->\r <!-- test commit -->",
   "main": "script.js",
   "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@tailwindcss/postcss": "^4.3.5",
+    "@types/node": "^26.6.11",
+    "@types/react": "^19.3.3",
+    "@types/react-dom": "^19.3.0",
     "tailwindcss": "^4.1.18",
+    "typescript": "^7.0.2",
     "vitest": "^4.1.12"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test": "vitest run"
   },
   "repository": {
     "type": "git",
@@ -20,5 +30,24 @@
   "bugs": {
     "url": "https://github.com/Asad-bot07/Project-IEM/issues"
   },
-  "homepage": "https://github.com/Asad-bot07/Project-IEM#readme"
+  "homepage": "https://github.com/Asad-bot07/Project-IEM#readme",
+  "dependencies": {
+    "@hookform/resolvers": "^7.0.9",
+    "@radix-ui/react-dialog": "^1.3.1",
+    "@radix-ui/react-label": "^2.1.17",
+    "@radix-ui/react-select": "^2.4.1",
+    "@radix-ui/react-slot": "^1.5.0",
+    "@radix-ui/react-tabs": "^1.2.1",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.119.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.81.0",
+    "next": "^16.4.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-hook-form": "^7.92.0",
+    "tailwind-merge": "^3.7.1",
+    "zod": "^4.6.7"
+  }
 }
