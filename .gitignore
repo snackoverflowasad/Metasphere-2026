@@ -70,3 +70,8 @@ test.html
 
 .antigravitycli
 implementation.md
+.superpowers/
+.env*.local
+.next/
+playwright-report/
+test-results/
