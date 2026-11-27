@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://metasphere-2026.web.app/sitemap.xml
