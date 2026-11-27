@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - feat/*
+      - fix/*
   pull_request:
     branches:
       - main
@@ -12,7 +13,7 @@ on:
 jobs:
   verify:
     name: Typecheck, Unit Tests, Build & E2E
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
 
     steps:
@@ -38,7 +39,9 @@ jobs:
         run: npm run build
 
       - name: Install Playwright Chromium browser
-        run: npx playwright install --with-deps chromium
+        run: |
+          sudo rm -f /etc/apt/sources.list.d/*microsoft* || true
+          npx playwright install --with-deps chromium
 
       - name: Run Playwright E2E suite
         run: npx playwright test
