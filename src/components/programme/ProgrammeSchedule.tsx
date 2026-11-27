@@ -52,7 +52,7 @@ export function ProgrammeSchedule({
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 space-y-10">
+    <div className="max-w-5xl mx-auto px-4 space-y-12">
       {Array.from(groupedByDate.entries()).map(([dateKey, daySessions]) => (
         <div key={dateKey} className="space-y-4">
           <h3 className="text-2xl font-bold text-gray-900 border-b border-orange-200 pb-2">
@@ -108,6 +108,17 @@ export function ProgrammeSchedule({
           </div>
         </div>
       ))}
+
+      <div className="text-center bg-white p-8 rounded-2xl shadow-lg border border-gray-100 max-w-xs mx-auto flex flex-col items-center justify-center">
+        <img
+          src={resolveQrSrc(qrAssetPath)}
+          alt="QR Code for Program"
+          className="mx-auto mb-4 w-56 h-56 object-contain"
+        />
+        <p className="text-gray-700 font-medium">
+          Scan the QR code to view the program schedule
+        </p>
+      </div>
     </div>
   );
 }
