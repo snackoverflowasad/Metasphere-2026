@@ -80,6 +80,7 @@ CREATE POLICY "conference_storage_require_aal2_insert"
         )
       )
       AND coalesce(metadata->>'mimetype', '') NOT IN ('image/svg+xml', 'text/html')
+      AND btrim(name) ~* '^[0-9]{4}/[a-zA-Z0-9._-]+\.(png|jpe?g|webp|pdf)$'
       AND btrim(name) !~* '\.(svg|html?|xhtml)$'
       AND (
         metadata IS NULL
@@ -118,6 +119,7 @@ CREATE POLICY "conference_storage_require_aal2_update"
         )
       )
       AND coalesce(metadata->>'mimetype', '') NOT IN ('image/svg+xml', 'text/html')
+      AND btrim(name) ~* '^[0-9]{4}/[a-zA-Z0-9._-]+\.(png|jpe?g|webp|pdf)$'
       AND btrim(name) !~* '\.(svg|html?|xhtml)$'
       AND (
         metadata IS NULL

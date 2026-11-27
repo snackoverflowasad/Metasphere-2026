@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FilePlus2, MapPin } from "lucide-react";
 import type { EditionSnapshot } from "@/types/database";
-import { buildEventJsonLd } from "@/features/conference/queries";
+import { buildEventJsonLd, serializeJsonLd } from "@/features/conference/queries";
 import { DeadlinesSection } from "@/components/deadlines/DeadlinesSection";
 import { ImageFadeCarousel } from "@/components/home/Carousels";
 import { CloudinaryVideoBg } from "@/components/home/CloudinaryVideoBg";
@@ -35,7 +35,7 @@ export function HomePageView({ edition, basePath }: EditionViewProps) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(eventJsonLd) }}
       />
 
       {/* Hero Section */}

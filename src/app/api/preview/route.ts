@@ -10,17 +10,42 @@ function resolveSafeRedirectPath(rawPath: string | null, year: number): string {
     return `/?edition=${year}`;
   }
   const trimmed = rawPath.trim();
-  if (!SAFE_RELATIVE_REDIRECT_RE.test(trimmed)) {
+  if (/[\u0000-\u001f\u007f]/.test(trimmed) || !SAFE_RELATIVE_REDIRECT_RE.test(trimmed)) {
     return `/?edition=${year}`;
   }
   return trimmed;
+}
+
+function isAllowedPreviewOrigin(request: NextRequest): boolean {
+  const secFetchSite = request.headers.get("sec-fetch-site");
+  if (
+    secFetchSite &&
+    secFetchSite !== "same-origin" &&
+    secFetchSite !== "none"
+  ) {
+    return false;
+  }
+
+  const origin = request.headers.get("origin");
+  if (origin && origin !== request.nextUrl.origin) {
+    return false;
+  }
+
+  return true;
 }
 
 /**
  * Toggles Next.js Draft Mode for authenticated `aal2` administrators so they
  * can preview unpublished edition drafts on public routes safely.
  */
-export async function GET(request: NextRequest): Promise<NextResponse> {
+async function handlePreview(request: NextRequest): Promise<NextResponse> {
+  if (!isAllowedPreviewOrigin(request)) {
+    return NextResponse.json(
+      { ok: false, error: "Cross-site preview toggle is forbidden." },
+      { status: 403 }
+    );
+  }
+
   try {
     await requireAdminSession();
   } catch (error) {
@@ -55,4 +80,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     year
   );
   return NextResponse.redirect(new URL(targetPath, request.url));
+}
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
+  return handlePreview(request);
+}
+
+export async function POST(request: NextRequest): Promise<NextResponse> {
+  return handlePreview(request);
 }

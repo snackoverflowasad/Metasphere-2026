@@ -47,10 +47,17 @@ test.describe("Security Headers, Admin Route Guards & WCAG 2.2 AA Accessibility"
     expect(previewRes.headers()["set-cookie"] ?? "").not.toContain(
       "__prerender_bypass"
     );
+
+    const crossSitePreviewRes = await request.get("/api/preview?edition=2027", {
+      maxRedirects: 0,
+      headers: { "sec-fetch-site": "cross-site" },
+    });
+    expect(crossSitePreviewRes.status()).toBe(403);
   });
 
-  test("emits strict security headers and valid SEO sitemap / robots", async ({
+  test("emits strict security headers, no-store on /admin, and valid SEO canonicals / titles / sitemap / robots", async ({
     request,
+    page,
   }) => {
     const homeRes = await request.get("/");
     expect(homeRes.status()).toBe(200);
@@ -60,6 +67,26 @@ test.describe("Security Headers, Admin Route Guards & WCAG 2.2 AA Accessibility"
     expect(headers["content-security-policy"]).toContain(
       "https://res.cloudinary.com"
     );
+
+    const adminLoginRes = await request.get("/admin/login");
+    expect(adminLoginRes.status()).toBe(200);
+    expect(adminLoginRes.headers()["cache-control"]).toContain("no-store");
+
+    await page.goto("/call-for-papers", { waitUntil: "domcontentloaded" });
+    const title = await page.title();
+    expect(title).toBe("Call for Papers | MetaSphere 2027");
+    const canonical = await page
+      .locator('link[rel="canonical"]')
+      .getAttribute("href");
+    expect(canonical).toContain("/call-for-papers");
+
+    await page.goto("/2026/call-for-papers", { waitUntil: "domcontentloaded" });
+    expect(await page.title()).toBe(
+      "Call for Papers | MetaSphere 2026 (Archived)"
+    );
+    expect(
+      await page.locator('link[rel="canonical"]').getAttribute("href")
+    ).toContain("/2026/call-for-papers");
 
     const sitemapRes = await request.get("/sitemap.xml");
     expect(sitemapRes.status()).toBe(200);
@@ -90,6 +117,9 @@ test.describe("Security Headers, Admin Route Guards & WCAG 2.2 AA Accessibility"
         const headerCount = document.querySelectorAll("header").length;
         const mainCount = document.querySelectorAll("main").length;
         const footerCount = document.querySelectorAll("footer").length;
+        const skipLinkExists = Boolean(
+          document.querySelector('a[href="#main-content"]')
+        );
         const imgsWithoutAlt = Array.from(document.querySelectorAll("img"))
           .filter((img) => !img.hasAttribute("alt") || img.alt.trim() === "")
           .map((img) => img.src);
@@ -101,6 +131,7 @@ test.describe("Security Headers, Admin Route Guards & WCAG 2.2 AA Accessibility"
           headerCount,
           mainCount,
           footerCount,
+          skipLinkExists,
           imgsWithoutAlt,
           horizontalOverflow,
         };
@@ -110,6 +141,7 @@ test.describe("Security Headers, Admin Route Guards & WCAG 2.2 AA Accessibility"
       expect(a11yAudit.headerCount, `${route} header landmark`).toBe(1);
       expect(a11yAudit.mainCount, `${route} main landmark`).toBe(1);
       expect(a11yAudit.footerCount, `${route} footer landmark`).toBe(1);
+      expect(a11yAudit.skipLinkExists, `${route} skip link`).toBe(true);
       expect(a11yAudit.imgsWithoutAlt, `${route} missing alt text`).toEqual([]);
       expect(a11yAudit.horizontalOverflow, `${route} desktop overflow`).toBe(
         false

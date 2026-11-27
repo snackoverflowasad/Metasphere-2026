@@ -62,31 +62,28 @@ export function checkStatusPermission(
     return "Editors can only modify draft records. Ask a content_admin or super_admin.";
   }
 
+  if (
+    table === "registration_fees" &&
+    (nextStatus !== "draft" ||
+      (currentStatus !== undefined &&
+        currentStatus !== null &&
+        currentStatus !== "draft")) &&
+    !canPerform(actor.role, "publish_financial", {
+      canApproveFinancial: actor.canApproveFinancial,
+    })
+  ) {
+    return "Modifying or publishing non-draft registration fees requires financial approval permission.";
+  }
+
   if (nextStatus === "published") {
     if (!canPerform(actor.role, "publish_content")) {
       return "Only content_admin or super_admin may publish content.";
-    }
-    if (
-      table === "registration_fees" &&
-      !canPerform(actor.role, "publish_financial", {
-        canApproveFinancial: actor.canApproveFinancial,
-      })
-    ) {
-      return "Publishing registration fees requires financial approval permission.";
     }
   }
 
   if (nextStatus === "archived") {
     if (!canPerform(actor.role, "archive_content")) {
       return "Only content_admin or super_admin may archive content.";
-    }
-    if (
-      table === "registration_fees" &&
-      !canPerform(actor.role, "publish_financial", {
-        canApproveFinancial: actor.canApproveFinancial,
-      })
-    ) {
-      return "Archiving registration fees requires financial approval permission.";
     }
   }
 

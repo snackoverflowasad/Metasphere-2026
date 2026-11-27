@@ -227,6 +227,7 @@ describe("0004 storage buckets & safe MIME policies", () => {
     expect(sql).toContain("'text/html'");
     expect(sql).toMatch(/NOT\s+IN\s*\(\s*'image\/svg\+xml'\s*,\s*'text\/html'\s*\)/i);
     expect(sql).toMatch(/metadata\s+IS\s+NULL\s+OR\s+metadata->>'mimetype'\s+IS\s+NULL/i);
+    expect(sql).toMatch(/btrim\(name\)\s*~\*\s*'\^\[0-9\]\{4\}\//i);
     expect(sql).toMatch(/btrim\(name\)\s*!~\*\s*'\\\.\(svg\|html\?\|xhtml\)\$'/i);
   });
 });

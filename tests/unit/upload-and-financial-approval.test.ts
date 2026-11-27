@@ -392,7 +392,10 @@ describe("uploadConferenceAssetAction", () => {
     );
 
     const fd = new FormData();
-    fd.append("file", new File(["content"], "doc.pdf", { type: "application/pdf" }));
+    fd.append(
+      "file",
+      new File(["%PDF-1.7\ncontent"], "doc.pdf", { type: "application/pdf" })
+    );
     fd.append("bucket", "conference-public");
     fd.append("editionYear", "2027");
 
@@ -403,6 +406,40 @@ describe("uploadConferenceAssetAction", () => {
       expect(result.data.path).toMatch(/^2027\/.*doc\.pdf$/);
     }
     expect(mockAuditInsert).toHaveBeenCalled();
+  });
+
+  it("rejects disguised HTML/SVG payloads claiming .png or .pdf magic headers", async () => {
+    mockRequireAdminSession.mockResolvedValue({
+      userId: "user-1",
+      email: "admin@iem.edu.in",
+      displayName: "Admin",
+      role: "content_admin",
+      canApproveFinancial: false,
+      aal: "aal2",
+    });
+
+    const fdSvgAsPng = new FormData();
+    fdSvgAsPng.append(
+      "file",
+      new File(["<svg onload=alert(1)></svg>"], "avatar.png", {
+        type: "image/png",
+      })
+    );
+    fdSvgAsPng.append("bucket", "conference-public");
+    fdSvgAsPng.append("editionYear", "2027");
+    const rSvg = await uploadConferenceAssetAction(fdSvgAsPng);
+    expect(rSvg.ok).toBe(false);
+
+    const fdTextAsPdf = new FormData();
+    fdTextAsPdf.append(
+      "file",
+      new File(["not-a-pdf-header"], "fake.pdf", { type: "application/pdf" })
+    );
+    fdTextAsPdf.append("bucket", "conference-public");
+    fdTextAsPdf.append("editionYear", "2027");
+    const rPdf = await uploadConferenceAssetAction(fdTextAsPdf);
+    expect(rPdf.ok).toBe(false);
+    expect(mockStorageUpload).not.toHaveBeenCalled();
   });
 });
 
@@ -578,5 +615,54 @@ describe("upsertSpeakerAction & upsertSponsorAction", () => {
       sortOrder: 0,
     });
     expect(badTier.ok).toBe(false);
+  });
+
+  it("blocks content_admin without financial approval from reverting published fee to draft", async () => {
+    mockRequireAdminSession.mockResolvedValue({
+      userId: "ca-1",
+      email: "ca@iem.edu.in",
+      displayName: "Content Admin",
+      role: "content_admin",
+      canApproveFinancial: false,
+      aal: "aal2",
+    });
+
+    const mockUpdate = vi.fn();
+    mockFrom.mockImplementation((table: string) => {
+      if (table === "registration_fees") {
+        return {
+          select: vi.fn().mockReturnValue({
+            eq: vi.fn().mockReturnValue({
+              maybeSingle: vi.fn().mockResolvedValue({
+                data: {
+                  id: FEE_UUID,
+                  edition_id: EDITION_UUID,
+                  status: "published",
+                },
+                error: null,
+              }),
+            }),
+          }),
+          update: mockUpdate,
+        };
+      }
+      return {};
+    });
+
+    const res = await upsertRegistrationFeeAction(FEE_UUID, {
+      editionId: EDITION_UUID,
+      editionYear: 2027,
+      category: "Early Bird Student",
+      amountInr: 4000,
+      amountUsd: 100,
+      indianDisplay: "4000 INR/-",
+      foreignDisplay: "100 USD",
+      taxNote: "Rates are Inclusive of 18% GST",
+      sortOrder: 0,
+      status: "draft",
+    });
+
+    expect(res.ok).toBe(false);
+    expect(mockUpdate).not.toHaveBeenCalled();
   });
 });

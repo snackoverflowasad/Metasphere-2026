@@ -2,7 +2,10 @@ import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import nextConfig, { legacyHtmlRedirects } from "../../next.config";
-import { buildSecurityHeaders } from "../../src/lib/security/headers";
+import {
+  buildNoStoreHeaders,
+  buildSecurityHeaders,
+} from "../../src/lib/security/headers";
 
 const ROOT_DIR = path.resolve(__dirname, "../..");
 const INVENTORY_PATH = path.join(ROOT_DIR, "docs/migration/legacy-inventory.json");
@@ -72,5 +75,10 @@ describe("Next.js Config, Legacy Redirects & Security Headers", () => {
     const rootRule = headerRules.find((r) => r.source === "/(.*)");
     expect(rootRule).toBeDefined();
     expect(rootRule?.headers).toEqual(buildSecurityHeaders());
+
+    const adminRule = headerRules.find((r) => r.source === "/admin/:path*");
+    expect(adminRule?.headers).toEqual(buildNoStoreHeaders());
+    const apiRule = headerRules.find((r) => r.source === "/api/:path*");
+    expect(apiRule?.headers).toEqual(buildNoStoreHeaders());
   });
 });

@@ -25,7 +25,7 @@ export function buildSecurityHeaders(): SecurityHeader[] {
     "frame-ancestors 'none'",
   ];
 
-  return [
+  const baseHeaders: SecurityHeader[] = [
     {
       key: "Content-Security-Policy",
       value: cspDirectives.join("; "),
@@ -45,6 +45,32 @@ export function buildSecurityHeaders(): SecurityHeader[] {
     {
       key: "Permissions-Policy",
       value: "camera=(), microphone=(), geolocation=()",
+    },
+  ];
+
+  if (!isDev) {
+    baseHeaders.push({
+      key: "Strict-Transport-Security",
+      value: "max-age=31536000; includeSubDomains",
+    });
+  }
+
+  return baseHeaders;
+}
+
+/**
+ * Prevents browsers and shared CDN/proxy caches from storing sensitive
+ * admin console or draft preview responses.
+ */
+export function buildNoStoreHeaders(): SecurityHeader[] {
+  return [
+    {
+      key: "Cache-Control",
+      value: "private, no-store, no-cache, must-revalidate",
+    },
+    {
+      key: "Pragma",
+      value: "no-cache",
     },
   ];
 }

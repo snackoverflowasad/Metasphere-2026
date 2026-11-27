@@ -109,9 +109,9 @@ export function CommitteeDirectory({ committee }: CommitteeDirectoryProps) {
               key={groupTitle}
               className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
             >
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">
                 {groupTitle}
-              </h3>
+              </h2>
               <ul className="space-y-3 text-gray-600">
                 {members.map((member) => (
                   <li key={member.id}>

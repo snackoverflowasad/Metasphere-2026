@@ -8,7 +8,12 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") ||
+  "https://metasphere2027.iem.edu.in";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: "MetaSphere 2027: Global Conference on Cloud Computing, Virtualization & Metaverse",
     template: "%s | MetaSphere",

@@ -107,7 +107,8 @@ export function PublicHeader({
       </div>
 
       {/* Navigation Bar */}
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 py-3">
+      <div className="bg-slate-900/90 backdrop-blur-md border-t border-white/10">
+        <div className="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 py-3">
         {/* Logo */}
         <Link
           href={href("/")}
@@ -268,6 +269,7 @@ export function PublicHeader({
             <Menu className="w-6 h-6" />
           )}
         </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}

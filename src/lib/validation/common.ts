@@ -17,7 +17,16 @@ export const ALLOWED_UPLOAD_EXTENSIONS = new Set<string>([
   ".pdf",
 ]);
 
+const EXTENSION_CANONICAL_MIME: Record<string, string> = {
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".webp": "image/webp",
+  ".pdf": "application/pdf",
+};
+
 const BLOCKED_UPLOAD_EXTENSION_RE = /\.(svg|svgz|html?|xhtml)$/i;
+const DANGEROUS_TEXT_PREFIX_RE = /^(?:\uFEFF|\s)*(?:<svg|<html|<!doctype|<script|<\?xml)/i;
 
 const POSTGRES_UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -130,4 +139,98 @@ export function validateUploadFile(file: {
   }
 
   return { ok: true };
+}
+
+/**
+ * Inspects binary magic-byte signatures for uploaded files so spoofed
+ * `file.type` / renamed `.html` or `.svg` payloads cannot bypass metadata checks.
+ */
+export function verifyUploadMagicBytes(
+  bytes: Uint8Array,
+  fileName: string,
+  claimedMime: string
+): { ok: true; canonicalMime: string } | { ok: false; error: string } {
+  const baseValidation = validateUploadFile({
+    name: fileName,
+    type: claimedMime,
+    size: bytes.byteLength,
+  });
+  if (!baseValidation.ok) {
+    return baseValidation;
+  }
+
+  const trimmedName = fileName.trim();
+  const lastDot = trimmedName.lastIndexOf(".");
+  const ext = lastDot >= 0 ? trimmedName.slice(lastDot).toLowerCase() : "";
+  const canonicalMime = EXTENSION_CANONICAL_MIME[ext];
+  const normalizedMime = claimedMime.trim().toLowerCase();
+
+  if (!canonicalMime || canonicalMime !== normalizedMime) {
+    return {
+      ok: false,
+      error: "File extension does not match the declared MIME type.",
+    };
+  }
+
+  const headerText = new TextDecoder("utf-8", { fatal: false }).decode(
+    bytes.subarray(0, Math.min(512, bytes.byteLength))
+  );
+  if (DANGEROUS_TEXT_PREFIX_RE.test(headerText)) {
+    return {
+      ok: false,
+      error: "HTML, XML, or SVG content is not allowed in uploaded files.",
+    };
+  }
+
+  if (canonicalMime === "image/png") {
+    const isPng =
+      bytes.length >= 8 &&
+      bytes[0] === 0x89 &&
+      bytes[1] === 0x50 &&
+      bytes[2] === 0x4e &&
+      bytes[3] === 0x47 &&
+      bytes[4] === 0x0d &&
+      bytes[5] === 0x0a &&
+      bytes[6] === 0x1a &&
+      bytes[7] === 0x0a;
+    if (!isPng) {
+      return { ok: false, error: "File bytes do not match a valid PNG image." };
+    }
+  } else if (canonicalMime === "image/jpeg") {
+    const isJpeg =
+      bytes.length >= 3 &&
+      bytes[0] === 0xff &&
+      bytes[1] === 0xd8 &&
+      bytes[2] === 0xff;
+    if (!isJpeg) {
+      return { ok: false, error: "File bytes do not match a valid JPEG image." };
+    }
+  } else if (canonicalMime === "image/webp") {
+    const isWebp =
+      bytes.length >= 12 &&
+      bytes[0] === 0x52 &&
+      bytes[1] === 0x49 &&
+      bytes[2] === 0x46 &&
+      bytes[3] === 0x46 &&
+      bytes[8] === 0x57 &&
+      bytes[9] === 0x45 &&
+      bytes[10] === 0x42 &&
+      bytes[11] === 0x50;
+    if (!isWebp) {
+      return { ok: false, error: "File bytes do not match a valid WEBP image." };
+    }
+  } else if (canonicalMime === "application/pdf") {
+    const isPdf =
+      bytes.length >= 5 &&
+      bytes[0] === 0x25 &&
+      bytes[1] === 0x50 &&
+      bytes[2] === 0x44 &&
+      bytes[3] === 0x46 &&
+      bytes[4] === 0x2d;
+    if (!isPdf) {
+      return { ok: false, error: "File bytes do not match a valid PDF document." };
+    }
+  }
+
+  return { ok: true, canonicalMime };
 }

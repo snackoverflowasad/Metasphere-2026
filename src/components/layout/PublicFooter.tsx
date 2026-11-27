@@ -50,7 +50,9 @@ export function PublicFooter({
           </div>
 
           <div>
-            <h4 className="font-semibold text-white mb-4">Quick Links</h4>
+            <h2 className="text-base font-semibold text-white mb-4">
+              Quick Links
+            </h2>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
@@ -112,7 +114,9 @@ export function PublicFooter({
           </div>
 
           <div>
-            <h4 className="font-semibold text-white mb-4">Contact & Venue</h4>
+            <h2 className="text-base font-semibold text-white mb-4">
+              Contact &amp; Venue
+            </h2>
             <div className="text-sm space-y-2">
               <p className="font-bold">IEM Ashram Building</p>
               <p className="text-gray-400">

@@ -3,7 +3,11 @@
 import { requireAdminSession } from "@/lib/auth/session";
 import { type ActionResult, mapActionError } from "@/lib/cms/mutations";
 import { createServerSupabase } from "@/lib/supabase/server";
-import { editionYearSchema, validateUploadFile } from "@/lib/validation/common";
+import {
+  editionYearSchema,
+  validateUploadFile,
+  verifyUploadMagicBytes,
+} from "@/lib/validation/common";
 
 /**
  * Uploads a conference asset (PNG, JPEG, WEBP, or PDF up to 10 MB) to
@@ -55,11 +59,19 @@ export async function uploadConferenceAssetAction(
 
     const supabase = await createServerSupabase();
     const arrayBuffer = await file.arrayBuffer();
+    const magicCheck = verifyUploadMagicBytes(
+      new Uint8Array(arrayBuffer),
+      file.name,
+      file.type
+    );
+    if (!magicCheck.ok) {
+      return { ok: false, error: magicCheck.error };
+    }
 
     const { error: uploadError } = await supabase.storage
       .from(bucket)
       .upload(path, arrayBuffer, {
-        contentType: file.type,
+        contentType: magicCheck.canonicalMime,
         upsert: false,
       });
 
@@ -88,12 +100,13 @@ export async function uploadConferenceAssetAction(
       after_data: {
         bucket,
         path,
-        mimeType: file.type,
+        mimeType: magicCheck.canonicalMime,
         size: file.size,
       },
     });
 
     if (auditErr) {
+      await supabase.storage.from(bucket).remove([path]).catch(() => undefined);
       return { ok: false, error: `Uploaded file, but audit log failed: ${auditErr.message}` };
     }
 

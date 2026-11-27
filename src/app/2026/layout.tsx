@@ -20,13 +20,22 @@ export default async function Archive2026Layout({
 
   return (
     <div className="flex flex-col min-h-screen bg-[#fffbf5] text-[#1a202c]">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-md focus:bg-slate-900 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white focus:shadow-lg"
+      >
+        Skip to main content
+      </a>
+
       <PublicHeader
         editionYear={2026}
         editionLabel={snapshot.edition.subtitle}
         isArchived={true}
         basePath="/2026"
       />
-      <main className="grow">{children}</main>
+      <main id="main-content" className="grow">
+        {children}
+      </main>
       <PublicFooter
         editionYear={2026}
         links={footerLinks}

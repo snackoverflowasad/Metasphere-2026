@@ -37,14 +37,14 @@ Configure these variables in `.env.local` (local dev) and Vercel Project Setting
 Because `/admin` enforces invite-only auth plus `aal2` MFA:
 
 1. In Supabase Dashboard (**Authentication -> Users -> Invite user**), invite the primary organizing chair's email address.
-2. Insert a matching row in `public.admin_users`:
+2. Insert a matching row in `public.admin_roles`:
    ```sql
-   INSERT INTO public.admin_users (user_id, email, full_name, role, is_active)
-   VALUES ('<auth-user-uuid>', '<chair-email>', '<Full Name>', 'super_admin', true);
+   INSERT INTO public.admin_roles (user_id, email, display_name, role, can_approve_financial, is_active)
+   VALUES ('<auth-user-uuid>', '<chair-email>', '<Full Name>', 'super_admin', true, true);
    ```
 3. The chair accepts the invite email, signs in at `/admin/login`, and completes TOTP authenticator enrollment at `/admin/mfa`.
-4. Additional organizing committee members can then be invited directly from `/admin/users` with scoped roles (`super_admin`, `program_chair`, `registration_treasurer`, `content_editor`).
-   - Financial bank/UPI edits on `/admin/registration` require `super_admin` or `registration_treasurer` approval before going live.
+4. Additional organizing committee members can then be invited directly from `/admin/users` with scoped roles (`super_admin`, `content_admin`, `editor`).
+   - Financial bank/UPI and fee edits on `/admin/registration` require `super_admin` or `content_admin` with `can_approve_financial = true`.
 
 ## 5. Vercel Deployment & DNS Cutover
 

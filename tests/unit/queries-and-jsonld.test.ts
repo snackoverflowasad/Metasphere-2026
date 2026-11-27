@@ -13,6 +13,7 @@ import {
   buildEventJsonLd,
   getActiveEditionYear,
   getEditionSnapshot,
+  serializeJsonLd,
 } from "../../src/features/conference/queries";
 import { getFallbackEditionSnapshot } from "../../src/lib/fallback/seed-snapshot";
 
@@ -86,5 +87,16 @@ describe("conference queries & dynamic Event JSON-LD", () => {
     mockUnstableCache.mockClear();
     await getEditionSnapshot(2027, { includeDrafts: true });
     expect(mockUnstableCache).not.toHaveBeenCalled();
+  });
+
+  it("serializeJsonLd escapes <, >, and & so </script> breakout is impossible", () => {
+    const raw = serializeJsonLd({
+      "@type": "Event",
+      name: "</script><script>alert(1)</script> & Test",
+    });
+    expect(raw).not.toContain("<");
+    expect(raw).not.toContain(">");
+    expect(raw).toContain("\\u003c/script\\u003e");
+    expect(raw).toContain("\\u0026");
   });
 });

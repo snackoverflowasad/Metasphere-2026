@@ -1,7 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { NextConfig } from "next";
-import { buildSecurityHeaders } from "./src/lib/security/headers";
+import {
+  buildNoStoreHeaders,
+  buildSecurityHeaders,
+} from "./src/lib/security/headers";
 
 export interface LegacyRedirectRule {
   source: string;
@@ -55,10 +58,19 @@ const nextConfig: NextConfig = {
     return legacyHtmlRedirects();
   },
   async headers() {
+    const noStoreHeaders = buildNoStoreHeaders();
     return [
       {
         source: "/(.*)",
         headers: buildSecurityHeaders(),
+      },
+      {
+        source: "/admin/:path*",
+        headers: noStoreHeaders,
+      },
+      {
+        source: "/api/:path*",
+        headers: noStoreHeaders,
       },
     ];
   },

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getEditionSnapshot } from "@/features/conference/queries";
+import { buildPublicPageMetadata } from "@/lib/seo/metadata";
 import { CallForPapersView } from "@/components/pages/CallForPapersView";
 import { CommitteeView } from "@/components/pages/CommitteeView";
 import { ContactView } from "@/components/pages/ContactView";
@@ -53,12 +54,18 @@ export async function generateMetadata({
   const path = slug.join("/");
   const title = TITLES[path];
   if (!title) {
-    return { title: "Archive Not Found | MetaSphere 2026" };
+    return {
+      title: { absolute: "Archive Not Found | MetaSphere 2026" },
+    };
   }
-  return {
-    title: `${title} | MetaSphere 2026 (Archived)`,
+  const edition = await getEditionSnapshot(2026);
+  return buildPublicPageMetadata({
+    edition,
+    path: `/${path}`,
+    pageTitle: title,
     description: `Archived ${title} details for MetaSphere 2026 (21st & 22nd August, 2026, IEM Kolkata).`,
-  };
+    isArchive: true,
+  });
 }
 
 export default async function Archive2026SubPage({

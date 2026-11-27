@@ -3,14 +3,17 @@ import {
   getEditionSnapshot,
   isAuthorizedDraftPreview,
 } from "@/features/conference/queries";
+import { buildPublicPageMetadata } from "@/lib/seo/metadata";
 import { CommitteeView } from "@/components/pages/CommitteeView";
 
 export async function generateMetadata(): Promise<Metadata> {
   const edition = await getEditionSnapshot();
-  return {
-    title: `Technical Program Committee | ${edition.edition.subtitle}`,
+  return buildPublicPageMetadata({
+    edition,
+    path: "/committees/technical",
+    pageTitle: "Technical Program Committee",
     description: `Meet the reviewers and Technical Program Committee of ${edition.edition.subtitle}.`,
-  };
+  });
 }
 
 export default async function TechnicalCommitteePage() {

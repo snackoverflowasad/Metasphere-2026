@@ -45,8 +45,8 @@ describe("SEO sitemap, robots.txt & public edition snapshot routes", () => {
     expect(urls.some((u) => u.includes("/admin"))).toBe(false);
   });
 
-  it("robots() allows public indexing and disallows /admin and /api", () => {
-    const rules = robots();
+  it("robots() allows public indexing and disallows /admin and /api", async () => {
+    const rules = await robots();
     expect(rules.sitemap).toBeTruthy();
     const ruleList = Array.isArray(rules.rules) ? rules.rules : [rules.rules];
     const primary = ruleList[0];

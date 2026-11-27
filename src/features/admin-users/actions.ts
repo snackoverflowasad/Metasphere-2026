@@ -1,8 +1,10 @@
 "use server";
 
+import type { Json } from "@/types/database";
 import { requireAdminSession } from "@/lib/auth/session";
 import { type ActionResult, mapActionError } from "@/lib/cms/mutations";
 import { createAdminSupabase } from "@/lib/supabase/admin";
+import { uuidSchema } from "@/lib/validation/common";
 import {
   type InviteAdminUserInput,
   type UpdateAdminRoleInput,
@@ -121,6 +123,19 @@ export async function updateAdminRoleAction(
 
     const adminSupabase = createAdminSupabase();
 
+    const { data: beforeRow, error: lookupError } = await adminSupabase
+      .from("admin_roles")
+      .select("*")
+      .eq("user_id", data.userId)
+      .maybeSingle();
+
+    if (lookupError) {
+      return { ok: false, error: lookupError.message };
+    }
+    if (!beforeRow) {
+      return { ok: false, error: "Administrator record not found." };
+    }
+
     const { error: updateError } = await adminSupabase
       .from("admin_roles")
       .update({
@@ -135,13 +150,17 @@ export async function updateAdminRoleAction(
       return { ok: false, error: updateError.message };
     }
 
+    if (!data.isActive || beforeRow.role !== data.role) {
+      await adminSupabase.auth.admin.signOut(data.userId).catch(() => undefined);
+    }
+
     await adminSupabase.from("audit_logs").insert({
       actor_id: actor.userId,
       actor_role: actor.role,
       action: "update",
       table_name: "admin_roles",
       record_id: data.userId,
-      before_data: null,
+      before_data: beforeRow as unknown as Json,
       after_data: {
         role: data.role,
         can_approve_financial: data.canApproveFinancial,
@@ -166,15 +185,32 @@ export async function deactivateAdminUserAction(
       requiredRoles: ["super_admin"],
     });
 
-    const trimmed = userId.trim();
-    if (!trimmed) {
-      return { ok: false, error: "User ID is required." };
+    const parsedUserId = uuidSchema("Valid user UUID is required.").safeParse(userId);
+    if (!parsedUserId.success) {
+      return {
+        ok: false,
+        error: parsedUserId.error.issues[0]?.message ?? "Valid user UUID is required.",
+      };
     }
+    const trimmed = parsedUserId.data;
     if (trimmed === actor.userId) {
       return { ok: false, error: "You cannot deactivate your own account." };
     }
 
     const adminSupabase = createAdminSupabase();
+    const { data: beforeRow, error: lookupError } = await adminSupabase
+      .from("admin_roles")
+      .select("*")
+      .eq("user_id", trimmed)
+      .maybeSingle();
+
+    if (lookupError) {
+      return { ok: false, error: lookupError.message };
+    }
+    if (!beforeRow) {
+      return { ok: false, error: "Administrator record not found." };
+    }
+
     const { error: updateError } = await adminSupabase
       .from("admin_roles")
       .update({ is_active: false })
@@ -184,13 +220,15 @@ export async function deactivateAdminUserAction(
       return { ok: false, error: updateError.message };
     }
 
+    await adminSupabase.auth.admin.signOut(trimmed).catch(() => undefined);
+
     await adminSupabase.from("audit_logs").insert({
       actor_id: actor.userId,
       actor_role: actor.role,
       action: "archive",
       table_name: "admin_roles",
       record_id: trimmed,
-      before_data: null,
+      before_data: beforeRow as unknown as Json,
       after_data: { is_active: false },
     });
 
