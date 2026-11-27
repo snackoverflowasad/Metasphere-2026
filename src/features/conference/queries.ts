@@ -518,19 +518,21 @@ export async function getEditionSnapshot(
     }
   }
 
+  const fetchUncached = async (): Promise<EditionSnapshot> => {
+    if (!isSupabaseConfigured()) {
+      return fallback;
+    }
+    try {
+      const anonClient = createAnonSupabaseClient();
+      const snapshot = await fetchEditionFromClient(anonClient, year, false);
+      return snapshot ?? fallback;
+    } catch {
+      return fallback;
+    }
+  };
+
   const loadCached = unstable_cache(
-    async (): Promise<EditionSnapshot> => {
-      if (!isSupabaseConfigured()) {
-        return fallback;
-      }
-      try {
-        const anonClient = createAnonSupabaseClient();
-        const snapshot = await fetchEditionFromClient(anonClient, year, false);
-        return snapshot ?? fallback;
-      } catch {
-        return fallback;
-      }
-    },
+    fetchUncached,
     ["edition-snapshot", String(year)],
     {
       tags: [editionCacheTag(year)],
@@ -538,7 +540,16 @@ export async function getEditionSnapshot(
     }
   );
 
-  return loadCached();
+  try {
+    return await loadCached();
+  } catch (err) {
+    // Outside Next.js request/cache runtime (e.g., standalone integration tests),
+    // `unstable_cache` throws "Invariant: incrementalCache missing".
+    if (err instanceof Error && err.message.includes("incrementalCache missing")) {
+      return fetchUncached();
+    }
+    throw err;
+  }
 }
 
 /**
