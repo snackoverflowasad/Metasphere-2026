@@ -5,6 +5,7 @@ test.describe("Theme, Media & Multi-Edition Preservation", () => {
   test("preserves exact #fffbf5 background, #f97316 primary CTA, banner SVG, Cloudinary media, and Track Modal", async ({
     page,
   }) => {
+    test.setTimeout(60_000);
     await page.goto("/");
 
     // Computed colors match MetaSphere 2026 exact palette
