@@ -35,18 +35,17 @@ function loadInventory() {
   return JSON.parse(raw);
 }
 
-function collectCloudinaryUrlsFromHtml(): string[] {
+function collectCloudinaryUrlsFromSeed(): string[] {
   const urls = new Set<string>();
-  const regex = /https:\/\/res\.cloudinary\.com\/dh87hfwml\/[^"'\s<>]+/g;
-
-  for (const { source } of EXPECTED_REDIRECTS) {
-    const html = fs.readFileSync(path.join(ROOT_DIR, source), "utf8");
-    const matches = html.match(regex) ?? [];
-    for (const url of matches) {
-      urls.add(url);
-    }
+  const regex = /https:\/\/res\.cloudinary\.com\/dh87hfwml\/[^"'\s<>`]+/g;
+  const seedSql = fs.readFileSync(
+    path.join(ROOT_DIR, "supabase/seed.sql"),
+    "utf8"
+  );
+  const matches = seedSql.match(regex) ?? [];
+  for (const url of matches) {
+    urls.add(url);
   }
-
   return Array.from(urls).sort();
 }
 
@@ -56,22 +55,19 @@ describe("Legacy 2026 Preservation Manifest", () => {
     expect(Array.isArray(inventory.legacyRedirects)).toBe(true);
     expect(inventory.legacyRedirects).toHaveLength(13);
     expect(inventory.legacyRedirects).toEqual(EXPECTED_REDIRECTS);
-
-    for (const entry of inventory.legacyRedirects) {
-      expect(fs.existsSync(path.join(ROOT_DIR, entry.source))).toBe(true);
-    }
+    expect(fs.existsSync(path.join(ROOT_DIR, "next.config.ts"))).toBe(true);
   });
 
-  it("preserves all >= 35 unique Cloudinary media URLs from the 13 HTML files", () => {
+  it("preserves all >= 35 unique Cloudinary media URLs in supabase/seed.sql", () => {
     const inventory = loadInventory();
-    const htmlCloudinaryUrls = collectCloudinaryUrlsFromHtml();
+    const seedCloudinaryUrls = collectCloudinaryUrlsFromSeed();
 
     expect(Array.isArray(inventory.cloudinaryUrls)).toBe(true);
     expect(inventory.cloudinaryUrls.length).toBeGreaterThanOrEqual(35);
-    expect(htmlCloudinaryUrls.length).toBeGreaterThanOrEqual(35);
+    expect(seedCloudinaryUrls.length).toBeGreaterThanOrEqual(35);
 
     const uniqueInventoryUrls = Array.from(new Set(inventory.cloudinaryUrls)).sort();
-    expect(uniqueInventoryUrls).toEqual(htmlCloudinaryUrls);
+    expect(uniqueInventoryUrls).toEqual(seedCloudinaryUrls);
   });
 
   it("locks exact legacy theme hex tokens", () => {
@@ -79,7 +75,7 @@ describe("Legacy 2026 Preservation Manifest", () => {
     expect(inventory.themeTokens).toEqual(EXPECTED_THEME_TOKENS);
   });
 
-  it("captures all localAssets including exact casing and spaces", () => {
+  it("captures all localAssets in public/ including exact casing and spaces", () => {
     const inventory = loadInventory();
     expect(Array.isArray(inventory.localAssets)).toBe(true);
     expect(inventory.localAssets).toContain("Assets/METASPHERE WEBSITE BANNER .svg");
@@ -90,8 +86,10 @@ describe("Legacy 2026 Preservation Manifest", () => {
     expect(inventory.localAssets).toContain("Assets/keynote-speakers/speaker-6.jpg");
 
     for (const assetPath of inventory.localAssets) {
-      expect(fs.existsSync(path.join(ROOT_DIR, assetPath))).toBe(true);
+      expect(fs.existsSync(path.join(ROOT_DIR, "public", assetPath))).toBe(true);
     }
+    expect(fs.existsSync(path.join(ROOT_DIR, "public/favicon.ico"))).toBe(true);
+    expect(fs.existsSync(path.join(ROOT_DIR, "public/favicon.svg"))).toBe(true);
   });
 
   it("captures externalLinks for CMT, Forms, Overleaf, Google Drive, and Google Maps", () => {
