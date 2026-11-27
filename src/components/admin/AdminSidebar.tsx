@@ -4,15 +4,23 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import {
+  Award,
   CalendarClock,
+  CalendarDays,
+  CreditCard,
   ExternalLink,
   Eye,
+  History,
+  Layers,
   LayoutDashboard,
   Link2,
   LogOut,
   Menu,
+  Mic2,
   Settings,
   ShieldCheck,
+  UserCog,
+  Users,
   X,
 } from "lucide-react";
 import type { AdminRole } from "@/types/database";
@@ -28,7 +36,12 @@ export interface AdminSidebarProps {
   supabaseConfigured: boolean;
 }
 
-const NAV_ITEMS = [
+const NAV_ITEMS: ReadonlyArray<{
+  href: string;
+  label: string;
+  icon: typeof LayoutDashboard;
+  superAdminOnly?: boolean;
+}> = [
   {
     href: "/admin/overview",
     label: "Overview",
@@ -45,11 +58,52 @@ const NAV_ITEMS = [
     icon: CalendarClock,
   },
   {
+    href: "/admin/speakers",
+    label: "Speakers",
+    icon: Mic2,
+  },
+  {
+    href: "/admin/committees",
+    label: "Committees",
+    icon: Users,
+  },
+  {
+    href: "/admin/tracks",
+    label: "Call for Papers Tracks",
+    icon: Layers,
+  },
+  {
+    href: "/admin/programme",
+    label: "Technical Programme",
+    icon: CalendarDays,
+  },
+  {
+    href: "/admin/sponsors",
+    label: "Sponsors & Partners",
+    icon: Award,
+  },
+  {
+    href: "/admin/registration",
+    label: "Registration & Fees",
+    icon: CreditCard,
+  },
+  {
     href: "/admin/resources",
     label: "Links & Resources",
     icon: Link2,
   },
-] as const;
+  {
+    href: "/admin/users",
+    label: "Admin Users",
+    icon: UserCog,
+    superAdminOnly: true,
+  },
+  {
+    href: "/admin/activity",
+    label: "Audit Activity",
+    icon: History,
+  },
+];
 
 export function AdminSidebar({
   userEmail,
@@ -109,7 +163,9 @@ export function AdminSidebar({
         </div>
 
         <nav className="space-y-1" aria-label="Admin navigation">
-          {NAV_ITEMS.map((item) => {
+          {NAV_ITEMS.filter(
+            (item) => !item.superAdminOnly || role === "super_admin"
+          ).map((item) => {
             const isActive = pathname === item.href;
             const Icon = item.icon;
             return (

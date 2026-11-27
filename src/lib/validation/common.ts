@@ -19,6 +19,16 @@ export const ALLOWED_UPLOAD_EXTENSIONS = new Set<string>([
 
 const BLOCKED_UPLOAD_EXTENSION_RE = /\.(svg|svgz|html?|xhtml)$/i;
 
+const POSTGRES_UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/**
+ * Zod schema validating PostgreSQL-compatible 8-4-4-4-12 hex UUID strings.
+ */
+export function uuidSchema(message = "Valid UUID is required") {
+  return z.string().trim().regex(POSTGRES_UUID_RE, message);
+}
+
 /**
  * Zod schema accepting only explicit `http://` or `https://` URLs.
  * Rejects `javascript:`, `data:`, `vbscript:`, `file:`, and relative paths.
@@ -45,6 +55,14 @@ export const safeHttpUrlSchema = z
       message: "URL must be a valid http:// or https:// URL",
     }
   );
+
+/**
+ * Zod schema accepting either a safe `http(s)://` URL or an empty string / null.
+ */
+export const optionalSafeHttpUrlSchema = z
+  .union([safeHttpUrlSchema, z.literal(""), z.null()])
+  .optional()
+  .transform((value) => (value ? value.trim() : ""));
 
 export const publicationStatusSchema = z.enum([
   "draft",

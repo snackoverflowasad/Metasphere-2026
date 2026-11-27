@@ -3,13 +3,11 @@ import {
   editionYearSchema,
   publicationStatusSchema,
   safeHttpUrlSchema,
+  uuidSchema,
 } from "@/lib/validation/common";
 import { IST_TIMEZONE } from "@/lib/dates/ist";
 
-export const editionIdSchema = z
-  .string()
-  .trim()
-  .uuid("Valid edition UUID is required");
+export const editionIdSchema = uuidSchema("Valid edition UUID is required");
 
 export const publishableTableSchema = z.enum([
   "conference_editions",

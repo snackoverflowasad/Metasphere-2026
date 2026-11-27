@@ -21,6 +21,7 @@ import {
   upsertConferenceLinkAction,
   upsertResourceAction,
 } from "@/features/resources/actions";
+import { AssetUploadWidget } from "@/components/admin/AssetUploadWidget";
 import { PublishControls } from "@/components/admin/PublishControls";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -516,6 +517,18 @@ export function ResourcesManager({
                     id="res-storage"
                     placeholder="Assets/WordTemplate.zip"
                     {...resourceForm.register("storagePath")}
+                  />
+                </div>
+
+                <div className="sm:col-span-2">
+                  <AssetUploadWidget
+                    editionYear={editionYear}
+                    disabled={isFallbackRecord}
+                    label="Optional: Upload New Resource File (PDF, PNG, JPG, WEBP)"
+                    onUploaded={({ url, path }) => {
+                      resourceForm.setValue("url", url, { shouldValidate: true });
+                      resourceForm.setValue("storagePath", path, { shouldValidate: true });
+                    }}
                   />
                 </div>
 

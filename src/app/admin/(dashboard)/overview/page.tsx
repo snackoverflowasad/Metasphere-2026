@@ -71,19 +71,19 @@ export default async function AdminOverviewPage({
       label: "Tracks & Sessions",
       value: `${data.counts.tracks} / ${data.counts.programSessions}`,
       detail: "Tracks / Program schedule",
-      href: `/admin/event-settings${editionQuery}`,
+      href: `/admin/tracks${editionQuery}`,
     },
     {
       label: "Speakers & Committees",
       value: `${data.counts.speakers} / ${data.counts.committees}`,
       detail: "Keynotes / Committees",
-      href: `/admin/event-settings${editionQuery}`,
+      href: `/admin/speakers${editionQuery}`,
     },
     {
       label: "Sponsors & Fee Tiers",
       value: `${data.counts.sponsors} / ${data.counts.registrationFees}`,
       detail: "Partners / Registration",
-      href: `/admin/event-settings${editionQuery}`,
+      href: `/admin/registration${editionQuery}`,
     },
   ];
 

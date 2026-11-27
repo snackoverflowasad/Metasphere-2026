@@ -156,3 +156,22 @@ export async function recordVersionAndAudit(params: {
     throw new Error(`Failed to write audit log: ${auditInsertError.message}`);
   }
 }
+
+/**
+ * Resolves the integer edition year for cache tag revalidation from an edition UUID.
+ */
+export async function resolveEditionYear(
+  supabase: SupabaseClient<Database>,
+  editionId: string
+): Promise<number | null> {
+  try {
+    const { data } = await supabase
+      .from("conference_editions")
+      .select("year")
+      .eq("id", editionId)
+      .maybeSingle<{ year: number }>();
+    return data?.year ?? null;
+  } catch {
+    return null;
+  }
+}
